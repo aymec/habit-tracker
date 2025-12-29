@@ -1,0 +1,35 @@
+{
+  "common": {
+    "welcome": "Bienvenido",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Añadir",
+    "back": "Atrás"
+  },
+  "habits": {
+    "title": "Hábitos",
+    "newHabit": "Nuevo Hábito",
+    "editHabit": "Editar Hábito",
+    "habitName": "Nombre del Hábito",
+    "noHabits": "¡No hay hábitos aún. Crea uno para empezar!",
+    "deleteConfirmation": "¿Estás seguro de que quieres eliminar este hábito? Se perderá todo el historial."
+  },
+  "history": {
+    "title": "Historial",
+    "totalCount": "Total",
+    "deleteEntryConfirmation": "¿Estás seguro de que quieres eliminar esta entrada?",
+    "noEntries": "Sin entradas aún."
+  },
+  "settings": {
+    "title": "Ajustes",
+    "appearance": "Apariencia",
+    "language": "Idioma",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema",
+    "about": "Acerca de",
+    "version": "Versión"
+  }
+}
