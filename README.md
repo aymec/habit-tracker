@@ -8,26 +8,47 @@ Get the list of features from the [implementation plan](./implementation_plan.md
 
 ## Development
 
-1. Install dependencies
+### 1. Install dependencies
 
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
-2. Start the app
+### 2. Start the app for Expo Go (fast)
 
-   ```bash
-   npx expo start -c
-   ```
+```bash
+npx expo start -c
+```
 
 In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- Your browser → http://localhost:8081
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+
+### 3. Build the app (slow)
+
+[Development build documentation](https://docs.expo.dev/develop/development-builds/introduction/)
+
+#### 3.1. iOS
+
+```bash
+npm run ios
+```
+
+#### 3.2 Android
+
+```bash
+npm run android
+```
+
+#### 3.3 Web
+
+```bash
+#TODO
+```
 
 ## About Expo
 
