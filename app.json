@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "habit-tracker",
-    "slug": "habit-tracker",
+    "name": "OnTrack",
+    "slug": "ontrack",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/Tracks_Light/apple-devices/AppIcon.appiconset/icon-ios-1024x1024.png",
-    "scheme": "habittracker",
+    "scheme": "ontrack",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.habit-tracker"
+      "bundleIdentifier": "com.aym3r1c.ontrack"
     },
     "android": {
       "adaptiveIcon": {
@@ -21,7 +21,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.habittracker"
+      "package": "com.aym3r1c.ontrack"
     },
     "web": {
       "output": "static",
