@@ -5,6 +5,7 @@ import { useHabit } from '../src/context/HabitContext';
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { Preset } from '../src/models/types';
 
@@ -13,40 +14,47 @@ export default function ModalScreen() {
   const { createNewHabit, updateHabitDetails, activeHabit, activeHabitPresets, addHabitPreset, updateHabitPreset, removePreset } = useHabit();
   const { t } = useTranslation();
   const router = useRouter();
+  const navigation = useNavigation();
   const params = useLocalSearchParams();
   const isEditing = params.mode === 'edit';
 
-  const [habitName, setHabitName] = useState('');
+  const [isEditingHabitName, setIsEditingHabitName] = useState(false);
+  const [editedHabitName, setEditedHabitName] = useState('');
   const [editingPresetId, setEditingPresetId] = useState<string | null>(null);
   const [presetLabel, setPresetLabel] = useState('');
   const [presetValue, setPresetValue] = useState('');
   const [isAddingPreset, setIsAddingPreset] = useState(false);
 
-  useEffect(() => {
-    if (isEditing && activeHabit) {
-      setHabitName(activeHabit.name);
+  const startEditHabitName = () => {
+    if (activeHabit) {
+      setEditedHabitName(activeHabit.name);
+      setIsEditingHabitName(true);
     }
-  }, [isEditing, activeHabit]);
+  };
 
-  const handleSave = async () => {
-    if (!habitName.trim()) {
+  const cancelEditHabitName = () => {
+    setIsEditingHabitName(false);
+    setEditedHabitName('');
+  };
+
+  const saveHabitName = async () => {
+    if (!editedHabitName.trim()) {
       Alert.alert('Error', t('habits.habitName') + ' is required');
       return;
     }
 
     try {
-      if (isEditing && activeHabit) {
+      if (activeHabit) {
         await updateHabitDetails({
           ...activeHabit,
-          name: habitName.trim()
+          name: editedHabitName.trim()
         });
-      } else {
-        await createNewHabit(habitName.trim());
       }
-      router.back();
+      setIsEditingHabitName(false);
+      setEditedHabitName('');
     } catch (error) {
       console.error(error);
-      Alert.alert('Error', 'Failed to save habit');
+      Alert.alert('Error', 'Failed to save habit name');
     }
   };
 
@@ -131,41 +139,55 @@ export default function ModalScreen() {
           headerShown: true,
           title: isEditing ? (activeHabit?.name ? `${t('common.edit')} ${activeHabit.name}` : t('habits.editHabit')) : t('habits.newHabit'),
           headerTitleAlign: 'center',
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => router.back()}>
-              <Text style={{ color: theme.colors.primary, fontSize: 16 }}>{t('common.cancel')}</Text>
-            </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <TouchableOpacity onPress={handleSave}>
-              <Text style={{ color: theme.colors.primary, fontWeight: 'bold', fontSize: 16 }}>{t('common.save')}</Text>
-            </TouchableOpacity>
-          ),
         }}
       />
 
       <ScrollView style={styles.content}>
         {/* Habit Name Section */}
-        <View style={styles.section}>
-          <Text style={[styles.label, { color: theme.colors.text }]}>
-            {t('habits.habitName')}
-          </Text>
-          <TextInput
-            style={[
-              styles.input,
-              {
-                backgroundColor: theme.colors.card,
-                color: theme.colors.text,
-                borderColor: theme.colors.border,
-              },
-            ]}
-            value={habitName}
-            onChangeText={setHabitName}
-            placeholder="e.g., Drink Water"
-            placeholderTextColor={theme.colors.textSecondary}
-            autoFocus={!isEditing}
-          />
-        </View>
+        {isEditing && (
+          <View style={[styles.section, { marginBottom: 10 }]}>
+            <Text style={[styles.sectionHeader, { color: theme.colors.text }]}>
+              {t('habits.habitName')}
+            </Text>
+            {isEditingHabitName ? (
+              <View style={[styles.editPresetContainer, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
+                <TextInput
+                  style={[
+                    styles.input,
+                    {
+                      backgroundColor: theme.colors.card,
+                      color: theme.colors.text,
+                      borderColor: theme.colors.border,
+                      marginBottom: 10,
+                    },
+                  ]}
+                  value={editedHabitName}
+                  onChangeText={setEditedHabitName}
+                  placeholder="e.g., Drink Water"
+                  placeholderTextColor={theme.colors.textSecondary}
+                  autoFocus
+                />
+                <View style={styles.editActions}>
+                  <TouchableOpacity onPress={cancelEditHabitName} style={styles.miniButton}>
+                    <Text style={{ color: theme.colors.textSecondary }}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={saveHabitName} style={[styles.miniButton, { backgroundColor: theme.colors.primary }]}>
+                    <Text style={{ color: '#FFFFFF' }}>Save</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ) : (
+              <View style={[styles.habitNameRow, { borderBottomColor: theme.colors.border }]}>
+                <Text style={[styles.habitNameText, { color: theme.colors.text }]}>
+                  {activeHabit?.name}
+                </Text>
+                <TouchableOpacity onPress={startEditHabitName} style={styles.actionIcon}>
+                  <Ionicons name="create-outline" size={20} color={theme.colors.text} />
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+        )}
 
         {isEditing && (
           <View style={[styles.presetsSection, { borderTopColor: theme.colors.border }]}>
@@ -298,6 +320,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 16,
     fontSize: 16,
+  },
+  habitNameRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 12,
+  },
+  habitNameText: {
+    fontSize: 16,
+    fontWeight: '500',
   },
   presetsSection: {
     marginTop: 10,
