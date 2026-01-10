@@ -36,7 +36,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
             ]}
             onPress={() => {
               selectHabit(item.id);
-              // props.navigation.closeDrawer();
+              props.navigation.closeDrawer();
             }}
           >
             <Text
@@ -67,7 +67,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         <TouchableOpacity
           style={[styles.addButton, { backgroundColor: theme.colors.primary }]}
           onPress={() => {
-            // props.navigation.closeDrawer();
+            props.navigation.closeDrawer();
             router.push('/edit');
           }}
         >

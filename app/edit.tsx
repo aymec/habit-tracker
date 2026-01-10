@@ -18,6 +18,7 @@ export default function ModalScreen() {
   const params = useLocalSearchParams();
   const isEditing = params.mode === 'edit';
 
+  const [habitName, setHabitName] = useState('');
   const [isEditingHabitName, setIsEditingHabitName] = useState(false);
   const [editedHabitName, setEditedHabitName] = useState('');
   const [editingPresetId, setEditingPresetId] = useState<string | null>(null);
@@ -55,6 +56,22 @@ export default function ModalScreen() {
     } catch (error) {
       console.error(error);
       Alert.alert('Error', 'Failed to save habit name');
+    }
+  };
+
+  const handleCreateHabit = async () => {
+    if (!habitName.trim()) {
+      Alert.alert('Error', t('habits.habitName') + ' is required');
+      return;
+    }
+
+    try {
+      await createNewHabit(habitName.trim());
+      // Navigate to edit mode for the newly created habit
+      router.replace({ pathname: '/edit', params: { mode: 'edit' } });
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'Failed to create habit');
     }
   };
 
@@ -143,6 +160,37 @@ export default function ModalScreen() {
       />
 
       <ScrollView style={styles.content}>
+        {/* Create New Habit Section */}
+        {!isEditing && (
+          <View style={styles.section}>
+            <Text style={[styles.sectionHeader, { color: theme.colors.text }]}>
+              {t('habits.habitName')}
+            </Text>
+            <TextInput
+              style={[
+                styles.input,
+                {
+                  backgroundColor: theme.colors.card,
+                  color: theme.colors.text,
+                  borderColor: theme.colors.border,
+                  marginBottom: 20,
+                },
+              ]}
+              value={habitName}
+              onChangeText={setHabitName}
+              placeholder="e.g., Drink Water"
+              placeholderTextColor={theme.colors.textSecondary}
+              autoFocus
+            />
+            <TouchableOpacity
+              style={[styles.createHabitButton, { backgroundColor: theme.colors.primary }]}
+              onPress={handleCreateHabit}
+            >
+              <Text style={styles.createHabitButtonText}>{t('common.create')}</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
         {/* Habit Name Section */}
         {isEditing && (
           <View style={[styles.section, { marginBottom: 10 }]}>
@@ -320,6 +368,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 16,
     fontSize: 16,
+  },
+  createHabitButton: {
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  createHabitButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   habitNameRow: {
     flexDirection: 'row',
