@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Platform } from 'react-native';
 import { Habit, Preset, Entry } from '../models/types';
 
 const STORAGE_KEYS = {
@@ -7,10 +8,31 @@ const STORAGE_KEYS = {
   ENTRIES: 'entries',
 };
 
+// Platform-agnostic storage helpers
+const getStorageItem = async (key: string): Promise<string | null> => {
+  if (Platform.OS === 'web') {
+    if (typeof window !== 'undefined') {
+      return window.localStorage.getItem(key);
+    }
+    return null;
+  }
+  return await AsyncStorage.getItem(key);
+};
+
+const setStorageItem = async (key: string, value: string): Promise<void> => {
+  if (Platform.OS === 'web') {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(key, value);
+    }
+  } else {
+    await AsyncStorage.setItem(key, value);
+  }
+};
+
 // Generic storage helper
 const saveData = async <T>(key: string, data: T): Promise<void> => {
   try {
-    await AsyncStorage.setItem(key, JSON.stringify(data));
+    await setStorageItem(key, JSON.stringify(data));
   } catch (error) {
     console.error(`Error saving data for key ${key}:`, error);
     throw error;
@@ -19,7 +41,7 @@ const saveData = async <T>(key: string, data: T): Promise<void> => {
 
 const getData = async <T>(key: string): Promise<T | null> => {
   try {
-    const jsonValue = await AsyncStorage.getItem(key);
+    const jsonValue = await getStorageItem(key);
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (error) {
     console.error(`Error getting data for key ${key}:`, error);

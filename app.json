@@ -2,7 +2,7 @@
   "expo": {
     "name": "OnTrack",
     "slug": "ontrack",
-    "version": "1.0.0",
+    "version": "1.0",
     "orientation": "portrait",
     "icon": "./assets/images/Tracks_Light/apple-devices/AppIcon.appiconset/icon-ios-1024x1024.png",
     "scheme": "ontrack",

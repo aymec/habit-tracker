@@ -4,6 +4,7 @@ import { useTheme } from '../../../src/context/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Constants from 'expo-constants';
 // Note: For Android material dropdown, in a simple Expo managed workflow without extra native deps like @react-native-picker/picker,
 // we often simulate it or use a library. However, since we want to avoid complex native deps if possible,
 // we can use a custom modal for Android that looks like a dialog, which is standard Material behavior for selection.
@@ -141,19 +142,17 @@ export default function SettingsScreen() {
               <Text style={[styles.optionText, { color: theme.colors.text }]}>
                 {t('settings.version')}
               </Text>
-              <View style={styles.iconContainer}>
-                <Text style={[styles.versionText, { color: theme.colors.textSecondary }]}>
-                  1.0.0
-                </Text>
-              </View>
+              <Text style={[styles.versionText, { color: theme.colors.textSecondary }]}>
+                {Constants.expoConfig?.version || '1.0'}
+              </Text>
             </View>
           </View>
         </View>
 
       </ScrollView>
 
-      {/* Android Selection Modal */}
-      {Platform.OS === 'android' && androidModalVisible && (
+      {/* Android/Web Selection Modal */}
+      {(Platform.OS === 'android' || Platform.OS === 'web') && androidModalVisible && (
         <View style={styles.modalOverlay}>
             <TouchableOpacity
                 style={StyleSheet.absoluteFill}
