@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Platform } from 'react-native';
-import { useHabit } from '../../../src/context/HabitContext';
-import { useTheme } from '../../../src/context/ThemeContext';
-import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { DrawerActions } from '@react-navigation/native';
 import { useNavigation, useRouter } from 'expo-router';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useHabit } from '../../../src/context/HabitContext';
+import { useTheme } from '../../../src/context/ThemeContext';
 
 export default function HomeScreen() {
   const { activeHabit, activeHabitPresets, logEntry, habits } = useHabit();
@@ -109,14 +109,6 @@ export default function HomeScreen() {
             </TouchableOpacity>
           ))}
         </View>
-
-        {/* Quick Increment Button (Main Action) */}
-        <TouchableOpacity
-          style={[styles.mainButton, { backgroundColor: theme.colors.primary }]}
-          onPress={() => logEntry(activeHabit.id, 1)}
-        >
-          <Ionicons name="add" size={40} color="#FFFFFF" />
-        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
