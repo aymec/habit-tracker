@@ -1,12 +1,12 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import type { FC, ReactNode } from 'react';
-import { Habit, Preset, Entry } from '../models/types';
+import { Habit, Option, Entry } from '../models/types';
 import * as Storage from '../services/storage';
 
 interface HabitContextType {
   habits: Habit[];
   activeHabit: Habit | null;
-  activeHabitPresets: Preset[];
+  activeHabitOptions: Option[];
   activeHabitEntries: Entry[];
   isLoading: boolean;
 
@@ -17,10 +17,10 @@ interface HabitContextType {
   updateHabitDetails: (habit: Habit) => Promise<void>;
   removeHabit: (habitId: string) => Promise<void>;
 
-  // Preset Actions
-  addHabitPreset: (habitId: string, label: string, value: number) => Promise<void>;
-  updateHabitPreset: (preset: Preset) => Promise<void>;
-  removePreset: (presetId: string) => Promise<void>;
+  // Option Actions
+  addHabitOption: (habitId: string, label: string, value: number) => Promise<void>;
+  updateHabitOption: (option: Option) => Promise<void>;
+  removeOption: (optionId: string) => Promise<void>;
 
   // Entry Actions
   logEntry: (habitId: string, value: number) => Promise<void>;
@@ -32,7 +32,7 @@ const HabitContext = createContext<HabitContextType | undefined>(undefined);
 export const HabitProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [habits, setHabits] = useState<Habit[]>([]);
   const [activeHabitId, setActiveHabitId] = useState<string | null>(null);
-  const [activeHabitPresets, setActiveHabitPresets] = useState<Preset[]>([]);
+  const [activeHabitOptions, setActiveHabitOptions] = useState<Option[]>([]);
   const [activeHabitEntries, setActiveHabitEntries] = useState<Entry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -59,29 +59,29 @@ export const HabitProvider: FC<{ children: ReactNode }> = ({ children }) => {
   useEffect(() => {
     const loadHabitData = async () => {
       if (!activeHabitId) {
-        setActiveHabitPresets([]);
+        setActiveHabitOptions([]);
         setActiveHabitEntries([]);
         return;
       }
 
       try {
-        const [presets, entries] = await Promise.all([
-          Storage.getPresetsForHabit(activeHabitId),
+        const [options, entries] = await Promise.all([
+          Storage.getOptionsForHabit(activeHabitId),
           Storage.getEntriesForHabit(activeHabitId)
         ]);
 
-        // If no presets exist for this habit (new habit), create default +1 preset
-        if (presets.length === 0) {
-          const defaultPreset: Preset = {
+        // If no options exist for this habit (new habit), create default +1 option
+        if (options.length === 0) {
+          const defaultOption: Option = {
             id: Date.now().toString(),
             habitId: activeHabitId,
             label: '+1',
             value: 1
           };
-          await Storage.addPreset(defaultPreset);
-          setActiveHabitPresets([defaultPreset]);
+          await Storage.addOption(defaultOption);
+          setActiveHabitOptions([defaultOption]);
         } else {
-          setActiveHabitPresets(presets);
+          setActiveHabitOptions(options);
         }
 
         setActiveHabitEntries(entries);
@@ -129,37 +129,37 @@ export const HabitProvider: FC<{ children: ReactNode }> = ({ children }) => {
     await loadHabits();
   };
 
-  const addHabitPreset = async (habitId: string, label: string, value: number) => {
-    const newPreset: Preset = {
+  const addHabitOption = async (habitId: string, label: string, value: number) => {
+    const newOption: Option = {
       id: Date.now().toString(),
       habitId,
       label,
       value
     };
 
-    await Storage.addPreset(newPreset);
+    await Storage.addOption(newOption);
     if (activeHabitId === habitId) {
-      const presets = await Storage.getPresetsForHabit(habitId);
-      setActiveHabitPresets(presets);
+      const options = await Storage.getOptionsForHabit(habitId);
+      setActiveHabitOptions(options);
     }
   };
 
-  const updateHabitPreset = async (preset: Preset) => {
-    const allPresets = await Storage.getPresets();
-    const newPresets = allPresets.map(p => p.id === preset.id ? preset : p);
-    await Storage.savePresets(newPresets);
+  const updateHabitOption = async (option: Option) => {
+    const allOptions = await Storage.getOptions();
+    const newOptions = allOptions.map(p => p.id === option.id ? option : p);
+    await Storage.saveOptions(newOptions);
 
-    if (activeHabitId === preset.habitId) {
-      const presets = await Storage.getPresetsForHabit(preset.habitId);
-      setActiveHabitPresets(presets);
+    if (activeHabitId === option.habitId) {
+      const options = await Storage.getOptionsForHabit(option.habitId);
+      setActiveHabitOptions(options);
     }
   };
 
-  const removePreset = async (presetId: string) => {
-    await Storage.deletePreset(presetId);
+  const removeOption = async (optionId: string) => {
+    await Storage.deleteOption(optionId);
     if (activeHabitId) {
-      const presets = await Storage.getPresetsForHabit(activeHabitId);
-      setActiveHabitPresets(presets);
+      const options = await Storage.getOptionsForHabit(activeHabitId);
+      setActiveHabitOptions(options);
     }
   };
 
@@ -209,7 +209,7 @@ export const HabitProvider: FC<{ children: ReactNode }> = ({ children }) => {
       value={{
         habits,
         activeHabit,
-        activeHabitPresets,
+        activeHabitOptions,
         activeHabitEntries,
         isLoading,
         loadHabits,
@@ -217,9 +217,9 @@ export const HabitProvider: FC<{ children: ReactNode }> = ({ children }) => {
         createNewHabit,
         updateHabitDetails,
         removeHabit,
-        addHabitPreset,
-        updateHabitPreset,
-        removePreset,
+        addHabitOption,
+        updateHabitOption,
+        removeOption,
         logEntry,
         removeEntry,
       }}

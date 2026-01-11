@@ -8,7 +8,7 @@ import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
 
 export default function HomeScreen() {
-  const { activeHabit, activeHabitPresets, logEntry, habits } = useHabit();
+  const { activeHabit, activeHabitOptions, logEntry, habits } = useHabit();
   const { theme } = useTheme();
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -85,25 +85,25 @@ export default function HomeScreen() {
           </Text>
         </View>
 
-        {/* Preset Buttons */}
-        <View style={styles.presetsContainer}>
-          {activeHabitPresets.map((preset) => (
+        {/* Option Buttons */}
+        <View style={styles.optionsContainer}>
+          {activeHabitOptions.map((option) => (
             <TouchableOpacity
-              key={preset.id}
+              key={option.id}
               style={[
-                styles.presetButton,
+                styles.optionButton,
                 {
                   backgroundColor: theme.colors.card,
                   borderColor: theme.colors.border,
                 }
               ]}
-              onPress={() => logEntry(activeHabit.id, preset.value)}
+              onPress={() => logEntry(activeHabit.id, option.value)}
             >
-              <Text style={[styles.presetLabel, { color: theme.colors.text }]}>
-                {preset.label}
+              <Text style={[styles.optionLabel, { color: theme.colors.text }]}>
+                {option.label}
               </Text>
-              <Text style={[styles.presetValue, { color: theme.colors.textSecondary }]}>
-                {preset.value > 0 ? `+${preset.value}` : preset.value}
+              <Text style={[styles.optionValue, { color: theme.colors.textSecondary }]}>
+                {option.value > 0 ? `+${option.value}` : option.value}
               </Text>
             </TouchableOpacity>
           ))}
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     marginTop: 5,
   },
-  presetsContainer: {
+  optionsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     gap: 15,
     paddingHorizontal: 20,
   },
-  presetButton: {
+  optionButton: {
     width: 100,
     height: 80,
     justifyContent: 'center',
@@ -205,12 +205,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 2,
   },
-  presetLabel: {
+  optionLabel: {
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 4,
   },
-  presetValue: {
+  optionValue: {
     fontSize: 12,
   },
   mainButton: {

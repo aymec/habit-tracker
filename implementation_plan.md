@@ -1,7 +1,7 @@
 # Habit Tracking Mobile App - Implementation Plan
 
 ## Project Overview
-A cross-platform (iOS & Android) habit tracking mobile app built with React Native and Expo. Users can track multiple habits with customizable units and presets, view entry history, and customize appearance settings.
+A cross-platform (iOS & Android) habit tracking mobile app built with React Native and Expo. Users can track multiple habits with customizable units and options, view entry history, and customize appearance settings.
 
 ## Technology Stack
 - **Framework**: React Native with Expo
@@ -78,7 +78,7 @@ interface Habit {
   createdAt: string;
 }
 
-interface Preset {
+interface Option {
   id: string;
   habitId: string;
   label: string;
@@ -95,7 +95,7 @@ interface Entry {
 
 ### 2.2 Implement Storage Service
 - CRUD operations for habits
-- CRUD operations for presets
+- CRUD operations for options
 - CRUD operations for entries
 - AsyncStorage wrapper with JSON serialization
 - Error handling and data validation
@@ -107,7 +107,7 @@ interface Entry {
 - List of all habits
 - Functions to create, update, delete habits
 - Functions to add/remove entries
-- Functions to manage presets
+- Functions to manage options
 
 ### 3.2 Theme Context
 - Current theme mode (light, dark, system)
@@ -137,7 +137,7 @@ interface Entry {
 - Nested within Home tab
 - Entry history screen
 - Add/Edit habit screens
-- Add/Edit preset screens
+- Add/Edit option screens
 
 ## Phase 5: Core Screens
 
@@ -146,13 +146,13 @@ interface Entry {
 - Header with burger menu button
 - Habit title (large, centered)
 - Counter display (very large, prominent)
-- Preset buttons (dynamic based on habit)
+- Option buttons (dynamic based on habit)
 - Quick increment button (default +1)
 - View history button
 
 **Functionality:**
 - Display active habit
-- Increment counter by preset values
+- Increment counter by option values
 - Open drawer menu
 - Navigate to entry history
 
@@ -184,12 +184,12 @@ interface Entry {
 - Save/Cancel buttons
 - Validation
 
-### 6.2 Preset Management
-- List of presets for habit
-- Add new preset (label + value)
-- Edit existing preset
-- Delete preset
-- Minimum one default preset (+1)
+### 6.2 Option Management
+- List of options for habit
+- Add new option (label + value)
+- Edit existing option
+- Delete option
+- Minimum one default option (+1)
 
 ## Phase 7: UI/UX Polish
 
@@ -257,7 +257,7 @@ npx expo start -c
 ## Key Features Summary
 
 ✅ Multiple independent habit trackers
-✅ Customizable presets per habit
+✅ Customizable options per habit
 ✅ Entry history with timestamps
 ✅ Edit/delete entries
 ✅ Left sidebar menu for habit switching

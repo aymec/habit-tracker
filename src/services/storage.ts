@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
-import { Habit, Preset, Entry } from '../models/types';
+import { Habit, Option, Entry } from '../models/types';
 
 const STORAGE_KEYS = {
   HABITS: 'habits',
-  PRESETS: 'presets',
+  OPTIONS: 'options',
   ENTRIES: 'entries',
 };
 
@@ -74,38 +74,38 @@ export const deleteHabit = async (habitId: string): Promise<void> => {
   const habits = await getHabits();
   await saveHabits(habits.filter(h => h.id !== habitId));
   // Also clean up related data
-  await deletePresetsForHabit(habitId);
+  await deleteOptionsForHabit(habitId);
   await deleteEntriesForHabit(habitId);
 };
 
-// Presets operations
-export const getPresets = async (): Promise<Preset[]> => {
-  const presets = await getData<Preset[]>(STORAGE_KEYS.PRESETS);
-  return presets || [];
+// Options operations
+export const getOptions = async (): Promise<Option[]> => {
+  const options = await getData<Option[]>(STORAGE_KEYS.OPTIONS);
+  return options || [];
 };
 
-export const savePresets = async (presets: Preset[]): Promise<void> => {
-  await saveData(STORAGE_KEYS.PRESETS, presets);
+export const saveOptions = async (options: Option[]): Promise<void> => {
+  await saveData(STORAGE_KEYS.OPTIONS, options);
 };
 
-export const getPresetsForHabit = async (habitId: string): Promise<Preset[]> => {
-  const presets = await getPresets();
-  return presets.filter(p => p.habitId === habitId);
+export const getOptionsForHabit = async (habitId: string): Promise<Option[]> => {
+  const options = await getOptions();
+  return options.filter(p => p.habitId === habitId);
 };
 
-export const addPreset = async (preset: Preset): Promise<void> => {
-  const presets = await getPresets();
-  await savePresets([...presets, preset]);
+export const addOption = async (option: Option): Promise<void> => {
+  const options = await getOptions();
+  await saveOptions([...options, option]);
 };
 
-export const deletePreset = async (presetId: string): Promise<void> => {
-  const presets = await getPresets();
-  await savePresets(presets.filter(p => p.id !== presetId));
+export const deleteOption = async (optionId: string): Promise<void> => {
+  const options = await getOptions();
+  await saveOptions(options.filter(p => p.id !== optionId));
 };
 
-export const deletePresetsForHabit = async (habitId: string): Promise<void> => {
-  const presets = await getPresets();
-  await savePresets(presets.filter(p => p.habitId !== habitId));
+export const deleteOptionsForHabit = async (habitId: string): Promise<void> => {
+  const options = await getOptions();
+  await saveOptions(options.filter(p => p.habitId !== habitId));
 };
 
 // Entries operations

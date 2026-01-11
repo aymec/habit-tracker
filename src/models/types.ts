@@ -6,7 +6,7 @@ export interface Habit {
   createdAt: string;
 }
 
-export interface Preset {
+export interface Option {
   id: string;
   habitId: string;
   label: string;

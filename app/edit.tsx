@@ -7,11 +7,11 @@ import { useState, useEffect } from 'react';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { Preset } from '../src/models/types';
+import { Option } from '../src/models/types';
 
 export default function ModalScreen() {
   const { theme } = useTheme();
-  const { createNewHabit, updateHabitDetails, activeHabit, activeHabitPresets, addHabitPreset, updateHabitPreset, removePreset, removeHabit, habits, selectHabit } = useHabit();
+  const { createNewHabit, updateHabitDetails, activeHabit, activeHabitOptions, addHabitOption, updateHabitOption, removeOption, removeHabit, habits, selectHabit } = useHabit();
   const { t } = useTranslation();
   const router = useRouter();
   const navigation = useNavigation();
@@ -21,10 +21,10 @@ export default function ModalScreen() {
   const [habitName, setHabitName] = useState('');
   const [isEditingHabitName, setIsEditingHabitName] = useState(false);
   const [editedHabitName, setEditedHabitName] = useState('');
-  const [editingPresetId, setEditingPresetId] = useState<string | null>(null);
-  const [presetLabel, setPresetLabel] = useState('');
-  const [presetValue, setPresetValue] = useState('');
-  const [isAddingPreset, setIsAddingPreset] = useState(false);
+  const [editingOptionId, setEditingOptionId] = useState<string | null>(null);
+  const [optionLabel, setOptionLabel] = useState('');
+  const [optionValue, setOptionValue] = useState('');
+  const [isAddingOption, setIsAddingOption] = useState(false);
 
   const startEditHabitName = () => {
     if (activeHabit) {
@@ -91,29 +91,29 @@ export default function ModalScreen() {
     }
   };
 
-  const startEditPreset = (preset: Preset) => {
-    setEditingPresetId(preset.id);
-    setPresetLabel(preset.label);
-    setPresetValue(preset.value.toString());
-    setIsAddingPreset(false);
+  const startEditOption = (option: Option) => {
+    setEditingOptionId(option.id);
+    setOptionLabel(option.label);
+    setOptionValue(option.value.toString());
+    setIsAddingOption(false);
   };
 
-  const startAddPreset = () => {
-    setEditingPresetId(null);
-    setPresetLabel('');
-    setPresetValue('');
-    setIsAddingPreset(true);
+  const startAddOption = () => {
+    setEditingOptionId(null);
+    setOptionLabel('');
+    setOptionValue('');
+    setIsAddingOption(true);
   };
 
-  const cancelPresetEdit = () => {
-    setEditingPresetId(null);
-    setIsAddingPreset(false);
-    setPresetLabel('');
-    setPresetValue('');
+  const cancelOptionEdit = () => {
+    setEditingOptionId(null);
+    setIsAddingOption(false);
+    setOptionLabel('');
+    setOptionValue('');
   };
 
-  const savePreset = async () => {
-    if (!presetLabel.trim()) {
+  const saveOption = async () => {
+    if (!optionLabel.trim()) {
       if (Platform.OS === 'web') {
         alert('Label is required');
       } else {
@@ -121,7 +121,7 @@ export default function ModalScreen() {
       }
       return;
     }
-    const val = parseFloat(presetValue);
+    const val = parseFloat(optionValue);
     if (isNaN(val) || val === 0) {
       if (Platform.OS === 'web') {
         alert('Value must be a valid non-zero number');
@@ -132,55 +132,55 @@ export default function ModalScreen() {
     }
 
     try {
-      if (isAddingPreset && activeHabit) {
-        await addHabitPreset(activeHabit.id, presetLabel.trim(), val);
-      } else if (editingPresetId) {
-        // Find existing preset to get other fields like habitId
-        const existing = activeHabitPresets.find(p => p.id === editingPresetId);
+      if (isAddingOption && activeHabit) {
+        await addHabitOption(activeHabit.id, optionLabel.trim(), val);
+      } else if (editingOptionId) {
+        // Find existing option to get other fields like habitId
+        const existing = activeHabitOptions.find(p => p.id === editingOptionId);
         if (existing) {
-          await updateHabitPreset({
+          await updateHabitOption({
             ...existing,
-            label: presetLabel.trim(),
+            label: optionLabel.trim(),
             value: val
           });
         }
       }
-      cancelPresetEdit();
+      cancelOptionEdit();
     } catch (error) {
       console.error(error);
       if (Platform.OS === 'web') {
-        alert('Failed to save preset');
+        alert('Failed to save option');
       } else {
-        Alert.alert('Error', 'Failed to save preset');
+        Alert.alert('Error', 'Failed to save option');
       }
     }
   };
 
-  const deletePreset = (presetId: string) => {
-    if (activeHabitPresets.length <= 1) {
+  const deleteOption = (optionId: string) => {
+    if (activeHabitOptions.length <= 1) {
       if (Platform.OS === 'web') {
-        alert('You must have at least one preset');
+        alert('You must have at least one option');
       } else {
-        Alert.alert('Error', 'You must have at least one preset');
+        Alert.alert('Error', 'You must have at least one option');
       }
       return;
     }
 
     if (Platform.OS === 'web') {
-      const confirmed = confirm('Delete this preset?');
+      const confirmed = confirm('Delete this option?');
       if (confirmed) {
-        removePreset(presetId);
+        removeOption(optionId);
       }
     } else {
       Alert.alert(
         t('common.delete'),
-        'Delete this preset?',
+        'Delete this option?',
         [
           { text: t('common.cancel'), style: 'cancel' },
           {
             text: t('common.delete'),
             style: 'destructive',
-            onPress: () => removePreset(presetId)
+            onPress: () => removeOption(optionId)
           }
         ]
       );
@@ -216,7 +216,7 @@ export default function ModalScreen() {
     // Use native confirm on web, Alert.alert on native platforms
     if (Platform.OS === 'web') {
       const confirmed = confirm(
-        `Delete "${activeHabit.name}"?\n\nThis will permanently delete all presets and entries.`
+        `Delete "${activeHabit.name}"?\n\nThis will permanently delete all options and entries.`
       );
       if (confirmed) {
         performDelete();
@@ -224,7 +224,7 @@ export default function ModalScreen() {
     } else {
       Alert.alert(
         t('common.delete'),
-        `Delete "${activeHabit.name}"? This will permanently delete all presets and entries.`,
+        `Delete "${activeHabit.name}"? This will permanently delete all options and entries.`,
         [
           { text: t('common.cancel'), style: 'cancel' },
           {
@@ -287,7 +287,7 @@ export default function ModalScreen() {
               {t('habits.habitName')}
             </Text>
             {isEditingHabitName ? (
-              <View style={[styles.editPresetContainer, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
+              <View style={[styles.editOptionContainer, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
                 <TextInput
                   style={[
                     styles.input,
@@ -327,38 +327,38 @@ export default function ModalScreen() {
         )}
 
         {isEditing && (
-          <View style={[styles.presetsSection, { borderTopColor: theme.colors.border }]}>
+          <View style={[styles.optionsSection, { borderTopColor: theme.colors.border }]}>
             <Text style={[styles.sectionHeader, { color: theme.colors.text }]}>
-              Presets
+              Options
             </Text>
 
-            {/* Presets List */}
-            {activeHabitPresets.map((preset) => {
-              if (editingPresetId === preset.id) {
+            {/* Options List */}
+            {activeHabitOptions.map((option) => {
+              if (editingOptionId === option.id) {
                 return (
-                  <View key={preset.id} style={[styles.editPresetContainer, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
+                  <View key={option.id} style={[styles.editOptionContainer, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
                     <View style={styles.inputRow}>
                       <TextInput
                         style={[styles.miniInput, { flex: 2, color: theme.colors.text, borderColor: theme.colors.border }]}
-                        value={presetLabel}
-                        onChangeText={setPresetLabel}
+                        value={optionLabel}
+                        onChangeText={setOptionLabel}
                         placeholder="Label"
                         placeholderTextColor={theme.colors.textSecondary}
                       />
                       <TextInput
                         style={[styles.miniInput, { flex: 1, color: theme.colors.text, borderColor: theme.colors.border }]}
-                        value={presetValue}
-                        onChangeText={setPresetValue}
+                        value={optionValue}
+                        onChangeText={setOptionValue}
                         placeholder="Val"
                         placeholderTextColor={theme.colors.textSecondary}
                         keyboardType="numeric"
                       />
                     </View>
                     <View style={styles.editActions}>
-                      <TouchableOpacity onPress={cancelPresetEdit} style={styles.miniButton}>
+                      <TouchableOpacity onPress={cancelOptionEdit} style={styles.miniButton}>
                         <Text style={{ color: theme.colors.textSecondary }}>Cancel</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity onPress={savePreset} style={[styles.miniButton, { backgroundColor: theme.colors.primary }]}>
+                      <TouchableOpacity onPress={saveOption} style={[styles.miniButton, { backgroundColor: theme.colors.primary }]}>
                         <Text style={{ color: '#FFFFFF' }}>Save</Text>
                       </TouchableOpacity>
                     </View>
@@ -367,18 +367,18 @@ export default function ModalScreen() {
               }
 
               return (
-                <View key={preset.id} style={[styles.presetRow, { borderBottomColor: theme.colors.border }]}>
-                  <View style={styles.presetInfo}>
-                    <Text style={[styles.presetLabel, { color: theme.colors.text }]}>{preset.label}</Text>
-                    <Text style={[styles.presetValue, { color: theme.colors.textSecondary }]}>
-                      ({preset.value > 0 ? `+${preset.value}` : preset.value})
+                <View key={option.id} style={[styles.optionRow, { borderBottomColor: theme.colors.border }]}>
+                  <View style={styles.optionInfo}>
+                    <Text style={[styles.optionLabel, { color: theme.colors.text }]}>{option.label}</Text>
+                    <Text style={[styles.optionValue, { color: theme.colors.textSecondary }]}>
+                      ({option.value > 0 ? `+${option.value}` : option.value})
                     </Text>
                   </View>
-                  <View style={styles.presetActions}>
-                    <TouchableOpacity onPress={() => startEditPreset(preset)} style={styles.actionIcon}>
+                  <View style={styles.optionActions}>
+                    <TouchableOpacity onPress={() => startEditOption(option)} style={styles.actionIcon}>
                       <Ionicons name="create-outline" size={20} color={theme.colors.text} />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => deletePreset(preset.id)} style={styles.actionIcon}>
+                    <TouchableOpacity onPress={() => deleteOption(option.id)} style={styles.actionIcon}>
                       <Ionicons name="trash-outline" size={20} color={theme.colors.danger} />
                     </TouchableOpacity>
                   </View>
@@ -386,44 +386,44 @@ export default function ModalScreen() {
               );
             })}
 
-            {/* Add New Preset Area */}
-            {isAddingPreset ? (
-              <View style={[styles.editPresetContainer, { backgroundColor: theme.colors.card, borderColor: theme.colors.border, marginTop: 10 }]}>
-                <Text style={{ color: theme.colors.text, marginBottom: 5, fontWeight: '600' }}>New Preset</Text>
+            {/* Add New Option Area */}
+            {isAddingOption ? (
+              <View style={[styles.editOptionContainer, { backgroundColor: theme.colors.card, borderColor: theme.colors.border, marginTop: 10 }]}>
+                <Text style={{ color: theme.colors.text, marginBottom: 5, fontWeight: '600' }}>New Option</Text>
                 <View style={styles.inputRow}>
                   <TextInput
                     style={[styles.miniInput, { flex: 2, color: theme.colors.text, borderColor: theme.colors.border }]}
-                    value={presetLabel}
-                    onChangeText={setPresetLabel}
+                    value={optionLabel}
+                    onChangeText={setOptionLabel}
                     placeholder="Label (e.g. +1)"
                     placeholderTextColor={theme.colors.textSecondary}
                     autoFocus
                   />
                   <TextInput
                     style={[styles.miniInput, { flex: 1, color: theme.colors.text, borderColor: theme.colors.border }]}
-                    value={presetValue}
-                    onChangeText={setPresetValue}
+                    value={optionValue}
+                    onChangeText={setOptionValue}
                     placeholder="Value"
                     placeholderTextColor={theme.colors.textSecondary}
                     keyboardType="numeric"
                   />
                 </View>
                 <View style={styles.editActions}>
-                  <TouchableOpacity onPress={cancelPresetEdit} style={styles.miniButton}>
+                  <TouchableOpacity onPress={cancelOptionEdit} style={styles.miniButton}>
                     <Text style={{ color: theme.colors.textSecondary }}>Cancel</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={savePreset} style={[styles.miniButton, { backgroundColor: theme.colors.primary }]}>
+                  <TouchableOpacity onPress={saveOption} style={[styles.miniButton, { backgroundColor: theme.colors.primary }]}>
                     <Text style={{ color: '#FFFFFF' }}>Add</Text>
                   </TouchableOpacity>
                 </View>
               </View>
             ) : (
               <TouchableOpacity
-                style={[styles.addPresetButton, { borderColor: theme.colors.border }]}
-                onPress={startAddPreset}
+                style={[styles.addOptionButton, { borderColor: theme.colors.border }]}
+                onPress={startAddOption}
               >
                 <Ionicons name="add" size={20} color={theme.colors.primary} />
-                <Text style={{ color: theme.colors.primary, fontWeight: '600' }}>Add Preset</Text>
+                <Text style={{ color: theme.colors.primary, fontWeight: '600' }}>Add Option</Text>
               </TouchableOpacity>
             )}
           </View>
@@ -493,7 +493,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
-  presetsSection: {
+  optionsSection: {
     marginTop: 10,
     paddingTop: 20,
     borderTopWidth: 1,
@@ -503,33 +503,33 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 15,
   },
-  presetRow: {
+  optionRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 12,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  presetInfo: {
+  optionInfo: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
   },
-  presetLabel: {
+  optionLabel: {
     fontSize: 16,
     fontWeight: '500',
   },
-  presetValue: {
+  optionValue: {
     fontSize: 14,
   },
-  presetActions: {
+  optionActions: {
     flexDirection: 'row',
     gap: 15,
   },
   actionIcon: {
     padding: 4,
   },
-  editPresetContainer: {
+  editOptionContainer: {
     padding: 12,
     borderRadius: 8,
     borderWidth: 1,
@@ -556,7 +556,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 6,
   },
-  addPresetButton: {
+  addOptionButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

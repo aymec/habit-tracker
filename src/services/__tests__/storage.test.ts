@@ -6,16 +6,16 @@ import {
   addHabit,
   updateHabit,
   deleteHabit,
-  getPresets,
-  getPresetsForHabit,
-  addPreset,
-  deletePreset,
+  getOptions,
+  getOptionsForHabit,
+  addOption,
+  deleteOption,
   getEntries,
   getEntriesForHabit,
   addEntry,
   deleteEntry,
 } from '../storage';
-import { Habit, Preset, Entry } from '../../models/types';
+import { Habit, Option, Entry } from '../../models/types';
 
 // Mock AsyncStorage - this prevents real storage operations during tests
 jest.mock('@react-native-async-storage/async-storage', () => ({
@@ -203,7 +203,7 @@ describe('Storage Service', () => {
         const habit1: Habit = { id: '1', name: 'A', totalCount: 1, createdAt: '2026-01-10' };
         const habit2: Habit = { id: '2', name: 'B', totalCount: 2, createdAt: '2026-01-10' };
 
-        const presets: Preset[] = [
+        const options: Option[] = [
           { id: 'p1', habitId: '1', label: 'Low', value: 1 },
           { id: 'p2', habitId: '2', label: 'High', value: 5 },
         ];
@@ -216,7 +216,7 @@ describe('Storage Service', () => {
         // Mock responses for all storage calls
         (AsyncStorage.getItem as jest.Mock)
           .mockResolvedValueOnce(JSON.stringify([habit1, habit2])) // getHabits
-          .mockResolvedValueOnce(JSON.stringify(presets)) // getPresets (for delete)
+          .mockResolvedValueOnce(JSON.stringify(options)) // getOptions (for delete)
           .mockResolvedValueOnce(JSON.stringify(entries)); // getEntries (for delete)
 
         (AsyncStorage.setItem as jest.Mock).mockResolvedValue(undefined);
@@ -231,9 +231,9 @@ describe('Storage Service', () => {
         const savedHabits = JSON.parse(setItemCalls[0][1]);
         expect(savedHabits).toEqual([habit2]);
 
-        // Check presets for habit were deleted
-        const savedPresets = JSON.parse(setItemCalls[1][1]);
-        expect(savedPresets).toEqual([presets[1]]);
+        // Check options for habit were deleted
+        const savedOptions = JSON.parse(setItemCalls[1][1]);
+        expect(savedOptions).toEqual([options[1]]);
 
         // Check entries for habit were deleted
         const savedEntries = JSON.parse(setItemCalls[2][1]);
@@ -243,7 +243,7 @@ describe('Storage Service', () => {
       it('should delete the only habit leaving empty list', async () => {
         // Arrange
         const singleHabit: Habit = { id: '1', name: 'A', totalCount: 1, createdAt: '2026-01-10' };
-        const presets: Preset[] = [
+        const options: Option[] = [
           { id: 'p1', habitId: '1', label: 'Low', value: 1 },
         ];
         const entries: Entry[] = [
@@ -252,7 +252,7 @@ describe('Storage Service', () => {
 
         (AsyncStorage.getItem as jest.Mock)
           .mockResolvedValueOnce(JSON.stringify([singleHabit]))
-          .mockResolvedValueOnce(JSON.stringify(presets))
+          .mockResolvedValueOnce(JSON.stringify(options))
           .mockResolvedValueOnce(JSON.stringify(entries));
 
         (AsyncStorage.setItem as jest.Mock).mockResolvedValue(undefined);
@@ -290,13 +290,13 @@ describe('Storage Service', () => {
         expect(savedHabits).toEqual([habit1, habit2]);
       });
 
-      it('should delete habit when no presets exist', async () => {
+      it('should delete habit when no options exist', async () => {
         // Arrange
         const habit: Habit = { id: '1', name: 'A', totalCount: 1, createdAt: '2026-01-10' };
 
         (AsyncStorage.getItem as jest.Mock)
           .mockResolvedValueOnce(JSON.stringify([habit]))
-          .mockResolvedValueOnce(JSON.stringify([])) // No presets
+          .mockResolvedValueOnce(JSON.stringify([])) // No options
           .mockResolvedValueOnce(JSON.stringify([])); // No entries
 
         (AsyncStorage.setItem as jest.Mock).mockResolvedValue(undefined);
@@ -313,13 +313,13 @@ describe('Storage Service', () => {
       it('should delete habit when no entries exist', async () => {
         // Arrange
         const habit: Habit = { id: '1', name: 'A', totalCount: 1, createdAt: '2026-01-10' };
-        const presets: Preset[] = [
+        const options: Option[] = [
           { id: 'p1', habitId: '1', label: 'Low', value: 1 },
         ];
 
         (AsyncStorage.getItem as jest.Mock)
           .mockResolvedValueOnce(JSON.stringify([habit]))
-          .mockResolvedValueOnce(JSON.stringify(presets))
+          .mockResolvedValueOnce(JSON.stringify(options))
           .mockResolvedValueOnce(JSON.stringify([])); // No entries
 
         (AsyncStorage.setItem as jest.Mock).mockResolvedValue(undefined);
@@ -335,13 +335,13 @@ describe('Storage Service', () => {
         expect(JSON.parse(setItemCalls[2][1])).toEqual([]);
       });
 
-      it('should not affect other habits presets and entries', async () => {
+      it('should not affect other habits options and entries', async () => {
         // Arrange
         const habit1: Habit = { id: '1', name: 'A', totalCount: 1, createdAt: '2026-01-10' };
         const habit2: Habit = { id: '2', name: 'B', totalCount: 2, createdAt: '2026-01-10' };
         const habit3: Habit = { id: '3', name: 'C', totalCount: 3, createdAt: '2026-01-10' };
 
-        const presets: Preset[] = [
+        const options: Option[] = [
           { id: 'p1', habitId: '1', label: 'Low', value: 1 },
           { id: 'p2', habitId: '2', label: 'Medium', value: 3 },
           { id: 'p3', habitId: '3', label: 'High', value: 5 },
@@ -355,7 +355,7 @@ describe('Storage Service', () => {
 
         (AsyncStorage.getItem as jest.Mock)
           .mockResolvedValueOnce(JSON.stringify([habit1, habit2, habit3]))
-          .mockResolvedValueOnce(JSON.stringify(presets))
+          .mockResolvedValueOnce(JSON.stringify(options))
           .mockResolvedValueOnce(JSON.stringify(entries));
 
         (AsyncStorage.setItem as jest.Mock).mockResolvedValue(undefined);
@@ -369,8 +369,8 @@ describe('Storage Service', () => {
         const savedHabits = JSON.parse(setItemCalls[0][1]);
         expect(savedHabits).toEqual([habit1, habit3]);
 
-        const savedPresets = JSON.parse(setItemCalls[1][1]);
-        expect(savedPresets).toEqual([presets[0], presets[2]]);
+        const savedOptions = JSON.parse(setItemCalls[1][1]);
+        expect(savedOptions).toEqual([options[0], options[2]]);
 
         const savedEntries = JSON.parse(setItemCalls[2][1]);
         expect(savedEntries).toEqual([entries[0], entries[2]]);
@@ -378,57 +378,57 @@ describe('Storage Service', () => {
     });
   });
 
-  describe('Presets Operations', () => {
-    const mockPreset: Preset = {
+  describe('Options Operations', () => {
+    const mockOption: Option = {
       id: 'p1',
       habitId: 'h1',
       label: 'Low',
       value: 1,
     };
 
-    describe('getPresetsForHabit', () => {
-      it('should return only presets for specified habit', async () => {
+    describe('getOptionsForHabit', () => {
+      it('should return only options for specified habit', async () => {
         // Arrange
-        const presets: Preset[] = [
+        const options: Option[] = [
           { id: 'p1', habitId: 'h1', label: 'Low', value: 1 },
           { id: 'p2', habitId: 'h2', label: 'High', value: 5 },
           { id: 'p3', habitId: 'h1', label: 'Medium', value: 3 },
         ];
-        (AsyncStorage.getItem as jest.Mock).mockResolvedValue(JSON.stringify(presets));
+        (AsyncStorage.getItem as jest.Mock).mockResolvedValue(JSON.stringify(options));
 
         // Act
-        const result = await getPresetsForHabit('h1');
+        const result = await getOptionsForHabit('h1');
 
         // Assert
         expect(result).toHaveLength(2);
         expect(result.every(p => p.habitId === 'h1')).toBe(true);
       });
 
-      it('should return empty array if no presets match habit', async () => {
+      it('should return empty array if no options match habit', async () => {
         // Arrange
         (AsyncStorage.getItem as jest.Mock).mockResolvedValue(JSON.stringify([]));
 
         // Act
-        const result = await getPresetsForHabit('nonexistent');
+        const result = await getOptionsForHabit('nonexistent');
 
         // Assert
         expect(result).toEqual([]);
       });
     });
 
-    describe('addPreset', () => {
-      it('should add preset to storage', async () => {
+    describe('addOption', () => {
+      it('should add option to storage', async () => {
         // Arrange
         (AsyncStorage.getItem as jest.Mock).mockResolvedValue(null);
         (AsyncStorage.setItem as jest.Mock).mockResolvedValue(undefined);
 
         // Act
-        await addPreset(mockPreset);
+        await addOption(mockOption);
 
         // Assert
         expect(AsyncStorage.setItem).toHaveBeenCalledWith(
-          'presets',
-          JSON.stringify([mockPreset])
+          'options',
+          JSON.stringify([mockOption])
         );
       });
     });
