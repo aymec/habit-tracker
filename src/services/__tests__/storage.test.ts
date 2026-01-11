@@ -239,6 +239,142 @@ describe('Storage Service', () => {
         const savedEntries = JSON.parse(setItemCalls[2][1]);
         expect(savedEntries).toEqual([entries[1]]);
       });
+
+      it('should delete the only habit leaving empty list', async () => {
+        // Arrange
+        const singleHabit: Habit = { id: '1', name: 'A', totalCount: 1, createdAt: '2026-01-10' };
+        const presets: Preset[] = [
+          { id: 'p1', habitId: '1', label: 'Low', value: 1 },
+        ];
+        const entries: Entry[] = [
+          { id: 'e1', habitId: '1', value: 1, timestamp: '2026-01-10' },
+        ];
+
+        (AsyncStorage.getItem as jest.Mock)
+          .mockResolvedValueOnce(JSON.stringify([singleHabit]))
+          .mockResolvedValueOnce(JSON.stringify(presets))
+          .mockResolvedValueOnce(JSON.stringify(entries));
+
+        (AsyncStorage.setItem as jest.Mock).mockResolvedValue(undefined);
+
+        // Act
+        await deleteHabit('1');
+
+        // Assert
+        const setItemCalls = (AsyncStorage.setItem as jest.Mock).mock.calls;
+
+        // Should save empty arrays
+        expect(JSON.parse(setItemCalls[0][1])).toEqual([]);
+        expect(JSON.parse(setItemCalls[1][1])).toEqual([]);
+        expect(JSON.parse(setItemCalls[2][1])).toEqual([]);
+      });
+
+      it('should handle deleting non-existent habit gracefully', async () => {
+        // Arrange
+        const habit1: Habit = { id: '1', name: 'A', totalCount: 1, createdAt: '2026-01-10' };
+        const habit2: Habit = { id: '2', name: 'B', totalCount: 2, createdAt: '2026-01-10' };
+
+        (AsyncStorage.getItem as jest.Mock)
+          .mockResolvedValueOnce(JSON.stringify([habit1, habit2]))
+          .mockResolvedValueOnce(JSON.stringify([]))
+          .mockResolvedValueOnce(JSON.stringify([]));
+
+        (AsyncStorage.setItem as jest.Mock).mockResolvedValue(undefined);
+
+        // Act - try to delete a habit that doesn't exist
+        await deleteHabit('999');
+
+        // Assert - original habits should remain unchanged
+        const setItemCalls = (AsyncStorage.setItem as jest.Mock).mock.calls;
+        const savedHabits = JSON.parse(setItemCalls[0][1]);
+        expect(savedHabits).toEqual([habit1, habit2]);
+      });
+
+      it('should delete habit when no presets exist', async () => {
+        // Arrange
+        const habit: Habit = { id: '1', name: 'A', totalCount: 1, createdAt: '2026-01-10' };
+
+        (AsyncStorage.getItem as jest.Mock)
+          .mockResolvedValueOnce(JSON.stringify([habit]))
+          .mockResolvedValueOnce(JSON.stringify([])) // No presets
+          .mockResolvedValueOnce(JSON.stringify([])); // No entries
+
+        (AsyncStorage.setItem as jest.Mock).mockResolvedValue(undefined);
+
+        // Act
+        await deleteHabit('1');
+
+        // Assert
+        const setItemCalls = (AsyncStorage.setItem as jest.Mock).mock.calls;
+        expect(setItemCalls).toHaveLength(3);
+        expect(JSON.parse(setItemCalls[0][1])).toEqual([]);
+      });
+
+      it('should delete habit when no entries exist', async () => {
+        // Arrange
+        const habit: Habit = { id: '1', name: 'A', totalCount: 1, createdAt: '2026-01-10' };
+        const presets: Preset[] = [
+          { id: 'p1', habitId: '1', label: 'Low', value: 1 },
+        ];
+
+        (AsyncStorage.getItem as jest.Mock)
+          .mockResolvedValueOnce(JSON.stringify([habit]))
+          .mockResolvedValueOnce(JSON.stringify(presets))
+          .mockResolvedValueOnce(JSON.stringify([])); // No entries
+
+        (AsyncStorage.setItem as jest.Mock).mockResolvedValue(undefined);
+
+        // Act
+        await deleteHabit('1');
+
+        // Assert
+        const setItemCalls = (AsyncStorage.setItem as jest.Mock).mock.calls;
+        expect(setItemCalls).toHaveLength(3);
+        expect(JSON.parse(setItemCalls[0][1])).toEqual([]);
+        expect(JSON.parse(setItemCalls[1][1])).toEqual([]);
+        expect(JSON.parse(setItemCalls[2][1])).toEqual([]);
+      });
+
+      it('should not affect other habits presets and entries', async () => {
+        // Arrange
+        const habit1: Habit = { id: '1', name: 'A', totalCount: 1, createdAt: '2026-01-10' };
+        const habit2: Habit = { id: '2', name: 'B', totalCount: 2, createdAt: '2026-01-10' };
+        const habit3: Habit = { id: '3', name: 'C', totalCount: 3, createdAt: '2026-01-10' };
+
+        const presets: Preset[] = [
+          { id: 'p1', habitId: '1', label: 'Low', value: 1 },
+          { id: 'p2', habitId: '2', label: 'Medium', value: 3 },
+          { id: 'p3', habitId: '3', label: 'High', value: 5 },
+        ];
+
+        const entries: Entry[] = [
+          { id: 'e1', habitId: '1', value: 1, timestamp: '2026-01-10' },
+          { id: 'e2', habitId: '2', value: 3, timestamp: '2026-01-10' },
+          { id: 'e3', habitId: '3', value: 5, timestamp: '2026-01-10' },
+        ];
+
+        (AsyncStorage.getItem as jest.Mock)
+          .mockResolvedValueOnce(JSON.stringify([habit1, habit2, habit3]))
+          .mockResolvedValueOnce(JSON.stringify(presets))
+          .mockResolvedValueOnce(JSON.stringify(entries));
+
+        (AsyncStorage.setItem as jest.Mock).mockResolvedValue(undefined);
+
+        // Act - Delete middle habit
+        await deleteHabit('2');
+
+        // Assert
+        const setItemCalls = (AsyncStorage.setItem as jest.Mock).mock.calls;
+
+        const savedHabits = JSON.parse(setItemCalls[0][1]);
+        expect(savedHabits).toEqual([habit1, habit3]);
+
+        const savedPresets = JSON.parse(setItemCalls[1][1]);
+        expect(savedPresets).toEqual([presets[0], presets[2]]);
+
+        const savedEntries = JSON.parse(setItemCalls[2][1]);
+        expect(savedEntries).toEqual([entries[0], entries[2]]);
+      });
     });
   });
 

@@ -11,7 +11,7 @@ import { Preset } from '../src/models/types';
 
 export default function ModalScreen() {
   const { theme } = useTheme();
-  const { createNewHabit, updateHabitDetails, activeHabit, activeHabitPresets, addHabitPreset, updateHabitPreset, removePreset } = useHabit();
+  const { createNewHabit, updateHabitDetails, activeHabit, activeHabitPresets, addHabitPreset, updateHabitPreset, removePreset, removeHabit, habits, selectHabit } = useHabit();
   const { t } = useTranslation();
   const router = useRouter();
   const navigation = useNavigation();
@@ -40,7 +40,11 @@ export default function ModalScreen() {
 
   const saveHabitName = async () => {
     if (!editedHabitName.trim()) {
-      Alert.alert('Error', t('habits.habitName') + ' is required');
+      if (Platform.OS === 'web') {
+        alert(t('habits.habitName') + ' is required');
+      } else {
+        Alert.alert('Error', t('habits.habitName') + ' is required');
+      }
       return;
     }
 
@@ -55,13 +59,21 @@ export default function ModalScreen() {
       setEditedHabitName('');
     } catch (error) {
       console.error(error);
-      Alert.alert('Error', 'Failed to save habit name');
+      if (Platform.OS === 'web') {
+        alert('Failed to save habit name');
+      } else {
+        Alert.alert('Error', 'Failed to save habit name');
+      }
     }
   };
 
   const handleCreateHabit = async () => {
     if (!habitName.trim()) {
-      Alert.alert('Error', t('habits.habitName') + ' is required');
+      if (Platform.OS === 'web') {
+        alert(t('habits.habitName') + ' is required');
+      } else {
+        Alert.alert('Error', t('habits.habitName') + ' is required');
+      }
       return;
     }
 
@@ -71,7 +83,11 @@ export default function ModalScreen() {
       router.replace({ pathname: '/edit', params: { mode: 'edit' } });
     } catch (error) {
       console.error(error);
-      Alert.alert('Error', 'Failed to create habit');
+      if (Platform.OS === 'web') {
+        alert('Failed to create habit');
+      } else {
+        Alert.alert('Error', 'Failed to create habit');
+      }
     }
   };
 
@@ -98,12 +114,20 @@ export default function ModalScreen() {
 
   const savePreset = async () => {
     if (!presetLabel.trim()) {
-      Alert.alert('Error', 'Label is required');
+      if (Platform.OS === 'web') {
+        alert('Label is required');
+      } else {
+        Alert.alert('Error', 'Label is required');
+      }
       return;
     }
     const val = parseFloat(presetValue);
     if (isNaN(val) || val === 0) {
-      Alert.alert('Error', 'Value must be a valid non-zero number');
+      if (Platform.OS === 'web') {
+        alert('Value must be a valid non-zero number');
+      } else {
+        Alert.alert('Error', 'Value must be a valid non-zero number');
+      }
       return;
     }
 
@@ -124,28 +148,93 @@ export default function ModalScreen() {
       cancelPresetEdit();
     } catch (error) {
       console.error(error);
-      Alert.alert('Error', 'Failed to save preset');
+      if (Platform.OS === 'web') {
+        alert('Failed to save preset');
+      } else {
+        Alert.alert('Error', 'Failed to save preset');
+      }
     }
   };
 
   const deletePreset = (presetId: string) => {
     if (activeHabitPresets.length <= 1) {
-      Alert.alert('Error', 'You must have at least one preset');
+      if (Platform.OS === 'web') {
+        alert('You must have at least one preset');
+      } else {
+        Alert.alert('Error', 'You must have at least one preset');
+      }
       return;
     }
 
-    Alert.alert(
-      t('common.delete'),
-      'Delete this preset?',
-      [
-        { text: t('common.cancel'), style: 'cancel' },
-        {
-          text: t('common.delete'),
-          style: 'destructive',
-          onPress: () => removePreset(presetId)
+    if (Platform.OS === 'web') {
+      const confirmed = confirm('Delete this preset?');
+      if (confirmed) {
+        removePreset(presetId);
+      }
+    } else {
+      Alert.alert(
+        t('common.delete'),
+        'Delete this preset?',
+        [
+          { text: t('common.cancel'), style: 'cancel' },
+          {
+            text: t('common.delete'),
+            style: 'destructive',
+            onPress: () => removePreset(presetId)
+          }
+        ]
+      );
+    }
+  };
+
+  const handleDeleteHabit = () => {
+    if (!activeHabit) return;
+
+    const performDelete = async () => {
+      try {
+        const habitId = activeHabit.id;
+        await removeHabit(habitId);
+
+        // Navigate to first available habit or home
+        const remainingHabits = habits.filter(h => h.id !== habitId);
+        if (remainingHabits.length > 0) {
+          selectHabit(remainingHabits[0].id);
         }
-      ]
-    );
+
+        // Go back to home
+        router.back();
+      } catch (error) {
+        console.error(error);
+        if (Platform.OS === 'web') {
+          alert('Failed to delete habit');
+        } else {
+          Alert.alert('Error', 'Failed to delete habit');
+        }
+      }
+    };
+
+    // Use native confirm on web, Alert.alert on native platforms
+    if (Platform.OS === 'web') {
+      const confirmed = confirm(
+        `Delete "${activeHabit.name}"?\n\nThis will permanently delete all presets and entries.`
+      );
+      if (confirmed) {
+        performDelete();
+      }
+    } else {
+      Alert.alert(
+        t('common.delete'),
+        `Delete "${activeHabit.name}"? This will permanently delete all presets and entries.`,
+        [
+          { text: t('common.cancel'), style: 'cancel' },
+          {
+            text: t('common.delete'),
+            style: 'destructive',
+            onPress: performDelete
+          }
+        ]
+      );
+    }
   };
 
   return (
@@ -339,6 +428,19 @@ export default function ModalScreen() {
             )}
           </View>
         )}
+
+        {/* Delete Habit Section */}
+        {isEditing && activeHabit && (
+          <View style={[styles.deleteSection, { borderTopColor: theme.colors.border }]}>
+            <TouchableOpacity
+              style={[styles.deleteHabitButton, { backgroundColor: theme.colors.danger }]}
+              onPress={handleDeleteHabit}
+            >
+              <Ionicons name="trash-outline" size={20} color="#FFFFFF" />
+              <Text style={styles.deleteHabitButtonText}>Delete Habit</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </ScrollView>
 
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
@@ -464,5 +566,24 @@ const styles = StyleSheet.create({
     marginTop: 15,
     borderStyle: 'dashed',
     gap: 5,
+  },
+  deleteSection: {
+    marginTop: 20,
+    paddingTop: 30,
+    borderTopWidth: 2,
+  },
+  deleteHabitButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    gap: 8,
+  },
+  deleteHabitButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
