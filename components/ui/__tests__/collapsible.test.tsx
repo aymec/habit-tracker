@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react-native';
 import { Collapsible } from '../collapsible';
 import { useColorScheme } from '@/hooks/use-color-scheme';

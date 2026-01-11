@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Platform, ActionSheetIOS } from 'react-native';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useTranslation } from 'react-i18next';

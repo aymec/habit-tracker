@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { useHabit } from '../src/context/HabitContext';
 import { useTheme } from '../src/context/ThemeContext';

@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import type { FC, ReactNode } from 'react';
 import { Habit, Preset, Entry } from '../models/types';
 import * as Storage from '../services/storage';
 
@@ -28,7 +29,7 @@ interface HabitContextType {
 
 const HabitContext = createContext<HabitContextType | undefined>(undefined);
 
-export const HabitProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const HabitProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [habits, setHabits] = useState<Habit[]>([]);
   const [activeHabitId, setActiveHabitId] = useState<string | null>(null);
   const [activeHabitPresets, setActiveHabitPresets] = useState<Preset[]>([]);
