@@ -1,0 +1,45 @@
+{
+  "common": {
+    "welcome": "歡迎",
+    "save": "儲存",
+    "cancel": "取消",
+    "delete": "刪除",
+    "edit": "編輯",
+    "add": "新增",
+    "create": "建立",
+    "back": "返回"
+  },
+  "habits": {
+    "title": "習慣",
+    "newHabit": "新增習慣",
+    "editHabit": "編輯習慣",
+    "habitName": "習慣名稱",
+    "noHabits": "尚無習慣。建立一個開始吧！",
+    "deleteConfirmation": "確定要刪除此習慣嗎？所有歷史記錄都將遺失。",
+    "options": "選項",
+    "addOption": "新增選項",
+    "newOption": "新選項",
+    "deleteHabit": "刪除習慣",
+    "deleteHabitFullMessage": "刪除 \"{{name}}\"？這將永久刪除所有選項和記錄。",
+    "deleteHabitWebMessage": "刪除 \"{{name}}\"？\n\n這將永久刪除所有選項和記錄。",
+    "optionLabel": "標籤",
+    "optionValue": "數值",
+    "optionLabelPlaceholder": "標籤 (例如 +1)"
+  },
+  "history": {
+    "title": "歷史",
+    "totalCount": "總計",
+    "deleteEntryConfirmation": "確定要刪除此項目嗎？",
+    "noEntries": "尚無記錄。"
+  },
+  "settings": {
+    "title": "設定",
+    "appearance": "外觀",
+    "language": "語言",
+    "light": "淺色",
+    "dark": "深色",
+    "system": "跟隨系統",
+    "about": "關於",
+    "version": "版本"
+  }
+}

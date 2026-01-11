@@ -6,10 +6,30 @@ import { Platform } from 'react-native';
 
 import en from './locales/en.json';
 import es from './locales/es.json';
+import fr from './locales/fr.json';
+import de from './locales/de.json';
+import ja from './locales/ja.json';
+import it from './locales/it.json';
+import pt from './locales/pt.json';
+import ru from './locales/ru.json';
+import zhCN from './locales/zh-CN.json';
+import zhTW from './locales/zh-TW.json';
+import hi from './locales/hi.json';
+import nl from './locales/nl.json';
 
 const RESOURCES = {
   en: { translation: en },
   es: { translation: es },
+  fr: { translation: fr },
+  de: { translation: de },
+  ja: { translation: ja },
+  it: { translation: it },
+  pt: { translation: pt },
+  ru: { translation: ru },
+  'zh-CN': { translation: zhCN },
+  'zh-TW': { translation: zhTW },
+  hi: { translation: hi },
+  nl: { translation: nl },
 };
 
 // Helper to get stored language (works on native and web)

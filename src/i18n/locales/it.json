@@ -1,0 +1,45 @@
+{
+  "common": {
+    "welcome": "Benvenuto",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "delete": "Elimina",
+    "edit": "Modifica",
+    "add": "Aggiungi",
+    "create": "Crea",
+    "back": "Indietro"
+  },
+  "habits": {
+    "title": "Abitudini",
+    "newHabit": "Nuova Abitudine",
+    "editHabit": "Modifica Abitudine",
+    "habitName": "Nome Abitudine",
+    "noHabits": "Nessuna abitudine ancora. Creane una per iniziare!",
+    "deleteConfirmation": "Sei sicuro di voler eliminare questa abitudine? Tutta la cronologia andrà persa.",
+    "options": "Opzioni",
+    "addOption": "Aggiungi Opzione",
+    "newOption": "Nuova Opzione",
+    "deleteHabit": "Elimina Abitudine",
+    "deleteHabitFullMessage": "Eliminare \"{{name}}\"? Questo cancellerà permanentemente tutte le opzioni e le voci.",
+    "deleteHabitWebMessage": "Eliminare \"{{name}}\"?\n\nQuesto cancellerà permanentemente tutte le opzioni e le voci.",
+    "optionLabel": "Etichetta",
+    "optionValue": "Valore",
+    "optionLabelPlaceholder": "Etichetta (es. +1)"
+  },
+  "history": {
+    "title": "Cronologia",
+    "totalCount": "Totale",
+    "deleteEntryConfirmation": "Sei sicuro di voler eliminare questa voce?",
+    "noEntries": "Nessuna voce ancora."
+  },
+  "settings": {
+    "title": "Impostazioni",
+    "appearance": "Aspetto",
+    "language": "Lingua",
+    "light": "Chiaro",
+    "dark": "Scuro",
+    "system": "Sistema",
+    "about": "Informazioni",
+    "version": "Versione"
+  }
+}

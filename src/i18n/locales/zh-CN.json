@@ -1,0 +1,45 @@
+{
+  "common": {
+    "welcome": "欢迎",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "add": "添加",
+    "create": "创建",
+    "back": "返回"
+  },
+  "habits": {
+    "title": "习惯",
+    "newHabit": "新建习惯",
+    "editHabit": "编辑习惯",
+    "habitName": "习惯名称",
+    "noHabits": "暂无习惯。创建一个开始吧！",
+    "deleteConfirmation": "确定要删除此习惯吗？所有历史记录都将丢失。",
+    "options": "选项",
+    "addOption": "添加选项",
+    "newOption": "新选项",
+    "deleteHabit": "删除习惯",
+    "deleteHabitFullMessage": "删除 \"{{name}}\"？这将永久删除所有选项和记录。",
+    "deleteHabitWebMessage": "删除 \"{{name}}\"？\n\n这将永久删除所有选项和记录。",
+    "optionLabel": "标签",
+    "optionValue": "数值",
+    "optionLabelPlaceholder": "标签 (例如 +1)"
+  },
+  "history": {
+    "title": "历史",
+    "totalCount": "总计",
+    "deleteEntryConfirmation": "确定要删除此条目吗？",
+    "noEntries": "暂无记录。"
+  },
+  "settings": {
+    "title": "设置",
+    "appearance": "外观",
+    "language": "语言",
+    "light": "浅色",
+    "dark": "深色",
+    "system": "跟随系统",
+    "about": "关于",
+    "version": "版本"
+  }
+}

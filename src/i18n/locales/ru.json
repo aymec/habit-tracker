@@ -1,0 +1,45 @@
+{
+  "common": {
+    "welcome": "Добро пожаловать",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "add": "Добавить",
+    "create": "Создать",
+    "back": "Назад"
+  },
+  "habits": {
+    "title": "Привычки",
+    "newHabit": "Новая привычка",
+    "editHabit": "Редактировать привычку",
+    "habitName": "Название привычки",
+    "noHabits": "Привычек пока нет. Создайте новую, чтобы начать!",
+    "deleteConfirmation": "Вы уверены, что хотите удалить эту привычку? Вся история будет потеряна.",
+    "options": "Опции",
+    "addOption": "Добавить опцию",
+    "newOption": "Новая опция",
+    "deleteHabit": "Удалить привычку",
+    "deleteHabitFullMessage": "Удалить \"{{name}}\"? Это навсегда удалит все опции и записи.",
+    "deleteHabitWebMessage": "Удалить \"{{name}}\"?\n\nЭто навсегда удалит все опции и записи.",
+    "optionLabel": "Метка",
+    "optionValue": "Значение",
+    "optionLabelPlaceholder": "Метка (напр. +1)"
+  },
+  "history": {
+    "title": "История",
+    "totalCount": "Всего",
+    "deleteEntryConfirmation": "Вы уверены, что хотите удалить эту запись?",
+    "noEntries": "Записей пока нет."
+  },
+  "settings": {
+    "title": "Настройки",
+    "appearance": "Внешний вид",
+    "language": "Язык",
+    "light": "Светлая",
+    "dark": "Темная",
+    "system": "Системная",
+    "about": "О приложении",
+    "version": "Версия"
+  }
+}

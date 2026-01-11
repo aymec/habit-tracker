@@ -216,7 +216,7 @@ export default function ModalScreen() {
     // Use native confirm on web, Alert.alert on native platforms
     if (Platform.OS === 'web') {
       const confirmed = confirm(
-        `Delete "${activeHabit.name}"?\n\nThis will permanently delete all options and entries.`
+        t('habits.deleteHabitWebMessage', { name: activeHabit.name })
       );
       if (confirmed) {
         performDelete();
@@ -224,7 +224,7 @@ export default function ModalScreen() {
     } else {
       Alert.alert(
         t('common.delete'),
-        `Delete "${activeHabit.name}"? This will permanently delete all options and entries.`,
+        t('habits.deleteHabitFullMessage', { name: activeHabit.name }),
         [
           { text: t('common.cancel'), style: 'cancel' },
           {
@@ -329,7 +329,7 @@ export default function ModalScreen() {
         {isEditing && (
           <View style={[styles.optionsSection, { borderTopColor: theme.colors.border }]}>
             <Text style={[styles.sectionHeader, { color: theme.colors.text }]}>
-              Options
+              {t('habits.options')}
             </Text>
 
             {/* Options List */}
@@ -389,13 +389,13 @@ export default function ModalScreen() {
             {/* Add New Option Area */}
             {isAddingOption ? (
               <View style={[styles.editOptionContainer, { backgroundColor: theme.colors.card, borderColor: theme.colors.border, marginTop: 10 }]}>
-                <Text style={{ color: theme.colors.text, marginBottom: 5, fontWeight: '600' }}>New Option</Text>
+                <Text style={{ color: theme.colors.text, marginBottom: 5, fontWeight: '600' }}>{t('habits.newOption')}</Text>
                 <View style={styles.inputRow}>
                   <TextInput
                     style={[styles.miniInput, { flex: 2, color: theme.colors.text, borderColor: theme.colors.border }]}
                     value={optionLabel}
                     onChangeText={setOptionLabel}
-                    placeholder="Label (e.g. +1)"
+                    placeholder={t('habits.optionLabelPlaceholder')}
                     placeholderTextColor={theme.colors.textSecondary}
                     autoFocus
                   />
@@ -403,17 +403,17 @@ export default function ModalScreen() {
                     style={[styles.miniInput, { flex: 1, color: theme.colors.text, borderColor: theme.colors.border }]}
                     value={optionValue}
                     onChangeText={setOptionValue}
-                    placeholder="Value"
+                    placeholder={t('habits.optionValue')}
                     placeholderTextColor={theme.colors.textSecondary}
                     keyboardType="numeric"
                   />
                 </View>
                 <View style={styles.editActions}>
                   <TouchableOpacity onPress={cancelOptionEdit} style={styles.miniButton}>
-                    <Text style={{ color: theme.colors.textSecondary }}>Cancel</Text>
+                    <Text style={{ color: theme.colors.textSecondary }}>{t('common.cancel')}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={saveOption} style={[styles.miniButton, { backgroundColor: theme.colors.primary }]}>
-                    <Text style={{ color: '#FFFFFF' }}>Add</Text>
+                    <Text style={{ color: '#FFFFFF' }}>{t('common.add')}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -423,7 +423,7 @@ export default function ModalScreen() {
                 onPress={startAddOption}
               >
                 <Ionicons name="add" size={20} color={theme.colors.primary} />
-                <Text style={{ color: theme.colors.primary, fontWeight: '600' }}>Add Option</Text>
+                <Text style={{ color: theme.colors.primary, fontWeight: '600' }}>{t('habits.addOption')}</Text>
               </TouchableOpacity>
             )}
           </View>
@@ -437,7 +437,7 @@ export default function ModalScreen() {
               onPress={handleDeleteHabit}
             >
               <Ionicons name="trash-outline" size={20} color="#FFFFFF" />
-              <Text style={styles.deleteHabitButtonText}>Delete Habit</Text>
+              <Text style={styles.deleteHabitButtonText}>{t('habits.deleteHabit')}</Text>
             </TouchableOpacity>
           </View>
         )}

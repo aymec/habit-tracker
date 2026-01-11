@@ -1,0 +1,45 @@
+{
+  "common": {
+    "welcome": "ようこそ",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "add": "追加",
+    "create": "作成",
+    "back": "戻る"
+  },
+  "habits": {
+    "title": "習慣",
+    "newHabit": "新しい習慣",
+    "editHabit": "習慣を編集",
+    "habitName": "習慣の名前",
+    "noHabits": "習慣はまだありません。作成して始めましょう！",
+    "deleteConfirmation": "この習慣を削除してもよろしいですか？すべての履歴が失われます。",
+    "options": "オプション",
+    "addOption": "オプションを追加",
+    "newOption": "新しいオプション",
+    "deleteHabit": "習慣を削除",
+    "deleteHabitFullMessage": "「{{name}}」を削除しますか？これにより、すべてのオプションと履歴が完全に削除されます。",
+    "deleteHabitWebMessage": "「{{name}}」を削除しますか？\n\nこれにより、すべてのオプションと履歴が完全に削除されます。",
+    "optionLabel": "ラベル",
+    "optionValue": "値",
+    "optionLabelPlaceholder": "ラベル (例: +1)"
+  },
+  "history": {
+    "title": "履歴",
+    "totalCount": "合計回数",
+    "deleteEntryConfirmation": "このエントリを削除してもよろしいですか？",
+    "noEntries": "エントリはまだありません。"
+  },
+  "settings": {
+    "title": "設定",
+    "appearance": "外観",
+    "language": "言語",
+    "light": "ライト",
+    "dark": "ダーク",
+    "system": "システム",
+    "about": "アプリについて",
+    "version": "バージョン"
+  }
+}

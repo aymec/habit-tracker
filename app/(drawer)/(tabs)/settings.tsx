@@ -19,8 +19,21 @@ export default function SettingsScreen() {
   const [androidModalVisible, setAndroidModalVisible] = useState(false);
 
   const languages = [
+    // Latin alphabet (Alphabetical order)
+    { code: 'de', label: 'Deutsch' },
     { code: 'en', label: 'English' },
     { code: 'es', label: 'Español' },
+    { code: 'fr', label: 'Français' },
+    { code: 'it', label: 'Italiano' },
+    { code: 'nl', label: 'Nederlands' },
+    { code: 'pt', label: 'Português' },
+
+    // Non-Latin alphabets (At the end)
+    { code: 'ru', label: 'Русский' }, // Cyrillic
+    { code: 'ja', label: '日本語' }, // Japanese
+    { code: 'zh-CN', label: '简体中文' }, // Simplified Chinese
+    { code: 'zh-TW', label: '繁體中文' }, // Traditional Chinese
+    { code: 'hi', label: 'हिन्दी' }, // Hindi
   ];
 
   const handleLanguagePress = () => {
@@ -119,7 +132,7 @@ export default function SettingsScreen() {
               onPress={handleLanguagePress}
             >
               <Text style={[styles.optionText, { color: theme.colors.text }]}>
-                {i18n.language === 'en' ? 'English' : 'Español'}
+                {languages.find(l => l.code === i18n.language)?.label || 'English'}
               </Text>
               <View style={styles.iconContainer}>
                 <Ionicons

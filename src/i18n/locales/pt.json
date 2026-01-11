@@ -1,0 +1,45 @@
+{
+  "common": {
+    "welcome": "Bem-vindo",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "add": "Adicionar",
+    "create": "Criar",
+    "back": "Voltar"
+  },
+  "habits": {
+    "title": "Hábitos",
+    "newHabit": "Novo Hábito",
+    "editHabit": "Editar Hábito",
+    "habitName": "Nome do Hábito",
+    "noHabits": "Ainda não há hábitos. Crie um para começar!",
+    "deleteConfirmation": "Tem certeza que deseja excluir este hábito? Todo o histórico será perdido.",
+    "options": "Opções",
+    "addOption": "Adicionar Opção",
+    "newOption": "Nova Opção",
+    "deleteHabit": "Excluir Hábito",
+    "deleteHabitFullMessage": "Excluir \"{{name}}\"? Isso excluirá permanentemente todas as opções e registros.",
+    "deleteHabitWebMessage": "Excluir \"{{name}}\"?\n\nIsso excluirá permanentemente todas as opções e registros.",
+    "optionLabel": "Rótulo",
+    "optionValue": "Valor",
+    "optionLabelPlaceholder": "Rótulo (ex: +1)"
+  },
+  "history": {
+    "title": "Histórico",
+    "totalCount": "Contagem Total",
+    "deleteEntryConfirmation": "Tem certeza que deseja excluir este registro?",
+    "noEntries": "Nenhum registro ainda."
+  },
+  "settings": {
+    "title": "Configurações",
+    "appearance": "Aparência",
+    "language": "Idioma",
+    "light": "Claro",
+    "dark": "Escuro",
+    "system": "Sistema",
+    "about": "Sobre",
+    "version": "Versão"
+  }
+}

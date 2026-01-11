@@ -1,0 +1,45 @@
+{
+  "common": {
+    "welcome": "Willkommen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "add": "Hinzufügen",
+    "create": "Erstellen",
+    "back": "Zurück"
+  },
+  "habits": {
+    "title": "Gewohnheiten",
+    "newHabit": "Neue Gewohnheit",
+    "editHabit": "Gewohnheit bearbeiten",
+    "habitName": "Name der Gewohnheit",
+    "noHabits": "Noch keine Gewohnheiten. Erstelle eine, um zu beginnen!",
+    "deleteConfirmation": "Bist du sicher, dass du diese Gewohnheit löschen möchtest? Der gesamte Verlauf geht verloren.",
+    "options": "Optionen",
+    "addOption": "Option hinzufügen",
+    "newOption": "Neue Option",
+    "deleteHabit": "Gewohnheit löschen",
+    "deleteHabitFullMessage": "\"{name}\" löschen? Dadurch werden alle Optionen und Einträge dauerhaft gelöscht.",
+    "deleteHabitWebMessage": "\"{name}\" löschen?\n\nDadurch werden alle Optionen und Einträge dauerhaft gelöscht.",
+    "optionLabel": "Beschriftung",
+    "optionValue": "Wert",
+    "optionLabelPlaceholder": "Beschriftung (z.B. +1)"
+  },
+  "history": {
+    "title": "Verlauf",
+    "totalCount": "Gesamtanzahl",
+    "deleteEntryConfirmation": "Bist du sicher, dass du diesen Eintrag löschen möchtest?",
+    "noEntries": "Noch keine Einträge."
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "appearance": "Erscheinungsbild",
+    "language": "Sprache",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System",
+    "about": "Über",
+    "version": "Version"
+  }
+}

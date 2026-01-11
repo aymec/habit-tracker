@@ -1,0 +1,45 @@
+{
+  "common": {
+    "welcome": "Welkom",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "add": "Toevoegen",
+    "create": "Aanmaken",
+    "back": "Terug"
+  },
+  "habits": {
+    "title": "Gewoontes",
+    "newHabit": "Nieuwe Gewoonte",
+    "editHabit": "Gewoonte Bewerken",
+    "habitName": "Naam van Gewoonte",
+    "noHabits": "Nog geen gewoontes. Maak er een aan om te beginnen!",
+    "deleteConfirmation": "Weet je zeker dat je deze gewoonte wilt verwijderen? Alle geschiedenis gaat verloren.",
+    "options": "Opties",
+    "addOption": "Optie Toevoegen",
+    "newOption": "Nieuwe Optie",
+    "deleteHabit": "Gewoonte Verwijderen",
+    "deleteHabitFullMessage": "\"{name}\" verwijderen? Dit zal alle opties en invoeren permanent verwijderen.",
+    "deleteHabitWebMessage": "\"{name}\" verwijderen?\n\nDit zal alle opties en invoeren permanent verwijderen.",
+    "optionLabel": "Label",
+    "optionValue": "Waarde",
+    "optionLabelPlaceholder": "Label (bijv. +1)"
+  },
+  "history": {
+    "title": "Geschiedenis",
+    "totalCount": "Totaal Aantal",
+    "deleteEntryConfirmation": "Weet je zeker dat je deze invoer wilt verwijderen?",
+    "noEntries": "Nog geen invoeren."
+  },
+  "settings": {
+    "title": "Instellingen",
+    "appearance": "Uiterlijk",
+    "language": "Taal",
+    "light": "Licht",
+    "dark": "Donker",
+    "system": "Systeem",
+    "about": "Over",
+    "version": "Versie"
+  }
+}

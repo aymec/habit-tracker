@@ -1,0 +1,45 @@
+{
+  "common": {
+    "welcome": "Bienvenue",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter",
+    "create": "Créer",
+    "back": "Retour"
+  },
+  "habits": {
+    "title": "Habitudes",
+    "newHabit": "Nouvelle habitude",
+    "editHabit": "Modifier l'habitude",
+    "habitName": "Nom de l'habitude",
+    "noHabits": "Pas encore d'habitudes. Créez-en une pour commencer !",
+    "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer cette habitude ? Tout l'historique sera perdu.",
+    "options": "Options",
+    "addOption": "Ajouter une option",
+    "newOption": "Nouvelle option",
+    "deleteHabit": "Supprimer l'habitude",
+    "deleteHabitFullMessage": "Supprimer \"{{name}}\" ? Cela supprimera définitivement toutes les options et les entrées.",
+    "deleteHabitWebMessage": "Supprimer \"{{name}}\" ?\n\nCela supprimera définitivement toutes les options et les entrées.",
+    "optionLabel": "Libellé",
+    "optionValue": "Valeur",
+    "optionLabelPlaceholder": "Libellé (ex. +1)"
+  },
+  "history": {
+    "title": "Historique",
+    "totalCount": "Nombre total",
+    "deleteEntryConfirmation": "Êtes-vous sûr de vouloir supprimer cette entrée ?",
+    "noEntries": "Aucune entrée pour le moment."
+  },
+  "settings": {
+    "title": "Paramètres",
+    "appearance": "Apparence",
+    "language": "Langue",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système",
+    "about": "À propos",
+    "version": "Version"
+  }
+}

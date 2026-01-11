@@ -15,7 +15,16 @@
     "editHabit": "Edit Habit",
     "habitName": "Habit Name",
     "noHabits": "No habits yet. Create one to get started!",
-    "deleteConfirmation": "Are you sure you want to delete this habit? All history will be lost."
+    "deleteConfirmation": "Are you sure you want to delete this habit? All history will be lost.",
+    "options": "Options",
+    "addOption": "Add Option",
+    "newOption": "New Option",
+    "deleteHabit": "Delete Habit",
+    "deleteHabitFullMessage": "Delete \"{{name}}\"? This will permanently delete all options and entries.",
+    "deleteHabitWebMessage": "Delete \"{{name}}\"?\n\nThis will permanently delete all options and entries.",
+    "optionLabel": "Label",
+    "optionValue": "Value",
+    "optionLabelPlaceholder": "Label (e.g. +1)"
   },
   "history": {
     "title": "History",
