@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import { useHabit } from '../context/HabitContext';
 import { useTheme } from '../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +19,12 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         <Text style={[styles.drawerTitle, { color: theme.colors.text }]}>
           {t('habits.title')}
         </Text>
+        <TouchableOpacity
+          style={styles.closeButton}
+          onPress={() => props.navigation.closeDrawer()}
+        >
+          <Ionicons name="close" size={28} color={theme.colors.text} />
+        </TouchableOpacity>
       </View>
 
       <FlatList
@@ -79,12 +86,18 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
 
 const styles = StyleSheet.create({
   drawerHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 20,
     borderBottomWidth: 1,
   },
   drawerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
+  },
+  closeButton: {
+    padding: 4,
   },
   habitList: {
     padding: 10,
