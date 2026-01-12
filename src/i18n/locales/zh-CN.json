@@ -7,7 +7,10 @@
     "edit": "编辑",
     "add": "添加",
     "create": "创建",
-    "back": "返回"
+    "back": "返回",
+    "set": "设置",
+    "clearAll": "全部清除",
+    "error": "错误"
   },
   "habits": {
     "title": "习惯",
@@ -41,5 +44,16 @@
     "system": "跟随系统",
     "about": "关于",
     "version": "版本"
+  },
+  "data": {
+    "data": "数据",
+    "confirmSetDemoDataTitle": "设置演示数据",
+    "confirmSetDemoDataMessage": "这将清除您当前的所有数据并将其替换为演示数据。您确定吗？",
+    "failedToSetDemoData": "设置演示数据失败。",
+    "confirmClearAllDataTitle": "确认清除所有数据",
+    "confirmClearAllDataMessage": "您确定要删除所有的习惯、选项和条目吗？此操作无法撤消。",
+    "failedToClearData": "清除数据失败。",
+    "setDemoData": "设置演示数据",
+    "clearAllData": "清除所有数据"
   }
 }

@@ -7,7 +7,10 @@
     "edit": "Edit",
     "add": "Add",
     "create": "Create",
-    "back": "Back"
+    "back": "Back",
+    "set": "Set",
+    "clearAll": "Clear All",
+    "error": "Error"
   },
   "habits": {
     "title": "Habits",
@@ -41,5 +44,16 @@
     "system": "System",
     "about": "About",
     "version": "Version"
+  },
+  "data": {
+    "data": "Data",
+    "confirmSetDemoDataTitle": "Set Demo Data",
+    "confirmSetDemoDataMessage": "This will clear all your current data and replace it with demo data. Are you sure?",
+    "failedToSetDemoData": "Failed to set demo data.",
+    "confirmClearAllDataTitle": "Confirm Clear All Data",
+    "confirmClearAllDataMessage": "Are you sure you want to delete all your habits, options, and entries? This action cannot be undone.",
+    "failedToClearData": "Failed to clear data.",
+    "setDemoData": "Set Demo Data",
+    "clearAllData": "Clear All Data"
   }
 }

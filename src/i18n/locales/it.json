@@ -7,7 +7,10 @@
     "edit": "Modifica",
     "add": "Aggiungi",
     "create": "Crea",
-    "back": "Indietro"
+    "back": "Indietro",
+    "set": "Imposta",
+    "clearAll": "Cancella tutto",
+    "error": "Errore"
   },
   "habits": {
     "title": "Abitudini",
@@ -41,5 +44,16 @@
     "system": "Sistema",
     "about": "Informazioni",
     "version": "Versione"
+  },
+  "data": {
+    "data": "Dati",
+    "confirmSetDemoDataTitle": "Imposta dati demo",
+    "confirmSetDemoDataMessage": "Questo cancellerà tutti i tuoi dati attuali e li sostituirà con dati demo. Sei sicuro?",
+    "failedToSetDemoData": "Impostazione dei dati demo non riuscita.",
+    "confirmClearAllDataTitle": "Conferma cancellazione di tutti i dati",
+    "confirmClearAllDataMessage": "Sei sicuro di voler eliminare tutte le tue abitudini, opzioni e voci? Questa azione non può essere annullata.",
+    "failedToClearData": "Cancellazione dei dati non riuscita.",
+    "setDemoData": "Imposta dati demo",
+    "clearAllData": "Cancella tutti i dati"
   }
 }

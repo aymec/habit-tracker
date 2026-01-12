@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Platform, ActionSheetIOS } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Platform, ActionSheetIOS, Alert } from 'react-native';
 import { useTheme } from '../../../src/context/ThemeContext';
+import { useHabit } from '../../../src/context/HabitContext';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Constants from 'expo-constants';
+import { populateTestData, clearAllData } from '../../../src/services/storage';
+
 // Note: For Android material dropdown, in a simple Expo managed workflow without extra native deps like @react-native-picker/picker,
 // we often simulate it or use a library. However, since we want to avoid complex native deps if possible,
 // we can use a custom modal for Android that looks like a dialog, which is standard Material behavior for selection.
@@ -14,6 +17,7 @@ import Constants from 'expo-constants';
 export default function SettingsScreen() {
   const { theme, mode, setMode } = useTheme();
   const { t, i18n } = useTranslation();
+  const { loadHabits } = useHabit();
 
   // For Android/custom modal state (reusing logic if we decide to use custom modal on Android)
   const [androidModalVisible, setAndroidModalVisible] = useState(false);
@@ -69,6 +73,60 @@ export default function SettingsScreen() {
     }
   };
 
+  const handlePopulateData = async () => {
+    Alert.alert(
+      t('data.confirmSetDemoDataTitle'),
+      t('data.confirmSetDemoDataMessage'),
+      [
+        {
+          text: t('common.cancel'),
+          style: 'cancel',
+        },
+        {
+          text: t('common.set'),
+          style: 'default',
+          onPress: async () => {
+            try {
+              await populateTestData();
+              await loadHabits();
+            } catch (error) {
+              Alert.alert(t('common.error'), t('data.failedToSetDemoData'));
+              console.error(error);
+            }
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  const handleClearData = async () => {
+    Alert.alert(
+      t('data.confirmClearAllDataTitle'),
+      t('data.confirmClearAllDataMessage'),
+      [
+        {
+          text: t('common.cancel'),
+          style: 'cancel',
+        },
+        {
+          text: t('common.clearAll'),
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await clearAllData();
+              await loadHabits();
+            } catch (error) {
+              Alert.alert(t('common.error'), t('data.failedToClearData'));
+              console.error(error);
+            }
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
   // ... rest of implementation needs to support the Android Modal or we install the picker.
   // Let's try to do it without installing new packages if possible to keep it simple,
   // but if the user insists on native dropdown, we might need it.
@@ -83,13 +141,13 @@ export default function SettingsScreen() {
   };
 
   // ... (renderThemeOption function)
-  const renderThemeOption = (optionMode: 'light' | 'dark' | 'system', label: string) => {
+  const renderThemeOption = (optionMode: 'light' | 'dark' | 'system', label: string, border: boolean) => {
       const isSelected = mode === optionMode;
       return (
         <TouchableOpacity
           style={[
             styles.optionRow,
-            { borderBottomColor: theme.colors.border }
+            border ? { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: theme.colors.border } : {}
           ]}
           onPress={() => setMode(optionMode)}
         >
@@ -115,9 +173,9 @@ export default function SettingsScreen() {
             {t('settings.appearance')}
           </Text>
           <View style={[styles.sectionContent, { backgroundColor: theme.colors.card }]}>
-            {renderThemeOption('light', t('settings.light'))}
-            {renderThemeOption('dark', t('settings.dark'))}
-            {renderThemeOption('system', t('settings.system'))}
+            {renderThemeOption('light', t('settings.light'), true)}
+            {renderThemeOption('dark', t('settings.dark'), true)}
+            {renderThemeOption('system', t('settings.system'), false)}
           </View>
         </View>
 
@@ -128,7 +186,7 @@ export default function SettingsScreen() {
           </Text>
           <View style={[styles.sectionContent, { backgroundColor: theme.colors.card }]}>
             <TouchableOpacity
-              style={[styles.optionRow, { borderBottomColor: theme.colors.border }]}
+              style={styles.optionRow}
               onPress={handleLanguagePress}
             >
               <Text style={[styles.optionText, { color: theme.colors.text }]}>
@@ -139,6 +197,45 @@ export default function SettingsScreen() {
                   name={Platform.OS === 'ios' ? "chevron-down" : "caret-down"}
                   size={20}
                   color={theme.colors.textSecondary}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Data Section */}
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.textSecondary }]}>
+            {t('data.data')}
+          </Text>
+          <View style={[styles.sectionContent, { backgroundColor: theme.colors.card }]}>
+            <TouchableOpacity
+              style={[styles.optionRow, { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: theme.colors.border }]}
+              onPress={handlePopulateData}
+            >
+              <Text style={[styles.optionText, { color: theme.colors.text }]}>
+                {t('data.setDemoData')}
+              </Text>
+              <View style={styles.iconContainer}>
+                <Ionicons
+                  name="rocket"
+                  size={20}
+                  color={theme.colors.textSecondary}
+                />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.optionRow}
+              onPress={handleClearData}
+            >
+              <Text style={[styles.optionText, { color: theme.colors.danger }]}>
+                {t('data.clearAllData')}
+              </Text>
+              <View style={styles.iconContainer}>
+                <Ionicons
+                  name="trash-outline"
+                  size={20}
+                  color={theme.colors.danger}
                 />
               </View>
             </TouchableOpacity>
@@ -240,7 +337,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 16,
     minHeight: 56,
-    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   optionText: {
     fontSize: 16,

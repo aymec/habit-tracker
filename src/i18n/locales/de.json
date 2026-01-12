@@ -7,7 +7,10 @@
     "edit": "Bearbeiten",
     "add": "Hinzufügen",
     "create": "Erstellen",
-    "back": "Zurück"
+    "back": "Zurück",
+    "set": "Einstellen",
+    "clearAll": "Alles löschen",
+    "error": "Fehler"
   },
   "habits": {
     "title": "Gewohnheiten",
@@ -41,5 +44,16 @@
     "system": "System",
     "about": "Über",
     "version": "Version"
+  },
+  "data": {
+    "data": "Daten",
+    "confirmSetDemoDataTitle": "Demo-Daten einstellen",
+    "confirmSetDemoDataMessage": "Dadurch werden alle Ihre aktuellen Daten gelöscht und durch Demo-Daten ersetzt. Bist du sicher?",
+    "failedToSetDemoData": "Fehler beim Einstellen der Demo-Daten.",
+    "confirmClearAllDataTitle": "Bestätigen Sie das Löschen aller Daten",
+    "confirmClearAllDataMessage": "Sind Sie sicher, dass Sie alle Ihre Gewohnheiten, Optionen und Einträge löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "failedToClearData": "Fehler beim Löschen der Daten.",
+    "setDemoData": "Demo-Daten einstellen",
+    "clearAllData": "Alle Daten löschen"
   }
 }

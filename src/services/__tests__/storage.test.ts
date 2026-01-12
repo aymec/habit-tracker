@@ -74,10 +74,12 @@ describe('Storage Service', () => {
       it('should throw error when storage fails', async () => {
         // Arrange
         const error = new Error('Storage error');
+        const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
         (AsyncStorage.getItem as jest.Mock).mockRejectedValue(error);
 
         // Act & Assert
         await expect(getHabits()).rejects.toThrow('Storage error');
+        consoleErrorSpy.mockRestore();
       });
     });
 

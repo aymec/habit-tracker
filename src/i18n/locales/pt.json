@@ -7,7 +7,10 @@
     "edit": "Editar",
     "add": "Adicionar",
     "create": "Criar",
-    "back": "Voltar"
+    "back": "Voltar",
+    "set": "Definir",
+    "clearAll": "Limpar tudo",
+    "error": "Erro"
   },
   "habits": {
     "title": "Hábitos",
@@ -41,5 +44,16 @@
     "system": "Sistema",
     "about": "Sobre",
     "version": "Versão"
+  },
+  "data": {
+    "data": "Dados",
+    "confirmSetDemoDataTitle": "Definir dados de demonstração",
+    "confirmSetDemoDataMessage": "Isso limpará todos os seus dados atuais e os substituirá por dados de demonstração. Você tem certeza?",
+    "failedToSetDemoData": "Falha ao definir os dados de demonstração.",
+    "confirmClearAllDataTitle": "Confirmar a exclusão de todos os dados",
+    "confirmClearAllDataMessage": "Tem certeza de que deseja excluir todos os seus hábitos, opções e entradas? Esta ação não pode ser desfeita.",
+    "failedToClearData": "Falha ao limpar os dados.",
+    "setDemoData": "Definir dados de demonstração",
+    "clearAllData": "Limpar todos os dados"
   }
 }

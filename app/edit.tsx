@@ -1,11 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ScrollView, FlatList } from 'react-native';
+import { Platform, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { useTheme } from '../src/context/ThemeContext';
 import { useHabit } from '../src/context/HabitContext';
 import { useTranslation } from 'react-i18next';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
-import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { Option } from '../src/models/types';
 
@@ -14,7 +13,6 @@ export default function ModalScreen() {
   const { createNewHabit, updateHabitDetails, activeHabit, activeHabitOptions, addHabitOption, updateHabitOption, removeOption, removeHabit, habits, selectHabit } = useHabit();
   const { t } = useTranslation();
   const router = useRouter();
-  const navigation = useNavigation();
   const params = useLocalSearchParams();
   const isEditing = params.mode === 'edit';
 

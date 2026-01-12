@@ -7,7 +7,10 @@
     "edit": "編集",
     "add": "追加",
     "create": "作成",
-    "back": "戻る"
+    "back": "戻る",
+    "set": "設定",
+    "clearAll": "すべてクリア",
+    "error": "エラー"
   },
   "habits": {
     "title": "習慣",
@@ -41,5 +44,16 @@
     "system": "システム",
     "about": "アプリについて",
     "version": "バージョン"
+  },
+  "data": {
+    "data": "データ",
+    "confirmSetDemoDataTitle": "デモデータを設定",
+    "confirmSetDemoDataMessage": "これにより、現在のすべてのデータがクリアされ、デモデータに置き換えられます。よろしいですか？",
+    "failedToSetDemoData": "デモデータの設定に失敗しました。",
+    "confirmClearAllDataTitle": "すべてのデータを削除することを確認します",
+    "confirmClearAllDataMessage": "すべての習慣、オプション、エントリを削除してもよろしいですか？この操作は元に戻せません。",
+    "failedToClearData": "データのクリアに失敗しました。",
+    "setDemoData": "デモデータを設定",
+    "clearAllData": "すべてのデータをクリア"
   }
 }

@@ -7,7 +7,10 @@
     "edit": "Bewerken",
     "add": "Toevoegen",
     "create": "Aanmaken",
-    "back": "Terug"
+    "back": "Terug",
+    "set": "Instellen",
+    "clearAll": "Alles wissen",
+    "error": "Fout"
   },
   "habits": {
     "title": "Gewoontes",
@@ -41,5 +44,16 @@
     "system": "Systeem",
     "about": "Over",
     "version": "Versie"
+  },
+  "data": {
+    "data": "Gegevens",
+    "confirmSetDemoDataTitle": "Demogegevens instellen",
+    "confirmSetDemoDataMessage": "Dit wist al uw huidige gegevens en vervangt deze door demogegevens. Weet u het zeker?",
+    "failedToSetDemoData": "Het instellen van demogegevens is mislukt.",
+    "confirmClearAllDataTitle": "Bevestig het wissen van alle gegevens",
+    "confirmClearAllDataMessage": "Weet u zeker dat u al uw gewoonten, opties en vermeldingen wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+    "failedToClearData": "Het wissen van gegevens is mislukt.",
+    "setDemoData": "Demogegevens instellen",
+    "clearAllData": "Alle gegevens wissen"
   }
 }

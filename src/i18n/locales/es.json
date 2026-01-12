@@ -7,7 +7,10 @@
     "edit": "Editar",
     "add": "Añadir",
     "create": "Crear",
-    "back": "Atrás"
+    "back": "Atrás",
+    "set": "Establecer",
+    "clearAll": "Limpiar todo",
+    "error": "Error"
   },
   "habits": {
     "title": "Hábitos",
@@ -41,5 +44,16 @@
     "system": "Sistema",
     "about": "Acerca de",
     "version": "Versión"
+  },
+  "data": {
+    "data": "Datos",
+    "confirmSetDemoDataTitle": "Establecer datos de demostración",
+    "confirmSetDemoDataMessage": "Esto borrará todos sus datos actuales y los reemplazará con datos de demostración. ¿Estás seguro?",
+    "failedToSetDemoData": "Error al establecer los datos de demostración.",
+    "confirmClearAllDataTitle": "Confirmar la eliminación de todos los datos",
+    "confirmClearAllDataMessage": "¿Estás seguro de que quieres eliminar todos tus hábitos, opciones y entradas? Esta acción no se puede deshacer.",
+    "failedToClearData": "Error al borrar los datos.",
+    "setDemoData": "Establecer datos de demostración",
+    "clearAllData": "Limpiar todos los datos"
   }
 }

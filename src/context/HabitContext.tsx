@@ -44,8 +44,9 @@ export const HabitProvider: FC<{ children: ReactNode }> = ({ children }) => {
       const loadedHabits = await Storage.getHabits();
       setHabits(loadedHabits);
 
-      // If no active habit but we have habits, select the first one
-      if (!activeHabitId && loadedHabits.length > 0) {
+      if (loadedHabits.length === 0) {
+        setActiveHabitId(null);
+      } else if (!activeHabitId && loadedHabits.length > 0) {
         setActiveHabitId(loadedHabits[0].id);
       }
     } catch (error) {
