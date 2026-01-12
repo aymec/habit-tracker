@@ -45,8 +45,8 @@ export default function EntryHistoryScreen() {
         renderItem={({ item }) => (
           <View style={[styles.entryItem, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
             <View style={styles.entryInfo}>
-              <Text style={[styles.entryValue, { color: theme.colors.primary }]}>
-                {item.value > 0 ? `+${item.value}` : item.value}
+              <Text style={[styles.entryLabel, { color: theme.colors.text }]}>
+                {item.label} ({item.value > 0 ? `+${item.value}` : item.value})
               </Text>
               <Text style={[styles.entryDate, { color: theme.colors.textSecondary }]}>
                 {formatDate(item.timestamp)}
@@ -91,9 +91,9 @@ const styles = StyleSheet.create({
   entryInfo: {
     flex: 1,
   },
-  entryValue: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  entryLabel: {
+    fontSize: 18,
+    fontWeight: '600',
     marginBottom: 4,
   },
   entryDate: {

@@ -97,7 +97,7 @@ export default function HomeScreen() {
                   borderColor: theme.colors.border,
                 }
               ]}
-              onPress={() => logEntry(activeHabit.id, option.value)}
+              onPress={() => logEntry(activeHabit.id, option.label, option.value)}
             >
               <Text style={[styles.optionLabel, { color: theme.colors.text }]}>
                 {option.label}

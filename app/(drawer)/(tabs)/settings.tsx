@@ -74,57 +74,87 @@ export default function SettingsScreen() {
   };
 
   const handlePopulateData = async () => {
-    Alert.alert(
-      t('data.confirmSetDemoDataTitle'),
-      t('data.confirmSetDemoDataMessage'),
-      [
-        {
-          text: t('common.cancel'),
-          style: 'cancel',
-        },
-        {
-          text: t('common.set'),
-          style: 'default',
-          onPress: async () => {
-            try {
-              await populateTestData();
-              await loadHabits();
-            } catch (error) {
-              Alert.alert(t('common.error'), t('data.failedToSetDemoData'));
-              console.error(error);
-            }
+    if (Platform.OS === 'web') {
+      const confirmed = window.confirm(
+        `${t('data.confirmSetDemoDataTitle')}\n\n${t('data.confirmSetDemoDataMessage')}`
+      );
+      if (confirmed) {
+        try {
+          await populateTestData();
+          await loadHabits();
+        } catch (error) {
+          window.alert(`${t('common.error')}: ${t('data.failedToSetDemoData')}`);
+          console.error(error);
+        }
+      }
+    } else {
+      Alert.alert(
+        t('data.confirmSetDemoDataTitle'),
+        t('data.confirmSetDemoDataMessage'),
+        [
+          {
+            text: t('common.cancel'),
+            style: 'cancel',
           },
-        },
-      ],
-      { cancelable: true }
-    );
+          {
+            text: t('common.set'),
+            style: 'default',
+            onPress: async () => {
+              try {
+                await populateTestData();
+                await loadHabits();
+              } catch (error) {
+                Alert.alert(t('common.error'), t('data.failedToSetDemoData'));
+                console.error(error);
+              }
+            },
+          },
+        ],
+        { cancelable: true }
+      );
+    }
   };
 
   const handleClearData = async () => {
-    Alert.alert(
-      t('data.confirmClearAllDataTitle'),
-      t('data.confirmClearAllDataMessage'),
-      [
-        {
-          text: t('common.cancel'),
-          style: 'cancel',
-        },
-        {
-          text: t('common.clearAll'),
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await clearAllData();
-              await loadHabits();
-            } catch (error) {
-              Alert.alert(t('common.error'), t('data.failedToClearData'));
-              console.error(error);
-            }
+    if (Platform.OS === 'web') {
+      const confirmed = window.confirm(
+        `${t('data.confirmClearAllDataTitle')}\n\n${t('data.confirmClearAllDataMessage')}`
+      );
+      if (confirmed) {
+        try {
+          await clearAllData();
+          await loadHabits();
+        } catch (error) {
+          window.alert(`${t('common.error')}: ${t('data.failedToClearData')}`);
+          console.error(error);
+        }
+      }
+    } else {
+      Alert.alert(
+        t('data.confirmClearAllDataTitle'),
+        t('data.confirmClearAllDataMessage'),
+        [
+          {
+            text: t('common.cancel'),
+            style: 'cancel',
           },
-        },
-      ],
-      { cancelable: true }
-    );
+          {
+            text: t('common.clearAll'),
+            style: 'destructive',
+            onPress: async () => {
+              try {
+                await clearAllData();
+                await loadHabits();
+              } catch (error) {
+                Alert.alert(t('common.error'), t('data.failedToClearData'));
+                console.error(error);
+              }
+            },
+          },
+        ],
+        { cancelable: true }
+      );
+    }
   };
 
   // ... rest of implementation needs to support the Android Modal or we install the picker.

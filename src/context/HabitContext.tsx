@@ -23,7 +23,7 @@ interface HabitContextType {
   removeOption: (optionId: string) => Promise<void>;
 
   // Entry Actions
-  logEntry: (habitId: string, value: number) => Promise<void>;
+  logEntry: (habitId: string, label: string, value: number) => Promise<void>;
   removeEntry: (entryId: string) => Promise<void>;
 }
 
@@ -164,10 +164,11 @@ export const HabitProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }
   };
 
-  const logEntry = async (habitId: string, value: number) => {
+  const logEntry = async (habitId: string, label: string, value: number) => {
     const newEntry: Entry = {
       id: Date.now().toString(),
       habitId,
+      label,
       value,
       timestamp: new Date().toISOString()
     };

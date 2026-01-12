@@ -16,6 +16,7 @@ export interface Option {
 export interface Entry {
   id: string;
   habitId: string;
+  label: string;
   value: number;
   timestamp: string;
 }
