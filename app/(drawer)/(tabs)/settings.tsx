@@ -175,27 +175,29 @@ export default function SettingsScreen() {
                 <Text style={[styles.androidModalTitle, { color: theme.colors.text }]}>
                     {t('settings.language')}
                 </Text>
-                {languages.map((lang) => (
-                    <TouchableOpacity
-                        key={lang.code}
-                        style={styles.androidOptionRow}
-                        onPress={() => changeLanguage(lang.code)}
-                    >
-                        <Text style={[styles.optionText, { color: theme.colors.text }]}>
-                            {lang.label}
-                        </Text>
-                        <View style={styles.androidRadioContainer}>
-                            <View style={[
-                                styles.androidRadioOuter,
-                                { borderColor: i18n.language === lang.code ? theme.colors.primary : theme.colors.textSecondary }
-                            ]}>
-                                {i18n.language === lang.code && (
-                                    <View style={[styles.androidRadioInner, { backgroundColor: theme.colors.primary }]} />
-                                )}
+                <ScrollView style={styles.androidLanguageList}>
+                    {languages.map((lang) => (
+                        <TouchableOpacity
+                            key={lang.code}
+                            style={styles.androidOptionRow}
+                            onPress={() => changeLanguage(lang.code)}
+                        >
+                            <Text style={[styles.optionText, { color: theme.colors.text }]}>
+                                {lang.label}
+                            </Text>
+                            <View style={styles.androidRadioContainer}>
+                                <View style={[
+                                    styles.androidRadioOuter,
+                                    { borderColor: i18n.language === lang.code ? theme.colors.primary : theme.colors.textSecondary }
+                                ]}>
+                                    {i18n.language === lang.code && (
+                                        <View style={[styles.androidRadioInner, { backgroundColor: theme.colors.primary }]} />
+                                    )}
+                                </View>
                             </View>
-                        </View>
-                    </TouchableOpacity>
-                ))}
+                        </TouchableOpacity>
+                    ))}
+                </ScrollView>
                 <TouchableOpacity
                     style={styles.androidCancelButton}
                     onPress={() => setAndroidModalVisible(false)}
@@ -237,11 +239,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 16,
-    height: 56,
+    minHeight: 56,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   optionText: {
     fontSize: 16,
+    flex: 1,
   },
   iconContainer: {
     width: 24,
@@ -261,6 +264,7 @@ const styles = StyleSheet.create({
   },
   androidModalContent: {
     width: '80%',
+    maxHeight: '80%',
     borderRadius: 4,
     paddingVertical: 20,
     paddingHorizontal: 24,
@@ -270,6 +274,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
+  },
+  androidLanguageList: {
+    flexShrink: 1,
   },
   androidOptionRow: {
     flexDirection: 'row',
