@@ -80,7 +80,7 @@ export default function HomeScreen() {
           <Text style={[styles.counterValue, { color: theme.colors.primary }]}>
             {activeHabit.totalCount}
           </Text>
-          <Text style={[styles.counterLabel, { color: theme.colors.textSecondary }]}>
+          <Text style={[styles.counterLabel, { color: theme.colors.text }]}>
             {t('history.totalCount')}
           </Text>
         </View>
@@ -102,7 +102,7 @@ export default function HomeScreen() {
               <Text style={[styles.optionLabel, { color: theme.colors.text }]}>
                 {option.label}
               </Text>
-              <Text style={[styles.optionValue, { color: theme.colors.textSecondary }]}>
+              <Text style={[styles.optionValue, { color: theme.colors.text }]}>
                 {option.value > 0 ? `+${option.value}` : option.value}
               </Text>
             </TouchableOpacity>

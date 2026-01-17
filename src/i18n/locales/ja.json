@@ -17,6 +17,7 @@
     "newHabit": "新しい習慣",
     "editHabit": "習慣を編集",
     "habitName": "習慣の名前",
+    "habitNamePlaceholder": "例: 水を飲む",
     "noHabits": "習慣はまだありません。作成して始めましょう！",
     "deleteConfirmation": "この習慣を削除してもよろしいですか？すべての履歴が失われます。",
     "options": "オプション",
@@ -27,7 +28,7 @@
     "deleteHabitWebMessage": "「{{name}}」を削除しますか？\n\nこれにより、すべてのオプションと履歴が完全に削除されます。",
     "optionLabel": "ラベル",
     "optionValue": "値",
-    "optionLabelPlaceholder": "ラベル (例: +1)"
+    "optionLabelPlaceholder": "オプションラベル"
   },
   "history": {
     "title": "履歴",

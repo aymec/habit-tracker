@@ -17,6 +17,7 @@
     "newHabit": "Nieuwe Gewoonte",
     "editHabit": "Gewoonte Bewerken",
     "habitName": "Naam van Gewoonte",
+    "habitNamePlaceholder": "bijv., Water drinken",
     "noHabits": "Nog geen gewoontes. Maak er een aan om te beginnen!",
     "deleteConfirmation": "Weet je zeker dat je deze gewoonte wilt verwijderen? Alle geschiedenis gaat verloren.",
     "options": "Opties",
@@ -27,7 +28,7 @@
     "deleteHabitWebMessage": "\"{name}\" verwijderen?\n\nDit zal alle opties en invoeren permanent verwijderen.",
     "optionLabel": "Label",
     "optionValue": "Waarde",
-    "optionLabelPlaceholder": "Label (bijv. +1)"
+    "optionLabelPlaceholder": "Optielabel"
   },
   "history": {
     "title": "Geschiedenis",

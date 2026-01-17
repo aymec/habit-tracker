@@ -17,6 +17,7 @@
     "newHabit": "新增習慣",
     "editHabit": "編輯習慣",
     "habitName": "習慣名稱",
+    "habitNamePlaceholder": "例如，喝水",
     "noHabits": "尚無習慣。建立一個開始吧！",
     "deleteConfirmation": "確定要刪除此習慣嗎？所有歷史記錄都將遺失。",
     "options": "選項",
@@ -27,7 +28,7 @@
     "deleteHabitWebMessage": "刪除 \"{{name}}\"？\n\n這將永久刪除所有選項和記錄。",
     "optionLabel": "標籤",
     "optionValue": "數值",
-    "optionLabelPlaceholder": "標籤 (例如 +1)"
+    "optionLabelPlaceholder": "選項標籤"
   },
   "history": {
     "title": "歷史",

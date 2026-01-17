@@ -17,6 +17,7 @@
     "newHabit": "New Habit",
     "editHabit": "Edit Habit",
     "habitName": "Habit Name",
+    "habitNamePlaceholder": "e.g., Drink Water",
     "noHabits": "No habits yet. Create one to get started!",
     "deleteConfirmation": "Are you sure you want to delete this habit? All history will be lost.",
     "options": "Options",
@@ -27,7 +28,7 @@
     "deleteHabitWebMessage": "Delete \"{{name}}\"?\n\nThis will permanently delete all options and entries.",
     "optionLabel": "Label",
     "optionValue": "Value",
-    "optionLabelPlaceholder": "Label (e.g. +1)"
+    "optionLabelPlaceholder": "Option label"
   },
   "history": {
     "title": "History",

@@ -17,6 +17,7 @@
     "newHabit": "Novo Hábito",
     "editHabit": "Editar Hábito",
     "habitName": "Nome do Hábito",
+    "habitNamePlaceholder": "ex., Beber Água",
     "noHabits": "Ainda não há hábitos. Crie um para começar!",
     "deleteConfirmation": "Tem certeza que deseja excluir este hábito? Todo o histórico será perdido.",
     "options": "Opções",
@@ -27,7 +28,7 @@
     "deleteHabitWebMessage": "Excluir \"{{name}}\"?\n\nIsso excluirá permanentemente todas as opções e registros.",
     "optionLabel": "Rótulo",
     "optionValue": "Valor",
-    "optionLabelPlaceholder": "Rótulo (ex: +1)"
+    "optionLabelPlaceholder": "Rótulo da opção"
   },
   "history": {
     "title": "Histórico",

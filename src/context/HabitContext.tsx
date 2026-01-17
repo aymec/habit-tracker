@@ -80,7 +80,7 @@ export const HabitProvider: FC<{ children: ReactNode }> = ({ children }) => {
           const defaultOption: Option = {
             id: Date.now().toString(),
             habitId: activeHabitId,
-            label: '+1',
+            label: 'One Unit',
             value: 1
           };
           await Storage.addOption(defaultOption);

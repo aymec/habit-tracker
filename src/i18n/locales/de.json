@@ -17,6 +17,7 @@
     "newHabit": "Neue Gewohnheit",
     "editHabit": "Gewohnheit bearbeiten",
     "habitName": "Name der Gewohnheit",
+    "habitNamePlaceholder": "z.B. Wasser trinken",
     "noHabits": "Noch keine Gewohnheiten. Erstelle eine, um zu beginnen!",
     "deleteConfirmation": "Bist du sicher, dass du diese Gewohnheit löschen möchtest? Der gesamte Verlauf geht verloren.",
     "options": "Optionen",
@@ -27,7 +28,7 @@
     "deleteHabitWebMessage": "\"{name}\" löschen?\n\nDadurch werden alle Optionen und Einträge dauerhaft gelöscht.",
     "optionLabel": "Beschriftung",
     "optionValue": "Wert",
-    "optionLabelPlaceholder": "Beschriftung (z.B. +1)"
+    "optionLabelPlaceholder": "Optionsbezeichnung"
   },
   "history": {
     "title": "Verlauf",

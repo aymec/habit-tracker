@@ -17,6 +17,7 @@
     "newHabit": "Новая привычка",
     "editHabit": "Редактировать привычку",
     "habitName": "Название привычки",
+    "habitNamePlaceholder": "напр., Пить воду",
     "noHabits": "Привычек пока нет. Создайте новую, чтобы начать!",
     "deleteConfirmation": "Вы уверены, что хотите удалить эту привычку? Вся история будет потеряна.",
     "options": "Опции",
@@ -27,7 +28,7 @@
     "deleteHabitWebMessage": "Удалить \"{{name}}\"?\n\nЭто навсегда удалит все опции и записи.",
     "optionLabel": "Метка",
     "optionValue": "Значение",
-    "optionLabelPlaceholder": "Метка (напр. +1)"
+    "optionLabelPlaceholder": "Метка опции"
   },
   "history": {
     "title": "История",

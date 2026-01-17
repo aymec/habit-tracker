@@ -17,6 +17,7 @@
     "newHabit": "Nouvelle habitude",
     "editHabit": "Modifier l'habitude",
     "habitName": "Nom de l'habitude",
+    "habitNamePlaceholder": "ex., Boire de l'eau",
     "noHabits": "Pas encore d'habitudes. Créez-en une pour commencer !",
     "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer cette habitude ? Tout l'historique sera perdu.",
     "options": "Options",
@@ -27,7 +28,7 @@
     "deleteHabitWebMessage": "Supprimer \"{{name}}\" ?\n\nCela supprimera définitivement toutes les options et les entrées.",
     "optionLabel": "Libellé",
     "optionValue": "Valeur",
-    "optionLabelPlaceholder": "Libellé (ex. +1)"
+    "optionLabelPlaceholder": "Libellé de l'option"
   },
   "history": {
     "title": "Historique",

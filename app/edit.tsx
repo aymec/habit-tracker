@@ -253,6 +253,9 @@ export default function ModalScreen() {
             <Text style={[styles.sectionHeader, { color: theme.colors.text }]}>
               {t('habits.habitName')}
             </Text>
+            <Text style={[styles.inputHint, { color: theme.colors.text }]}>
+              {t('habits.habitNamePlaceholder')}
+            </Text>
             <TextInput
               style={[
                 styles.input,
@@ -265,8 +268,6 @@ export default function ModalScreen() {
               ]}
               value={habitName}
               onChangeText={setHabitName}
-              placeholder="e.g., Drink Water"
-              placeholderTextColor={theme.colors.textSecondary}
               autoFocus
             />
             <TouchableOpacity
@@ -298,7 +299,7 @@ export default function ModalScreen() {
                   ]}
                   value={editedHabitName}
                   onChangeText={setEditedHabitName}
-                  placeholder="e.g., Drink Water"
+                  placeholder={t('habits.habitNamePlaceholder')}
                   placeholderTextColor={theme.colors.textSecondary}
                   autoFocus
                 />
@@ -387,24 +388,25 @@ export default function ModalScreen() {
             {/* Add New Option Area */}
             {isAddingOption ? (
               <View style={[styles.editOptionContainer, { backgroundColor: theme.colors.card, borderColor: theme.colors.border, marginTop: 10 }]}>
-                <Text style={{ color: theme.colors.text, marginBottom: 5, fontWeight: '600' }}>{t('habits.newOption')}</Text>
                 <View style={styles.inputRow}>
-                  <TextInput
-                    style={[styles.miniInput, { flex: 2, color: theme.colors.text, borderColor: theme.colors.border }]}
-                    value={optionLabel}
-                    onChangeText={setOptionLabel}
-                    placeholder={t('habits.optionLabelPlaceholder')}
-                    placeholderTextColor={theme.colors.textSecondary}
-                    autoFocus
-                  />
-                  <TextInput
-                    style={[styles.miniInput, { flex: 1, color: theme.colors.text, borderColor: theme.colors.border }]}
-                    value={optionValue}
-                    onChangeText={setOptionValue}
-                    placeholder={t('habits.optionValue')}
-                    placeholderTextColor={theme.colors.textSecondary}
-                    keyboardType="numeric"
-                  />
+                  <View style={{ flex: 2 }}>
+                    <Text style={[styles.inputLabel, { color: theme.colors.text }]}>{t('habits.optionLabelPlaceholder')}</Text>
+                    <TextInput
+                      style={[styles.miniInput, { color: theme.colors.text, borderColor: theme.colors.border }]}
+                      value={optionLabel}
+                      onChangeText={setOptionLabel}
+                      autoFocus
+                    />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={[styles.inputLabel, { color: theme.colors.text }]}>{t('habits.optionValue')}</Text>
+                    <TextInput
+                      style={[styles.miniInput, { color: theme.colors.text, borderColor: theme.colors.border }]}
+                      value={optionValue}
+                      onChangeText={setOptionValue}
+                      keyboardType="numeric"
+                    />
+                  </View>
                 </View>
                 <View style={styles.editActions}>
                   <TouchableOpacity onPress={cancelOptionEdit} style={styles.miniButton}>
@@ -513,6 +515,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 15,
   },
+  inputHint: {
+    fontSize: 14,
+    fontWeight: 'normal',
+    marginBottom: 8,
+  },
   optionRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -555,6 +562,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 6,
     paddingHorizontal: 10,
+  },
+  inputLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    marginBottom: 5,
   },
   editActions: {
     flexDirection: 'row',
