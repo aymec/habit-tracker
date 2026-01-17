@@ -35,22 +35,6 @@ export default function GoalScreen() {
               <Ionicons name="chevron-back" size={28} color={theme.colors.primary} />
             </TouchableOpacity>
           ),
-          headerRight: () => (
-            <View style={styles.headerRight}>
-              <TouchableOpacity
-                onPress={() => router.push({ pathname: '/(tabs)/(home)/edit', params: { mode: 'edit' } })}
-                style={styles.iconButton}
-              >
-                <Ionicons name="create-outline" size={24} color={theme.colors.text} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => router.push('/(tabs)/(home)/history')}
-                style={styles.iconButton}
-              >
-                <Ionicons name="time-outline" size={24} color={theme.colors.text} />
-              </TouchableOpacity>
-            </View>
-          ),
         }}
       />
 
@@ -89,6 +73,22 @@ export default function GoalScreen() {
           ))}
         </View>
       </ScrollView>
+
+      {/* Toolbar */}
+      <View style={[styles.toolbar, { backgroundColor: 'transparent' }]} pointerEvents="box-none">
+        <TouchableOpacity
+          onPress={() => router.push({ pathname: '/(tabs)/(home)/edit', params: { mode: 'edit' } })}
+          style={[styles.toolbarButton, { borderColor: theme.colors.border, backgroundColor: theme.colors.background }]}
+        >
+          <Ionicons name="build-outline" size={24} color={theme.colors.text} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => router.push('/(tabs)/(home)/history')}
+          style={[styles.toolbarButton, { borderColor: theme.colors.border, backgroundColor: theme.colors.background }]}
+        >
+          <Ionicons name="calendar-number-outline" size={24} color={theme.colors.text} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -100,18 +100,30 @@ const styles = StyleSheet.create({
   headerLeft: {
     padding: 4,
   },
-  headerRight: {
+  toolbar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
     flexDirection: 'row',
-    gap: 10,
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingVertical: 15,
   },
-  iconButton: {
-    padding: 4,
+  toolbarButton: {
+    width: 44,
+    height: 44,
+    borderWidth: 1,
+    borderRadius: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   content: {
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 40,
+    paddingTop: 20,
+    paddingBottom: 80,
   },
   counterContainer: {
     alignItems: 'center',
