@@ -88,6 +88,7 @@ const LANGUAGE_DETECTOR = {
   },
 };
 
+// eslint-disable-next-line import/no-named-as-default-member
 i18n
   .use(LANGUAGE_DETECTOR)
   .use(initReactI18next)

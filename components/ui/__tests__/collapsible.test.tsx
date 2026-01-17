@@ -7,24 +7,24 @@ jest.mock('@/hooks/use-color-scheme');
 
 // Mock the icon component (it uses native symbols which don't work in tests)
 jest.mock('@/components/ui/icon-symbol', () => ({
-  IconSymbol: ({ name, style }: any) => {
-    const { Text } = require('react-native');
-    return <Text testID={`icon-${name}`} style={style}>Icon</Text>;
+  IconSymbol: ({ name, style }: { name: string; style: object }) => {
+    const { Text: RNText } = jest.requireActual('react-native');
+    return <RNText testID={`icon-${name}`} style={style}>Icon</RNText>;
   },
 }));
 
 // Mock themed components - they just pass through for testing
 jest.mock('@/components/themed-text', () => ({
-  ThemedText: ({ children, ...props }: any) => {
-    const { Text } = require('react-native');
-    return <Text {...props}>{children}</Text>;
+  ThemedText: ({ children, ...props }: { children: React.ReactNode }) => {
+    const { Text: RNText } = jest.requireActual('react-native');
+    return <RNText {...props}>{children}</RNText>;
   },
 }));
 
 jest.mock('@/components/themed-view', () => ({
-  ThemedView: ({ children, ...props }: any) => {
-    const { View } = require('react-native');
-    return <View {...props}>{children}</View>;
+  ThemedView: ({ children, ...props }: { children: React.ReactNode }) => {
+    const { View: RNView } = jest.requireActual('react-native');
+    return <RNView {...props}>{children}</RNView>;
   },
 }));
 

@@ -1,16 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Platform } from 'react-native';
 import {
   getHabits,
   saveHabits,
   addHabit,
   updateHabit,
   deleteHabit,
-  getOptions,
   getOptionsForHabit,
   addOption,
-  deleteOption,
-  getEntries,
   getEntriesForHabit,
   addEntry,
   deleteEntry,
