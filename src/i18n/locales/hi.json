@@ -14,7 +14,7 @@
   },
   "habits": {
     "title": "लक्ष्य",
-    "newHabit": "नया लक्ष्य",
+    "newHabit": "नया लक्ष्य सेट करें",
     "editHabit": "लक्ष्य संपादित करें",
     "habitName": "लक्ष्य का नाम",
     "habitNamePlaceholder": "जैसे, पानी पीना",

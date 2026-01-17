@@ -14,7 +14,7 @@
   },
   "habits": {
     "title": "Goals",
-    "newHabit": "New Goal",
+    "newHabit": "Set New Goal",
     "editHabit": "Edit Goal",
     "habitName": "Goal Name",
     "habitNamePlaceholder": "e.g., Drink Water",

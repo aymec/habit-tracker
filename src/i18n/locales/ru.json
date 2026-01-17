@@ -14,7 +14,7 @@
   },
   "habits": {
     "title": "Цели",
-    "newHabit": "Новая цель",
+    "newHabit": "Установить цель",
     "editHabit": "Редактировать цель",
     "habitName": "Название цели",
     "habitNamePlaceholder": "напр., Пить воду",

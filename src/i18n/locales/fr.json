@@ -14,7 +14,7 @@
   },
   "habits": {
     "title": "Objectifs",
-    "newHabit": "Nouvel objectif",
+    "newHabit": "Définir un objectif",
     "editHabit": "Modifier l'objectif",
     "habitName": "Nom de l'objectif",
     "habitNamePlaceholder": "ex., Boire de l'eau",

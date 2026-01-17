@@ -14,7 +14,7 @@
   },
   "habits": {
     "title": "目標",
-    "newHabit": "新增目標",
+    "newHabit": "設定新目標",
     "editHabit": "編輯目標",
     "habitName": "目標名稱",
     "habitNamePlaceholder": "例如，喝水",

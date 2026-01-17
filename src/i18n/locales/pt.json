@@ -14,7 +14,7 @@
   },
   "habits": {
     "title": "Metas",
-    "newHabit": "Nova Meta",
+    "newHabit": "Definir Nova Meta",
     "editHabit": "Editar Meta",
     "habitName": "Nome da Meta",
     "habitNamePlaceholder": "ex., Beber Água",
