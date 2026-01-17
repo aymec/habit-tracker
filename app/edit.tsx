@@ -427,6 +427,18 @@ export default function ModalScreen() {
           </View>
         )}
 
+        {/* Save Button */}
+        {isEditing && activeHabit && (
+          <View style={styles.saveSection}>
+            <TouchableOpacity
+              style={[styles.saveButton, { backgroundColor: theme.colors.primary }]}
+              onPress={() => router.back()}
+            >
+              <Text style={styles.saveButtonText}>{t('common.save')}</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
         {/* Delete Habit Section */}
         {isEditing && activeHabit && (
           <View style={[styles.deleteSection, { borderTopColor: theme.colors.border }]}>
@@ -564,6 +576,22 @@ const styles = StyleSheet.create({
     marginTop: 15,
     borderStyle: 'dashed',
     gap: 5,
+  },
+  saveSection: {
+    marginTop: 30,
+  },
+  saveButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+  },
+  saveButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   deleteSection: {
     marginTop: 20,
