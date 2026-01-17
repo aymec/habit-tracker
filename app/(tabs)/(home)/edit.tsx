@@ -19,7 +19,7 @@ export default function ModalScreen() {
   // Redirect to home if no habits exist (data was cleared) - only when screen is focused
   useEffect(() => {
     if (isFocused && habits.length === 0) {
-      router.replace('/(tabs)/(home)');
+      router.dismissAll();
     }
   }, [habits, router, isFocused]);
 
