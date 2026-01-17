@@ -46,8 +46,12 @@ export const HabitProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
       if (loadedHabits.length === 0) {
         setActiveHabitId(null);
-      } else if (!activeHabitId && loadedHabits.length > 0) {
-        setActiveHabitId(loadedHabits[0].id);
+      } else if (loadedHabits.length > 0) {
+        // Select first habit if no active habit, or if current active habit no longer exists
+        const activeHabitExists = loadedHabits.some(h => h.id === activeHabitId);
+        if (!activeHabitId || !activeHabitExists) {
+          setActiveHabitId(loadedHabits[0].id);
+        }
       }
     } catch (error) {
       console.error('Failed to load habits:', error);
