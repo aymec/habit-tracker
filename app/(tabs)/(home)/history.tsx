@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity, Alert, Platform } from 'react-native';
 import { useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 import { useHabit } from '../../../src/context/HabitContext';
@@ -23,21 +23,28 @@ export default function EntryHistoryScreen() {
   }, [habits, router, isFocused]);
 
   const handleDeleteEntry = (entry: Entry) => {
-    Alert.alert(
-      t('common.delete'),
-      t('history.deleteEntryConfirmation'),
-      [
-        {
-          text: t('common.cancel'),
-          style: 'cancel',
-        },
-        {
-          text: t('common.delete'),
-          style: 'destructive',
-          onPress: () => removeEntry(entry.id),
-        },
-      ]
-    );
+    if (Platform.OS === 'web') {
+      const confirmed = window.confirm(t('history.deleteEntryConfirmation'));
+      if (confirmed) {
+        removeEntry(entry.id);
+      }
+    } else {
+      Alert.alert(
+        t('common.delete'),
+        t('history.deleteEntryConfirmation'),
+        [
+          {
+            text: t('common.cancel'),
+            style: 'cancel',
+          },
+          {
+            text: t('common.delete'),
+            style: 'destructive',
+            onPress: () => removeEntry(entry.id),
+          },
+        ]
+      );
+    }
   };
 
   const formatDate = (isoString: string) => {
