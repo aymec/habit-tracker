@@ -10,7 +10,9 @@
     "back": "Zurück",
     "set": "Einstellen",
     "clearAll": "Alles löschen",
-    "error": "Fehler"
+    "error": "Fehler",
+    "next": "Weiter",
+    "skip": "Überspringen"
   },
   "habits": {
     "title": "Ziele",
@@ -28,7 +30,27 @@
     "deleteHabitWebMessage": "\"{name}\" löschen?\n\nDadurch werden alle Optionen und Einträge dauerhaft gelöscht.",
     "optionLabel": "Beschriftung",
     "optionValue": "Wert",
-    "optionLabelPlaceholder": "Optionsbezeichnung"
+    "optionLabelPlaceholder": "Optionsbezeichnung",
+    "goal": "Ziel",
+    "target": "Ziel",
+    "setTarget": "Ziel festlegen",
+    "targetOptional": "Dieser Schritt ist optional",
+    "targetHint": "z.B. 2 Liter pro Tag",
+    "targetValueRequired": "Bitte geben Sie einen gültigen Zielwert ein",
+    "skipTargetConfirmTitle": "Kein Ziel festgelegt",
+    "skipTargetConfirmMessage": "Ohne Ziel fortfahren? Sie können später jederzeit eines hinzufügen.",
+    "invalidTargetTitle": "Ungültiger Wert",
+    "invalidTargetMessage": "Bitte geben Sie eine gültige Zahl ein oder fahren Sie ohne Ziel fort. Sie können später jederzeit eines hinzufügen.",
+    "noTarget": "Nicht festgelegt",
+    "per": "pro",
+    "targetDisplay": "{{value}} pro {{period}}",
+    "vsTarget": "vs. {{value}} pro {{period}}",
+    "period": {
+      "day": "Tag",
+      "week": "Woche",
+      "month": "Monat",
+      "year": "Jahr"
+    }
   },
   "history": {
     "title": "Verlauf",

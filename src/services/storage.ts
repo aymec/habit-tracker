@@ -159,40 +159,97 @@ export const populateTestData = async (): Promise<void> => {
     await clearAllData();
   }
 
+  const now = new Date();
 
-  const startDate = new Date('2025-12-15T00:00:00.000Z');
-  const endDate = new Date('2026-01-10T23:59:59.999Z');
+  // Generate dynamic Drink Water entries for the last 7 days
+  const drinkWaterOptions = [
+    { label: 'Glass S', value: 0.15 },
+    { label: 'Glass L', value: 0.25 },
+    { label: 'Bottle', value: 0.5 },
+  ];
+  const drinkWaterHabitId = '1768195720601';
+  const drinkWaterEntries: Entry[] = [];
+  let drinkWaterTotal = 0;
 
-  const getRandomDateInRange = () => {
-    const startMillis = startDate.getTime();
-    const endMillis = endDate.getTime();
-    const randomMillis = startMillis + Math.random() * (endMillis - startMillis);
-    return new Date(randomMillis).toISOString();
-  };
+  for (let daysAgo = 0; daysAgo < 7; daysAgo++) {
+    const day = new Date(now);
+    day.setDate(day.getDate() - daysAgo);
+    day.setHours(0, 0, 0, 0);
 
-  const habitsData: Habit[] = JSON.parse('[{"createdAt": "2026-01-12T06:11:02.233Z", "id": "1768198262233", "name": "Fruits & Vegetables 😋", "totalCount": 42}, {"createdAt": "2026-01-12T05:28:40.601Z", "id": "1768195720601", "name": "Drink Water 💦", "totalCount": 105}, {"createdAt": "2026-01-12T05:33:23.754Z", "id": "1768196003754", "name": "Reading 📚", "totalCount": 43}]');
+    // 3-7 entries per day
+    const entriesPerDay = Math.floor(Math.random() * 5) + 3;
 
-  const optionsData: Option[] = JSON.parse('[{"habitId": "1768195720601", "id": "1768195720829", "label": "Glass S", "value": 15}, {"habitId": "1768195720601", "id": "1768195744249", "label": "Glass L", "value": 25}, {"habitId": "1768195720601", "id": "1768195751749", "label": "Bottle", "value": 50}, {"habitId": "1768196003754", "id": "1768196003922", "label": "1 page", "value": 1}, {"habitId": "1768196003754", "id": "1768196037339", "label": "10 pages", "value": 10}, {"habitId": "1768198262233", "id": "1768198262453", "label": "🍏", "value": 1}, {"habitId": "1768198262233", "id": "1768198359819", "label": "🍌", "value": 1}, {"habitId": "1768198262233", "id": "1768198366820", "label": "🥑", "value": 1}, {"habitId": "1768198262233", "id": "1768198374136", "label": "🍅", "value": 1}, {"habitId": "1768198262233", "id": "1768198382019", "label": "🥝", "value": 1}]');
+    for (let i = 0; i < entriesPerDay; i++) {
+      const option = drinkWaterOptions[Math.floor(Math.random() * drinkWaterOptions.length)];
+      const timestamp = new Date(day);
+      timestamp.setHours(8 + Math.floor(Math.random() * 12), Math.floor(Math.random() * 60), Math.floor(Math.random() * 60));
 
-  const entriesData: Entry[] = JSON.parse('[{"habitId": "1768195720601", "id": "1768195834951", "label": "Glass S", "timestamp": "2026-01-12T05:30:34.951Z", "value": 15}, {"habitId": "1768195720601", "id": "1768195836399", "label": "Glass S", "timestamp": "2026-01-12T05:30:36.399Z", "value": 15}, {"habitId": "1768195720601", "id": "1768195838966", "label": "Bottle", "timestamp": "2026-01-12T05:30:38.966Z", "value": 50}, {"habitId": "1768195720601", "id": "1768195841699", "label": "Glass L", "timestamp": "2026-01-12T05:30:41.699Z", "value": 25}, {"habitId": "1768196003754", "id": "1768196363298", "label": "1 page", "timestamp": "2026-01-12T05:39:23.298Z", "value": 1}, {"habitId": "1768196003754", "id": "1768196365564", "label": "1 page", "timestamp": "2026-01-12T05:39:25.564Z", "value": 1}, {"habitId": "1768196003754", "id": "1768196365748", "label": "1 page", "timestamp": "2026-01-12T05:39:25.748Z", "value": 1}, {"habitId": "1768196003754", "id": "1768196365915", "label": "1 page", "timestamp": "2026-01-12T05:39:25.915Z", "value": 1}, {"habitId": "1768196003754", "id": "1768196366398", "label": "1 page", "timestamp": "2026-01-12T05:39:26.398Z", "value": 1}, {"habitId": "1768196003754", "id": "1768196368616", "label": "10 pages", "timestamp": "2026-01-12T05:39:28.616Z", "value": 10}, {"habitId": "1768196003754", "id": "1768196368916", "label": "10 pages", "timestamp": "2026-01-12T05:39:28.916Z", "value": 10}, {"habitId": "1768196003754", "id": "1768196369381", "label": "1 page", "timestamp": "2026-01-12T05:39:29.381Z", "value": 1}, {"habitId": "1768196003754", "id": "1768196370865", "label": "10 pages", "timestamp": "2026-01-12T05:39:30.865Z", "value": 10}, {"habitId": "1768196003754", "id": "1768196371231", "label": "1 page", "timestamp": "2026-01-12T05:39:31.231Z", "value": 1}, {"habitId": "1768196003754", "id": "1768196371381", "label": "1 page", "timestamp": "2026-01-12T05:39:31.381Z", "value": 1}, {"habitId": "1768196003754", "id": "1768196371514", "label": "1 page", "timestamp": "2026-01-12T05:39:31.514Z", "value": 1}, {"habitId": "1768196003754", "id": "1768196376302", "label": "1 page", "timestamp": "2026-01-12T05:39:36.302Z", "value": 1}, {"habitId": "1768196003754", "id": "1768196376465", "label": "1 page", "timestamp": "2026-01-12T05:39:36.465Z", "value": 1}, {"habitId": "1768196003754", "id": "1768196376605", "label": "1 page", "timestamp": "2026-01-12T05:39:36.605Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400001", "label": "🍏", "timestamp": "2026-01-12T06:12:00.001Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400002", "label": "🍌", "timestamp": "2026-01-12T06:12:00.002Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400003", "label": "🥑", "timestamp": "2026-01-12T06:12:00.003Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400004", "label": "🍅", "timestamp": "2026-01-12T06:12:00.004Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400005", "label": "🥝", "timestamp": "2026-01-12T06:12:00.005Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400006", "label": "🍏", "timestamp": "2026-01-12T06:12:00.006Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400007", "label": "🍌", "timestamp": "2026-01-12T06:12:00.007Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400008", "label": "🥑", "timestamp": "2026-01-12T06:12:00.008Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400009", "label": "🍅", "timestamp": "2026-01-12T06:12:00.009Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400010", "label": "🥝", "timestamp": "2026-01-12T06:12:00.010Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400011", "label": "🍏", "timestamp": "2026-01-12T06:12:00.011Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400012", "label": "🍌", "timestamp": "2026-01-12T06:12:00.012Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400013", "label": "🥑", "timestamp": "2026-01-12T06:12:00.013Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400014", "label": "🍅", "timestamp": "2026-01-12T06:12:00.014Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400015", "label": "🥝", "timestamp": "2026-01-12T06:12:00.015Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400016", "label": "🍏", "timestamp": "2026-01-12T06:12:00.016Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400017", "label": "🍌", "timestamp": "2026-01-12T06:12:00.017Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400018", "label": "🥑", "timestamp": "2026-01-12T06:12:00.018Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400019", "label": "🍅", "timestamp": "2026-01-12T06:12:00.019Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400020", "label": "🥝", "timestamp": "2026-01-12T06:12:00.020Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400021", "label": "🍏", "timestamp": "2026-01-12T06:12:00.021Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400022", "label": "🍌", "timestamp": "2026-01-12T06:12:00.022Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400023", "label": "🥑", "timestamp": "2026-01-12T06:12:00.023Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400024", "label": "🍅", "timestamp": "2026-01-12T06:12:00.024Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400025", "label": "🥝", "timestamp": "2026-01-12T06:12:00.025Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400026", "label": "🍏", "timestamp": "2026-01-12T06:12:00.026Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400027", "label": "🍌", "timestamp": "2026-01-12T06:12:00.027Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400028", "label": "🥑", "timestamp": "2026-01-12T06:12:00.028Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400029", "label": "🍅", "timestamp": "2026-01-12T06:12:00.029Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400030", "label": "🥝", "timestamp": "2026-01-12T06:12:00.030Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400031", "label": "🍏", "timestamp": "2026-01-12T06:12:00.031Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400032", "label": "🍌", "timestamp": "2026-01-12T06:12:00.032Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400033", "label": "🥑", "timestamp": "2026-01-12T06:12:00.033Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400034", "label": "🍅", "timestamp": "2026-01-12T06:12:00.034Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400035", "label": "🥝", "timestamp": "2026-01-12T06:12:00.035Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400036", "label": "🍏", "timestamp": "2026-01-12T06:12:00.036Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400037", "label": "🍌", "timestamp": "2026-01-12T06:12:00.037Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400038", "label": "🥑", "timestamp": "2026-01-12T06:12:00.038Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400039", "label": "🍅", "timestamp": "2026-01-12T06:12:00.039Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400040", "label": "🥝", "timestamp": "2026-01-12T06:12:00.040Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400041", "label": "🍏", "timestamp": "2026-01-12T06:12:00.041Z", "value": 1}, {"habitId": "1768198262233", "id": "1768198400042", "label": "🍌", "timestamp": "2026-01-12T06:12:00.042Z", "value": 1}]');
+      drinkWaterEntries.push({
+        habitId: drinkWaterHabitId,
+        id: `dw-${daysAgo}-${i}-${Date.now()}`,
+        label: option.label,
+        timestamp: timestamp.toISOString(),
+        value: option.value,
+      });
+      drinkWaterTotal += option.value;
+    }
+  }
 
-  // Randomize createdAt for habits
-  const habits = habitsData.map(habit => ({
-    ...habit,
-    createdAt: getRandomDateInRange(),
-  }));
+  const habitsData: Habit[] = [
+    { createdAt: new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000).toISOString(), id: '1768198262233', name: 'Fruits & Vegetables 😋', totalCount: 42, target: { value: 5, period: 'day' } },
+    { createdAt: new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000).toISOString(), id: drinkWaterHabitId, name: 'Drink Water 💦', totalCount: Math.round(drinkWaterTotal * 100) / 100, target: { value: 2, period: 'day' } },
+    { createdAt: new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000).toISOString(), id: '1768196003754', name: 'Reading 📚', totalCount: 3, target: { value: 50, period: 'year' } },
+  ];
 
-  // Randomize timestamp for entries
-  const entries = entriesData.map(entry => ({
-    ...entry,
-    timestamp: getRandomDateInRange(),
-  }));
+  const optionsData: Option[] = JSON.parse('[{"habitId": "1768195720601", "id": "1768195720829", "label": "Glass S", "value": 0.15}, {"habitId": "1768195720601", "id": "1768195744249", "label": "Glass L", "value": 0.25}, {"habitId": "1768195720601", "id": "1768195751749", "label": "Bottle", "value": 0.5}, {"habitId": "1768196003754", "id": "1768196003922", "label": "One book", "value": 1}, {"habitId": "1768198262233", "id": "1768198262453", "label": "🍏", "value": 1}, {"habitId": "1768198262233", "id": "1768198359819", "label": "🍌", "value": 1}, {"habitId": "1768198262233", "id": "1768198366820", "label": "🥑", "value": 1}, {"habitId": "1768198262233", "id": "1768198374136", "label": "🍅", "value": 1}, {"habitId": "1768198262233", "id": "1768198382019", "label": "🥝", "value": 1}]');
 
-  const options = optionsData; // Options don't have dates to randomize
+  // Static entries for Reading and Fruits & Vegetables (with dynamic dates)
+  const staticEntries: Entry[] = [];
 
-  await saveHabits(habits);
-  await saveOptions(options);
-  await saveEntries(entries);
+  // Reading entries - spread over last 30 days
+  const readingDates = [3, 15, 25];
+  readingDates.forEach((daysAgo, i) => {
+    const date = new Date(now);
+    date.setDate(date.getDate() - daysAgo);
+    staticEntries.push({
+      habitId: '1768196003754',
+      id: `reading-${i}-${Date.now()}`,
+      label: 'One book',
+      timestamp: date.toISOString(),
+      value: 1,
+    });
+  });
+
+  // Fruits & Vegetables entries - spread over last 7 days
+  const fruitEmojis = ['🍏', '🍌', '🥑', '🍅', '🥝'];
+  for (let daysAgo = 0; daysAgo < 7; daysAgo++) {
+    const day = new Date(now);
+    day.setDate(day.getDate() - daysAgo);
+    // 5-7 fruits per day
+    const fruitsPerDay = Math.floor(Math.random() * 3) + 5;
+    for (let i = 0; i < fruitsPerDay; i++) {
+      const emoji = fruitEmojis[Math.floor(Math.random() * fruitEmojis.length)];
+      const timestamp = new Date(day);
+      timestamp.setHours(7 + Math.floor(Math.random() * 14), Math.floor(Math.random() * 60));
+      staticEntries.push({
+        habitId: '1768198262233',
+        id: `fruit-${daysAgo}-${i}-${Date.now()}`,
+        label: emoji,
+        timestamp: timestamp.toISOString(),
+        value: 1,
+      });
+    }
+  }
+
+  // Calculate actual fruit total
+  const fruitTotal = staticEntries.filter(e => e.habitId === '1768198262233').length;
+  habitsData[0].totalCount = fruitTotal;
+
+  const allEntries = [...drinkWaterEntries, ...staticEntries];
+
+  await saveHabits(habitsData);
+  await saveOptions(optionsData);
+  await saveEntries(allEntries);
 
   console.log('Test data populated.');
 };

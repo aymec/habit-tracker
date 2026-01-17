@@ -10,7 +10,9 @@
     "back": "Terug",
     "set": "Instellen",
     "clearAll": "Alles wissen",
-    "error": "Fout"
+    "error": "Fout",
+    "next": "Volgende",
+    "skip": "Overslaan"
   },
   "habits": {
     "title": "Doelen",
@@ -28,7 +30,27 @@
     "deleteHabitWebMessage": "\"{name}\" verwijderen?\n\nDit zal alle opties en invoeren permanent verwijderen.",
     "optionLabel": "Label",
     "optionValue": "Waarde",
-    "optionLabelPlaceholder": "Optielabel"
+    "optionLabelPlaceholder": "Optielabel",
+    "goal": "Doel",
+    "target": "Doel",
+    "setTarget": "Doel instellen",
+    "targetOptional": "Deze stap is optioneel",
+    "targetHint": "bijv. 2 liter per dag",
+    "targetValueRequired": "Voer een geldig doel in",
+    "skipTargetConfirmTitle": "Geen doel ingesteld",
+    "skipTargetConfirmMessage": "Doorgaan zonder doel? Je kunt er later altijd een toevoegen.",
+    "invalidTargetTitle": "Ongeldige waarde",
+    "invalidTargetMessage": "Voer een geldig getal in of ga door zonder doel. Je kunt er later altijd een toevoegen.",
+    "noTarget": "Niet ingesteld",
+    "per": "per",
+    "targetDisplay": "{{value}} per {{period}}",
+    "vsTarget": "vs. {{value}} per {{period}}",
+    "period": {
+      "day": "dag",
+      "week": "week",
+      "month": "maand",
+      "year": "jaar"
+    }
   },
   "history": {
     "title": "Geschiedenis",

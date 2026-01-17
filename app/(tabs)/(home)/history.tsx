@@ -1,15 +1,26 @@
 import { StyleSheet, View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { useEffect } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { Entry } from '../../../src/models/types';
 
 export default function EntryHistoryScreen() {
-  const { activeHabitEntries, removeEntry, activeHabit } = useHabit();
+  const { activeHabitEntries, removeEntry, activeHabit, habits } = useHabit();
   const { theme } = useTheme();
   const { t } = useTranslation();
+  const router = useRouter();
+  const isFocused = useIsFocused();
+
+  // Redirect to home if no habits exist (data was cleared) - only when screen is focused
+  useEffect(() => {
+    if (isFocused && habits.length === 0) {
+      router.replace('/(tabs)/(home)');
+    }
+  }, [habits, router, isFocused]);
 
   const handleDeleteEntry = (entry: Entry) => {
     Alert.alert(

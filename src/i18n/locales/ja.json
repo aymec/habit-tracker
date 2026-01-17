@@ -10,7 +10,9 @@
     "back": "戻る",
     "set": "設定",
     "clearAll": "すべてクリア",
-    "error": "エラー"
+    "error": "エラー",
+    "next": "次へ",
+    "skip": "スキップ"
   },
   "habits": {
     "title": "目標",
@@ -28,7 +30,27 @@
     "deleteHabitWebMessage": "「{{name}}」を削除しますか？\n\nこれにより、すべてのオプションと履歴が完全に削除されます。",
     "optionLabel": "ラベル",
     "optionValue": "値",
-    "optionLabelPlaceholder": "オプションラベル"
+    "optionLabelPlaceholder": "オプションラベル",
+    "goal": "目標",
+    "target": "目標",
+    "setTarget": "目標を設定",
+    "targetOptional": "このステップは任意です",
+    "targetHint": "例: 1日2リットル",
+    "targetValueRequired": "有効な目標値を入力してください",
+    "skipTargetConfirmTitle": "目標未設定",
+    "skipTargetConfirmMessage": "目標を設定せずに続けますか？後からいつでも追加できます。",
+    "invalidTargetTitle": "無効な値",
+    "invalidTargetMessage": "有効な数値を入力するか、目標を設定せずに続けてください。後からいつでも追加できます。",
+    "noTarget": "未設定",
+    "per": "/",
+    "targetDisplay": "{{period}}{{value}}",
+    "vsTarget": "vs. {{period}}{{value}}",
+    "period": {
+      "day": "日",
+      "week": "週",
+      "month": "月",
+      "year": "年"
+    }
   },
   "history": {
     "title": "履歴",

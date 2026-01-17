@@ -1,5 +1,4 @@
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
@@ -18,14 +17,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.header }]} edges={['top']}>
-      {/* Header */}
-      <View style={[styles.header, { borderBottomColor: theme.colors.border, backgroundColor: theme.colors.header }]}>
-        <Text style={[styles.headerTitle, { color: theme.colors.text }]}>
-          {t('habits.title')}
-        </Text>
-      </View>
-
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {habits.length === 0 ? (
         <View style={[styles.emptyState, { backgroundColor: theme.colors.background }]}>
           <Ionicons name="clipboard-outline" size={80} color={theme.colors.textSecondary} />
@@ -64,29 +56,18 @@ export default function HomeScreen() {
       <View style={[styles.footer, { backgroundColor: theme.colors.background }]}>
         <TouchableOpacity
           style={[styles.addButton, { backgroundColor: theme.colors.primary }]}
-          onPress={() => router.push('/(tabs)/(home)/edit')}
+          onPress={() => router.push('/(tabs)/(home)/name')}
         >
           <Text style={styles.addButtonText}>{t('habits.newHabit')}</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-    borderBottomWidth: 1,
-  },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
   },
   emptyState: {
     flex: 1,

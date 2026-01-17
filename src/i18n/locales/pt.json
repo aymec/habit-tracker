@@ -10,7 +10,9 @@
     "back": "Voltar",
     "set": "Definir",
     "clearAll": "Limpar tudo",
-    "error": "Erro"
+    "error": "Erro",
+    "next": "Próximo",
+    "skip": "Pular"
   },
   "habits": {
     "title": "Metas",
@@ -28,7 +30,27 @@
     "deleteHabitWebMessage": "Excluir \"{{name}}\"?\n\nIsso excluirá permanentemente todas as opções e registros.",
     "optionLabel": "Rótulo",
     "optionValue": "Valor",
-    "optionLabelPlaceholder": "Rótulo da opção"
+    "optionLabelPlaceholder": "Rótulo da opção",
+    "goal": "Meta",
+    "target": "Meta",
+    "setTarget": "Definir meta",
+    "targetOptional": "Esta etapa é opcional",
+    "targetHint": "ex. 2 litros por dia",
+    "targetValueRequired": "Por favor insira um valor de meta válido",
+    "skipTargetConfirmTitle": "Nenhuma meta definida",
+    "skipTargetConfirmMessage": "Continuar sem definir uma meta? Você pode adicionar uma depois.",
+    "invalidTargetTitle": "Valor inválido",
+    "invalidTargetMessage": "Por favor insira um número válido ou continue sem definir uma meta. Você pode adicionar uma depois.",
+    "noTarget": "Não definido",
+    "per": "por",
+    "targetDisplay": "{{value}} por {{period}}",
+    "vsTarget": "vs. {{value}} por {{period}}",
+    "period": {
+      "day": "dia",
+      "week": "semana",
+      "month": "mês",
+      "year": "ano"
+    }
   },
   "history": {
     "title": "Histórico",

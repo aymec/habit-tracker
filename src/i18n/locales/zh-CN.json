@@ -10,7 +10,9 @@
     "back": "返回",
     "set": "设置",
     "clearAll": "全部清除",
-    "error": "错误"
+    "error": "错误",
+    "next": "下一步",
+    "skip": "跳过"
   },
   "habits": {
     "title": "目标",
@@ -28,7 +30,27 @@
     "deleteHabitWebMessage": "删除 \"{{name}}\"？\n\n这将永久删除所有选项和记录。",
     "optionLabel": "标签",
     "optionValue": "数值",
-    "optionLabelPlaceholder": "选项标签"
+    "optionLabelPlaceholder": "选项标签",
+    "goal": "目标",
+    "target": "目标",
+    "setTarget": "设置目标",
+    "targetOptional": "此步骤为可选",
+    "targetHint": "例如：每天2公升",
+    "targetValueRequired": "请输入有效的目标值",
+    "skipTargetConfirmTitle": "未设置目标",
+    "skipTargetConfirmMessage": "不设置目标继续？您可以稍后添加。",
+    "invalidTargetTitle": "无效值",
+    "invalidTargetMessage": "请输入有效的数字，或不设置目标继续。您可以稍后添加。",
+    "noTarget": "未设置",
+    "per": "每",
+    "targetDisplay": "每{{period}}{{value}}",
+    "vsTarget": "vs. 每{{period}}{{value}}",
+    "period": {
+      "day": "天",
+      "week": "周",
+      "month": "月",
+      "year": "年"
+    }
   },
   "history": {
     "title": "历史",

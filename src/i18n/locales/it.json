@@ -10,7 +10,9 @@
     "back": "Indietro",
     "set": "Imposta",
     "clearAll": "Cancella tutto",
-    "error": "Errore"
+    "error": "Errore",
+    "next": "Avanti",
+    "skip": "Salta"
   },
   "habits": {
     "title": "Obiettivi",
@@ -28,7 +30,27 @@
     "deleteHabitWebMessage": "Eliminare \"{{name}}\"?\n\nQuesto cancellerà permanentemente tutte le opzioni e le voci.",
     "optionLabel": "Etichetta",
     "optionValue": "Valore",
-    "optionLabelPlaceholder": "Etichetta opzione"
+    "optionLabelPlaceholder": "Etichetta opzione",
+    "goal": "Obiettivo",
+    "target": "Obiettivo",
+    "setTarget": "Imposta obiettivo",
+    "targetOptional": "Questo passaggio è facoltativo",
+    "targetHint": "es. 2 litri al giorno",
+    "targetValueRequired": "Inserisci un valore obiettivo valido",
+    "skipTargetConfirmTitle": "Nessun obiettivo impostato",
+    "skipTargetConfirmMessage": "Continuare senza impostare un obiettivo? Potrai aggiungerne uno in seguito.",
+    "invalidTargetTitle": "Valore non valido",
+    "invalidTargetMessage": "Inserisci un numero valido o continua senza impostare un obiettivo. Potrai aggiungerne uno in seguito.",
+    "noTarget": "Non impostato",
+    "per": "al",
+    "targetDisplay": "{{value}} al {{period}}",
+    "vsTarget": "vs. {{value}} al {{period}}",
+    "period": {
+      "day": "giorno",
+      "week": "settimana",
+      "month": "mese",
+      "year": "anno"
+    }
   },
   "history": {
     "title": "Cronologia",

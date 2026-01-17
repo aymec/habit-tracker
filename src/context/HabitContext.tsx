@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import type { FC, ReactNode } from 'react';
-import { Habit, Option, Entry } from '../models/types';
+import { Habit, Option, Entry, HabitTarget } from '../models/types';
 import * as Storage from '../services/storage';
 
 interface HabitContextType {
@@ -13,7 +13,7 @@ interface HabitContextType {
   // Actions
   loadHabits: () => Promise<void>;
   selectHabit: (habitId: string) => void;
-  createNewHabit: (name: string, icon?: string) => Promise<void>;
+  createNewHabit: (name: string, icon?: string, target?: HabitTarget) => Promise<void>;
   updateHabitDetails: (habit: Habit) => Promise<void>;
   removeHabit: (habitId: string) => Promise<void>;
 
@@ -107,11 +107,12 @@ export const HabitProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setActiveHabitId(habitId);
   };
 
-  const createNewHabit = async (name: string, icon?: string) => {
+  const createNewHabit = async (name: string, icon?: string, target?: HabitTarget) => {
     const newHabit: Habit = {
       id: Date.now().toString(),
       name,
       icon,
+      target,
       totalCount: 0,
       createdAt: new Date().toISOString()
     };

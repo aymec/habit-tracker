@@ -1,7 +1,15 @@
+export type TargetPeriod = 'day' | 'week' | 'month' | 'year';
+
+export interface HabitTarget {
+  value: number;
+  period: TargetPeriod;
+}
+
 export interface Habit {
   id: string;
   name: string;
   icon?: string;
+  target?: HabitTarget;
   totalCount: number;
   createdAt: string;
 }

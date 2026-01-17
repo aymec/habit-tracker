@@ -2,22 +2,67 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter, Stack } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useMemo, useEffect } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
+import { TargetPeriod, Entry } from '../../../src/models/types';
+
+const getStartOfPeriod = (period: TargetPeriod): Date => {
+  const now = new Date();
+  switch (period) {
+    case 'day':
+      return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    case 'week':
+      const dayOfWeek = now.getDay();
+      const diff = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Monday as start of week
+      return new Date(now.getFullYear(), now.getMonth(), now.getDate() - diff);
+    case 'month':
+      return new Date(now.getFullYear(), now.getMonth(), 1);
+    case 'year':
+      return new Date(now.getFullYear(), 0, 1);
+  }
+};
+
+const calculatePeriodCount = (entries: Entry[], period: TargetPeriod): number => {
+  const startOfPeriod = getStartOfPeriod(period);
+  return entries
+    .filter(entry => new Date(entry.timestamp) >= startOfPeriod)
+    .reduce((sum, entry) => sum + entry.value, 0);
+};
+
+const formatCount = (count: number): string => {
+  const rounded = Math.round(count * 100) / 100;
+  if (Number.isInteger(rounded)) {
+    return rounded.toString();
+  }
+  return rounded.toFixed(2);
+};
 
 export default function GoalScreen() {
-  const { activeHabit, activeHabitOptions, logEntry } = useHabit();
+  const { activeHabit, activeHabitOptions, activeHabitEntries, logEntry, habits } = useHabit();
   const { theme } = useTheme();
   const { t } = useTranslation();
   const router = useRouter();
+  const isFocused = useIsFocused();
+
+  // Redirect to home if no habits exist (data was cleared) - only when screen is focused
+  useEffect(() => {
+    if (isFocused && habits.length === 0) {
+      router.replace('/(tabs)/(home)');
+    }
+  }, [habits, router, isFocused]);
+
+  // Calculate the display count based on target period
+  const displayCount = useMemo(() => {
+    if (!activeHabit) return 0;
+    if (!activeHabit.target) return activeHabit.totalCount;
+    return calculatePeriodCount(activeHabitEntries, activeHabit.target.period);
+  }, [activeHabit, activeHabitEntries]);
 
   // If no habit is selected (shouldn't happen, but safe to handle)
-  if (!activeHabit) {
-    return (
-      <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-        <Text style={{ color: theme.colors.text }}>Loading...</Text>
-      </View>
-    );
+  if (!activeHabit || habits.length === 0) {
+    return null;
   }
 
   return (
@@ -42,10 +87,15 @@ export default function GoalScreen() {
         {/* Counter Display */}
         <View style={styles.counterContainer}>
           <Text style={[styles.counterValue, { color: theme.colors.primary }]}>
-            {activeHabit.totalCount}
+            {formatCount(displayCount)}
           </Text>
           <Text style={[styles.counterLabel, { color: theme.colors.text }]}>
-            {t('history.totalCount')}
+            {activeHabit.target
+              ? t('habits.vsTarget', {
+                  value: activeHabit.target.value,
+                  period: t(`habits.period.${activeHabit.target.period}`)
+                })
+              : t('history.totalCount')}
           </Text>
         </View>
 

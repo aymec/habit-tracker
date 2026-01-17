@@ -10,7 +10,9 @@
     "back": "Назад",
     "set": "Установить",
     "clearAll": "Очистить все",
-    "error": "Ошибка"
+    "error": "Ошибка",
+    "next": "Далее",
+    "skip": "Пропустить"
   },
   "habits": {
     "title": "Цели",
@@ -28,7 +30,27 @@
     "deleteHabitWebMessage": "Удалить \"{{name}}\"?\n\nЭто навсегда удалит все опции и записи.",
     "optionLabel": "Метка",
     "optionValue": "Значение",
-    "optionLabelPlaceholder": "Метка опции"
+    "optionLabelPlaceholder": "Метка опции",
+    "goal": "Цель",
+    "target": "Цель",
+    "setTarget": "Установить цель",
+    "targetOptional": "Этот шаг необязателен",
+    "targetHint": "напр. 2 литра в день",
+    "targetValueRequired": "Пожалуйста, введите корректную цель",
+    "skipTargetConfirmTitle": "Цель не установлена",
+    "skipTargetConfirmMessage": "Продолжить без установки цели? Вы сможете добавить её позже.",
+    "invalidTargetTitle": "Недопустимое значение",
+    "invalidTargetMessage": "Пожалуйста, введите корректное число или продолжите без установки цели. Вы сможете добавить её позже.",
+    "noTarget": "Не установлено",
+    "per": "в",
+    "targetDisplay": "{{value}} в {{period}}",
+    "vsTarget": "vs. {{value}} в {{period}}",
+    "period": {
+      "day": "день",
+      "week": "неделю",
+      "month": "месяц",
+      "year": "год"
+    }
   },
   "history": {
     "title": "История",

@@ -10,7 +10,9 @@
     "back": "Back",
     "set": "Set",
     "clearAll": "Clear All",
-    "error": "Error"
+    "error": "Error",
+    "next": "Next",
+    "skip": "Skip"
   },
   "habits": {
     "title": "Goals",
@@ -28,7 +30,27 @@
     "deleteHabitWebMessage": "Delete \"{{name}}\"?\n\nThis will permanently delete all options and entries.",
     "optionLabel": "Label",
     "optionValue": "Value",
-    "optionLabelPlaceholder": "Option label"
+    "optionLabelPlaceholder": "Option label",
+    "goal": "Goal",
+    "target": "Goal",
+    "setTarget": "Set Goal",
+    "targetOptional": "This step is optional",
+    "targetHint": "e.g., 2 liters per day",
+    "targetValueRequired": "Please enter a valid goal value",
+    "skipTargetConfirmTitle": "No goal set",
+    "skipTargetConfirmMessage": "Continue without setting a goal? You can always add one later.",
+    "invalidTargetTitle": "Invalid value",
+    "invalidTargetMessage": "Please enter a valid number, or continue without setting a goal. You can always add one later.",
+    "noTarget": "Not set",
+    "per": "per",
+    "targetDisplay": "{{value}} per {{period}}",
+    "vsTarget": "vs. {{value}} per {{period}}",
+    "period": {
+      "day": "day",
+      "week": "week",
+      "month": "month",
+      "year": "year"
+    }
   },
   "history": {
     "title": "History",

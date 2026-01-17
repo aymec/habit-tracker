@@ -10,7 +10,9 @@
     "back": "Retour",
     "set": "Définir",
     "clearAll": "Tout effacer",
-    "error": "Erreur"
+    "error": "Erreur",
+    "next": "Suivant",
+    "skip": "Passer"
   },
   "habits": {
     "title": "Objectifs",
@@ -28,7 +30,27 @@
     "deleteHabitWebMessage": "Supprimer \"{{name}}\" ?\n\nCela supprimera définitivement toutes les options et les entrées.",
     "optionLabel": "Libellé",
     "optionValue": "Valeur",
-    "optionLabelPlaceholder": "Libellé de l'option"
+    "optionLabelPlaceholder": "Libellé de l'option",
+    "goal": "Objectif",
+    "target": "Objectif",
+    "setTarget": "Définir l'objectif",
+    "targetOptional": "Cette étape est facultative",
+    "targetHint": "ex. 2 litres par jour",
+    "targetValueRequired": "Veuillez entrer une valeur d'objectif valide",
+    "skipTargetConfirmTitle": "Aucun objectif défini",
+    "skipTargetConfirmMessage": "Continuer sans définir d'objectif ? Vous pourrez en ajouter un plus tard.",
+    "invalidTargetTitle": "Valeur invalide",
+    "invalidTargetMessage": "Veuillez entrer un nombre valide ou continuer sans définir d'objectif. Vous pourrez en ajouter un plus tard.",
+    "noTarget": "Non défini",
+    "per": "par",
+    "targetDisplay": "{{value}} par {{period}}",
+    "vsTarget": "vs. {{value}} par {{period}}",
+    "period": {
+      "day": "jour",
+      "week": "semaine",
+      "month": "mois",
+      "year": "an"
+    }
   },
   "history": {
     "title": "Historique",

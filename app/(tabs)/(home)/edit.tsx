@@ -3,26 +3,37 @@ import { Platform, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, S
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
-import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
+import { useState, useEffect } from 'react';
+import { useIsFocused } from '@react-navigation/native';
+import { useRouter, Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { Option } from '../../../src/models/types';
+import { Option, TargetPeriod, HabitTarget } from '../../../src/models/types';
 
 export default function ModalScreen() {
   const { theme } = useTheme();
-  const { createNewHabit, updateHabitDetails, activeHabit, activeHabitOptions, addHabitOption, updateHabitOption, removeOption, removeHabit, habits, selectHabit } = useHabit();
+  const { updateHabitDetails, activeHabit, activeHabitOptions, addHabitOption, updateHabitOption, removeOption, removeHabit, habits, selectHabit } = useHabit();
   const { t } = useTranslation();
   const router = useRouter();
-  const params = useLocalSearchParams();
-  const isEditing = params.mode === 'edit';
+  const isFocused = useIsFocused();
 
-  const [habitName, setHabitName] = useState('');
+  // Redirect to home if no habits exist (data was cleared) - only when screen is focused
+  useEffect(() => {
+    if (isFocused && habits.length === 0) {
+      router.replace('/(tabs)/(home)');
+    }
+  }, [habits, router, isFocused]);
+
   const [isEditingHabitName, setIsEditingHabitName] = useState(false);
   const [editedHabitName, setEditedHabitName] = useState('');
+  const [isEditingTarget, setIsEditingTarget] = useState(false);
+  const [editedTargetValue, setEditedTargetValue] = useState('');
+  const [editedTargetPeriod, setEditedTargetPeriod] = useState<TargetPeriod>('day');
   const [editingOptionId, setEditingOptionId] = useState<string | null>(null);
   const [optionLabel, setOptionLabel] = useState('');
   const [optionValue, setOptionValue] = useState('');
   const [isAddingOption, setIsAddingOption] = useState(false);
+
+  const PERIODS: TargetPeriod[] = ['day', 'week', 'month', 'year'];
 
   const startEditHabitName = () => {
     if (activeHabit) {
@@ -65,28 +76,51 @@ export default function ModalScreen() {
     }
   };
 
-  const handleCreateHabit = async () => {
-    if (!habitName.trim()) {
-      if (Platform.OS === 'web') {
-        alert(t('habits.habitName') + ' is required');
-      } else {
-        Alert.alert('Error', t('habits.habitName') + ' is required');
-      }
-      return;
+  const startEditTarget = () => {
+    if (activeHabit) {
+      setEditedTargetValue(activeHabit.target?.value?.toString() || '');
+      setEditedTargetPeriod(activeHabit.target?.period || 'day');
+      setIsEditingTarget(true);
     }
+  };
 
+  const cancelEditTarget = () => {
+    setIsEditingTarget(false);
+    setEditedTargetValue('');
+    setEditedTargetPeriod('day');
+  };
+
+  const saveTarget = async () => {
     try {
-      await createNewHabit(habitName.trim());
-      // Navigate to edit mode for the newly created habit
-      router.replace({ pathname: '/(tabs)/(home)/edit', params: { mode: 'edit' } });
+      if (activeHabit) {
+        let newTarget: HabitTarget | undefined = undefined;
+        const value = parseFloat(editedTargetValue);
+        if (!isNaN(value) && value > 0) {
+          newTarget = { value, period: editedTargetPeriod };
+        }
+        await updateHabitDetails({
+          ...activeHabit,
+          target: newTarget
+        });
+      }
+      setIsEditingTarget(false);
+      setEditedTargetValue('');
     } catch (error) {
       console.error(error);
       if (Platform.OS === 'web') {
-        alert('Failed to create habit');
+        alert('Failed to save target');
       } else {
-        Alert.alert('Error', 'Failed to create habit');
+        Alert.alert('Error', 'Failed to save target');
       }
     }
+  };
+
+  const formatTarget = (target?: HabitTarget): string => {
+    if (!target) return t('habits.noTarget');
+    return t('habits.targetDisplay', {
+      value: target.value,
+      period: t(`habits.period.${target.period}`)
+    });
   };
 
   const startEditOption = (option: Option) => {
@@ -241,50 +275,17 @@ export default function ModalScreen() {
       <Stack.Screen
         options={{
           headerShown: true,
-          title: isEditing ? (activeHabit?.name ? `${t('common.edit')} ${activeHabit.name}` : t('habits.editHabit')) : t('habits.newHabit'),
+          title: activeHabit?.name ? `${t('common.edit')} ${activeHabit.name}` : t('habits.editHabit'),
           headerTitleAlign: 'center',
         }}
       />
 
       <ScrollView style={styles.content}>
-        {/* Create New Habit Section */}
-        {!isEditing && (
-          <View style={styles.section}>
-            <Text style={[styles.sectionHeader, { color: theme.colors.text }]}>
-              {t('habits.habitName')}
-            </Text>
-            <Text style={[styles.inputHint, { color: theme.colors.text }]}>
-              {t('habits.habitNamePlaceholder')}
-            </Text>
-            <TextInput
-              style={[
-                styles.input,
-                {
-                  backgroundColor: theme.colors.card,
-                  color: theme.colors.text,
-                  borderColor: theme.colors.border,
-                  marginBottom: 20,
-                },
-              ]}
-              value={habitName}
-              onChangeText={setHabitName}
-              autoFocus
-            />
-            <TouchableOpacity
-              style={[styles.createHabitButton, { backgroundColor: theme.colors.primary }]}
-              onPress={handleCreateHabit}
-            >
-              <Text style={styles.createHabitButtonText}>{t('common.create')}</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-
-        {/* Habit Name Section */}
-        {isEditing && (
-          <View style={[styles.section, { marginBottom: 10 }]}>
-            <Text style={[styles.sectionHeader, { color: theme.colors.text }]}>
-              {t('habits.habitName')}
-            </Text>
+        {/* Goal Section */}
+        <View style={[styles.section, { marginBottom: 10 }]}>
+          <Text style={[styles.sectionHeader, { color: theme.colors.text }]}>
+            {t('habits.goal')}
+          </Text>
             {isEditingHabitName ? (
               <View style={[styles.editOptionContainer, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
                 <TextInput
@@ -322,11 +323,74 @@ export default function ModalScreen() {
                 </TouchableOpacity>
               </View>
             )}
-          </View>
-        )}
 
-        {isEditing && (
-          <View style={[styles.optionsSection, { borderTopColor: theme.colors.border }]}>
+            {/* Target Row */}
+            {isEditingTarget ? (
+              <View style={[styles.editOptionContainer, { backgroundColor: theme.colors.card, borderColor: theme.colors.border, marginTop: 10 }]}>
+                <View style={styles.targetEditRow}>
+                  <TextInput
+                    style={[
+                      styles.targetValueInput,
+                      {
+                        backgroundColor: theme.colors.card,
+                        color: theme.colors.text,
+                        borderColor: theme.colors.border,
+                      },
+                    ]}
+                    value={editedTargetValue}
+                    onChangeText={setEditedTargetValue}
+                    keyboardType="numeric"
+                    placeholder="0"
+                    placeholderTextColor={theme.colors.textSecondary}
+                  />
+                  <Text style={[styles.perText, { color: theme.colors.text }]}>{t('habits.per')}</Text>
+                  <View style={styles.periodSelector}>
+                    {PERIODS.map((period) => (
+                      <TouchableOpacity
+                        key={period}
+                        style={[
+                          styles.periodButton,
+                          {
+                            backgroundColor: editedTargetPeriod === period ? theme.colors.primary : theme.colors.card,
+                            borderColor: editedTargetPeriod === period ? theme.colors.primary : theme.colors.border,
+                          },
+                        ]}
+                        onPress={() => setEditedTargetPeriod(period)}
+                      >
+                        <Text
+                          style={[
+                            styles.periodButtonText,
+                            { color: editedTargetPeriod === period ? '#FFFFFF' : theme.colors.text },
+                          ]}
+                        >
+                          {t(`habits.period.${period}`)}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </View>
+                <View style={styles.editActions}>
+                  <TouchableOpacity onPress={cancelEditTarget} style={[styles.miniButton, { borderWidth: 1, borderColor: theme.colors.border }]}>
+                    <Text style={{ color: theme.colors.text }}>{t('common.cancel')}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={saveTarget} style={[styles.miniButton, { backgroundColor: theme.colors.primary }]}>
+                    <Text style={{ color: '#FFFFFF' }}>{t('common.save')}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ) : (
+              <View style={[styles.targetRow, { borderBottomColor: theme.colors.border }]}>
+                <Text style={[styles.targetText, { color: theme.colors.text }]}>
+                  {t('habits.target')}: {formatTarget(activeHabit?.target)}
+                </Text>
+                <TouchableOpacity onPress={startEditTarget} style={styles.actionIcon}>
+                  <Ionicons name="create-outline" size={20} color={theme.colors.text} />
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+
+        <View style={styles.optionsSection}>
             <Text style={[styles.sectionHeader, { color: theme.colors.text }]}>
               {t('habits.options')}
             </Text>
@@ -427,10 +491,9 @@ export default function ModalScreen() {
               );
             })}
           </View>
-        )}
 
         {/* Save Button */}
-        {isEditing && activeHabit && (
+        {activeHabit && (
           <View style={styles.saveSection}>
             <TouchableOpacity
               style={[styles.saveButton, { backgroundColor: theme.colors.primary }]}
@@ -442,8 +505,8 @@ export default function ModalScreen() {
         )}
 
         {/* Delete Habit Section */}
-        {isEditing && activeHabit && (
-          <View style={[styles.deleteSection, { borderTopColor: theme.colors.border }]}>
+        {activeHabit && (
+          <View style={styles.deleteSection}>
             <TouchableOpacity
               style={[styles.deleteHabitButton, { backgroundColor: theme.colors.danger }]}
               onPress={handleDeleteHabit}
@@ -471,11 +534,6 @@ const styles = StyleSheet.create({
   section: {
     marginBottom: 20,
   },
-  label: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 8,
-  },
   input: {
     height: 50,
     borderWidth: 1,
@@ -483,42 +541,70 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     fontSize: 16,
   },
-  createHabitButton: {
-    paddingVertical: 14,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  createHabitButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
   habitNameRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 12,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   habitNameText: {
     fontSize: 16,
     fontWeight: '500',
   },
+  targetRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 12,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  targetText: {
+    fontSize: 16,
+    fontWeight: '500',
+    flex: 1,
+  },
+  targetEditRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 10,
+    marginBottom: 10,
+  },
+  targetValueInput: {
+    height: 40,
+    width: 70,
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingHorizontal: 10,
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  perText: {
+    fontSize: 14,
+  },
+  periodSelector: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+  },
+  periodButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 6,
+    borderWidth: 1,
+  },
+  periodButtonText: {
+    fontSize: 12,
+    fontWeight: '500',
+  },
   optionsSection: {
     marginTop: 10,
     paddingTop: 20,
-    borderTopWidth: 1,
   },
   sectionHeader: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 15,
-  },
-  inputHint: {
-    fontSize: 14,
-    fontWeight: 'normal',
-    marginBottom: 8,
   },
   optionRow: {
     flexDirection: 'row',
@@ -606,10 +692,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   deleteSection: {
-    marginTop: 20,
-    paddingTop: 30,
+    marginTop: 12,
     paddingBottom: 40,
-    borderTopWidth: 2,
   },
   deleteHabitButton: {
     flexDirection: 'row',

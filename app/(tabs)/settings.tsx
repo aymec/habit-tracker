@@ -6,12 +6,14 @@ import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Constants from 'expo-constants';
+import { useRouter } from 'expo-router';
 import { populateTestData, clearAllData } from '../../src/services/storage';
 
 export default function SettingsScreen() {
   const { theme, mode, setMode } = useTheme();
   const { t, i18n } = useTranslation();
   const { loadHabits } = useHabit();
+  const router = useRouter();
 
   const [androidModalVisible, setAndroidModalVisible] = useState(false);
 

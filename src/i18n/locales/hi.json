@@ -10,7 +10,9 @@
     "back": "वापस",
     "set": "सेट करें",
     "clearAll": "सब साफ़ करें",
-    "error": "त्रुटि"
+    "error": "त्रुटि",
+    "next": "अगला",
+    "skip": "छोड़ें"
   },
   "habits": {
     "title": "लक्ष्य",
@@ -28,7 +30,27 @@
     "deleteHabitWebMessage": "\"{{name}}\" हटाएं?\n\nइससे सभी विकल्प और प्रविष्टियां स्थायी रूप से हटा दी जाएंगी।",
     "optionLabel": "लेबल",
     "optionValue": "मान",
-    "optionLabelPlaceholder": "विकल्प लेबल"
+    "optionLabelPlaceholder": "विकल्प लेबल",
+    "goal": "लक्ष्य",
+    "target": "लक्ष्य",
+    "setTarget": "लक्ष्य सेट करें",
+    "targetOptional": "यह चरण वैकल्पिक है",
+    "targetHint": "जैसे, प्रतिदिन 2 लीटर पानी",
+    "targetValueRequired": "कृपया एक मान्य लक्ष्य दर्ज करें",
+    "skipTargetConfirmTitle": "कोई लक्ष्य सेट नहीं",
+    "skipTargetConfirmMessage": "बिना लक्ष्य सेट किए जारी रखें? आप बाद में कभी भी जोड़ सकते हैं।",
+    "invalidTargetTitle": "अमान्य मान",
+    "invalidTargetMessage": "कृपया एक मान्य संख्या दर्ज करें, या बिना लक्ष्य सेट किए जारी रखें। आप बाद में कभी भी जोड़ सकते हैं।",
+    "noTarget": "सेट नहीं",
+    "per": "प्रति",
+    "targetDisplay": "{{value}} प्रति {{period}}",
+    "vsTarget": "vs. {{value}} प्रति {{period}}",
+    "period": {
+      "day": "दिन",
+      "week": "सप्ताह",
+      "month": "महीना",
+      "year": "वर्ष"
+    }
   },
   "history": {
     "title": "इतिहास",
