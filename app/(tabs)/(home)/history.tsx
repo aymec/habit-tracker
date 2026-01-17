@@ -1,10 +1,10 @@
 import { StyleSheet, View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
-import { useHabit } from '../src/context/HabitContext';
-import { useTheme } from '../src/context/ThemeContext';
+import { useHabit } from '../../../src/context/HabitContext';
+import { useTheme } from '../../../src/context/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { Stack } from 'expo-router';
-import { Entry } from '../src/models/types';
+import { Entry } from '../../../src/models/types';
 
 export default function EntryHistoryScreen() {
   const { activeHabitEntries, removeEntry, activeHabit } = useHabit();

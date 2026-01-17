@@ -1,25 +1,18 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Platform, ActionSheetIOS, Alert } from 'react-native';
-import { useTheme } from '../../../src/context/ThemeContext';
-import { useHabit } from '../../../src/context/HabitContext';
+import { useTheme } from '../../src/context/ThemeContext';
+import { useHabit } from '../../src/context/HabitContext';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Constants from 'expo-constants';
-import { populateTestData, clearAllData } from '../../../src/services/storage';
-
-// Note: For Android material dropdown, in a simple Expo managed workflow without extra native deps like @react-native-picker/picker,
-// we often simulate it or use a library. However, since we want to avoid complex native deps if possible,
-// we can use a custom modal for Android that looks like a dialog, which is standard Material behavior for selection.
-// Or we can try to use a library if standard components don't suffice.
-// Let's stick to a custom implementation that mimics Material Dialog for Android and ActionSheet for iOS.
+import { populateTestData, clearAllData } from '../../src/services/storage';
 
 export default function SettingsScreen() {
   const { theme, mode, setMode } = useTheme();
   const { t, i18n } = useTranslation();
   const { loadHabits } = useHabit();
 
-  // For Android/custom modal state (reusing logic if we decide to use custom modal on Android)
   const [androidModalVisible, setAndroidModalVisible] = useState(false);
 
   const languages = [
@@ -58,17 +51,6 @@ export default function SettingsScreen() {
         }
       );
     } else {
-      // For Android, we can't easily get the native spinner without a library like @react-native-picker/picker.
-      // A common pattern in RN without extra libs is using a dialog/modal.
-      // But user asked for "native material design drop down menu".
-      // Since we don't have @react-native-picker/picker installed in package.json, let's install it?
-      // Or we can use a custom implementation that looks better than the expansion.
-      // Let's use a nice modal dialog for Android which is also very standard for single choice.
-      // But strictly "dropdown" (Spinner) requires the library.
-      // Given the constraints and previous instruction "native iOS style... native material design",
-      // ActionSheetIOS is perfect for iOS.
-      // For Android, a dialog with radio buttons is the standard replacement for "dropdowns" in settings.
-      // Let's implement a nice dialog for Android.
       setAndroidModalVisible(true);
     }
   };
@@ -157,41 +139,32 @@ export default function SettingsScreen() {
     }
   };
 
-  // ... rest of implementation needs to support the Android Modal or we install the picker.
-  // Let's try to do it without installing new packages if possible to keep it simple,
-  // but if the user insists on native dropdown, we might need it.
-  // Actually, let's just use the current expansion for Android as a fallback but styled better?
-  // No, user said "native material design".
-  // Let's stick with the ActionSheet for iOS which addresses the main feedback.
-  // For Android, I'll create a simple modal selection which is standard.
-
   const changeLanguage = (langCode: string) => {
     i18n.changeLanguage(langCode);
     setAndroidModalVisible(false);
   };
 
-  // ... (renderThemeOption function)
   const renderThemeOption = (optionMode: 'light' | 'dark' | 'system', label: string, border: boolean) => {
-      const isSelected = mode === optionMode;
-      return (
-        <TouchableOpacity
-          style={[
-            styles.optionRow,
-            border ? { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: theme.colors.border } : {}
-          ]}
-          onPress={() => setMode(optionMode)}
-        >
-          <Text style={[styles.optionText, { color: theme.colors.text }]}>
-            {label}
-          </Text>
-          <View style={styles.iconContainer}>
-            {isSelected && (
-              <Ionicons name="checkmark" size={24} color={theme.colors.primary} />
-            )}
-          </View>
-        </TouchableOpacity>
-      );
-    };
+    const isSelected = mode === optionMode;
+    return (
+      <TouchableOpacity
+        style={[
+          styles.optionRow,
+          border ? { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: theme.colors.border } : {}
+        ]}
+        onPress={() => setMode(optionMode)}
+      >
+        <Text style={[styles.optionText, { color: theme.colors.text }]}>
+          {label}
+        </Text>
+        <View style={styles.iconContainer}>
+          {isSelected && (
+            <Ionicons name="checkmark" size={24} color={theme.colors.primary} />
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
@@ -294,46 +267,46 @@ export default function SettingsScreen() {
       {/* Android/Web Selection Modal */}
       {(Platform.OS === 'android' || Platform.OS === 'web') && androidModalVisible && (
         <View style={styles.modalOverlay}>
-            <TouchableOpacity
-                style={StyleSheet.absoluteFill}
-                onPress={() => setAndroidModalVisible(false)}
-            />
-            <View style={[styles.androidModalContent, { backgroundColor: theme.colors.card }]}>
-                <Text style={[styles.androidModalTitle, { color: theme.colors.text }]}>
-                    {t('settings.language')}
-                </Text>
-                <ScrollView style={styles.androidLanguageList}>
-                    {languages.map((lang) => (
-                        <TouchableOpacity
-                            key={lang.code}
-                            style={styles.androidOptionRow}
-                            onPress={() => changeLanguage(lang.code)}
-                        >
-                            <Text style={[styles.optionText, { color: theme.colors.text }]}>
-                                {lang.label}
-                            </Text>
-                            <View style={styles.androidRadioContainer}>
-                                <View style={[
-                                    styles.androidRadioOuter,
-                                    { borderColor: i18n.language === lang.code ? theme.colors.primary : theme.colors.textSecondary }
-                                ]}>
-                                    {i18n.language === lang.code && (
-                                        <View style={[styles.androidRadioInner, { backgroundColor: theme.colors.primary }]} />
-                                    )}
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                    ))}
-                </ScrollView>
+          <TouchableOpacity
+            style={StyleSheet.absoluteFill}
+            onPress={() => setAndroidModalVisible(false)}
+          />
+          <View style={[styles.androidModalContent, { backgroundColor: theme.colors.card }]}>
+            <Text style={[styles.androidModalTitle, { color: theme.colors.text }]}>
+              {t('settings.language')}
+            </Text>
+            <ScrollView style={styles.androidLanguageList}>
+              {languages.map((lang) => (
                 <TouchableOpacity
-                    style={styles.androidCancelButton}
-                    onPress={() => setAndroidModalVisible(false)}
+                  key={lang.code}
+                  style={styles.androidOptionRow}
+                  onPress={() => changeLanguage(lang.code)}
                 >
-                    <Text style={[styles.androidCancelText, { color: theme.colors.primary }]}>
-                        {t('common.cancel').toUpperCase()}
-                    </Text>
+                  <Text style={[styles.optionText, { color: theme.colors.text }]}>
+                    {lang.label}
+                  </Text>
+                  <View style={styles.androidRadioContainer}>
+                    <View style={[
+                      styles.androidRadioOuter,
+                      { borderColor: i18n.language === lang.code ? theme.colors.primary : theme.colors.textSecondary }
+                    ]}>
+                      {i18n.language === lang.code && (
+                        <View style={[styles.androidRadioInner, { backgroundColor: theme.colors.primary }]} />
+                      )}
+                    </View>
+                  </View>
                 </TouchableOpacity>
-            </View>
+              ))}
+            </ScrollView>
+            <TouchableOpacity
+              style={styles.androidCancelButton}
+              onPress={() => setAndroidModalVisible(false)}
+            >
+              <Text style={[styles.androidCancelText, { color: theme.colors.primary }]}>
+                {t('common.cancel').toUpperCase()}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
     </SafeAreaView>

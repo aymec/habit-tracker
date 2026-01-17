@@ -9,6 +9,8 @@ export const lightTheme = {
     textSecondary: '#8E8E93',
     success: '#34C759',
     danger: '#FF3B30',
+    tabBar: '#F2F2F7', // Same as background in light mode
+    header: '#FFFFFF', // Matches React Navigation DefaultTheme card
   },
   spacing: {
     xs: 4,
@@ -36,6 +38,8 @@ export const darkTheme = {
     textSecondary: '#8E8E93',
     success: '#32D74B',
     danger: '#FF453A',
+    tabBar: '#1C1C1E', // Same as card in dark mode
+    header: '#121212', // Matches React Navigation DarkTheme card
   },
   spacing: {
     xs: 4,

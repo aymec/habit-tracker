@@ -1,12 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { Platform, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
-import { useTheme } from '../src/context/ThemeContext';
-import { useHabit } from '../src/context/HabitContext';
+import { useTheme } from '../../../src/context/ThemeContext';
+import { useHabit } from '../../../src/context/HabitContext';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { Option } from '../src/models/types';
+import { Option } from '../../../src/models/types';
 
 export default function ModalScreen() {
   const { theme } = useTheme();
@@ -78,7 +78,7 @@ export default function ModalScreen() {
     try {
       await createNewHabit(habitName.trim());
       // Navigate to edit mode for the newly created habit
-      router.replace({ pathname: '/edit', params: { mode: 'edit' } });
+      router.replace({ pathname: '/(tabs)/(home)/edit', params: { mode: 'edit' } });
     } catch (error) {
       console.error(error);
       if (Platform.OS === 'web') {
@@ -200,7 +200,7 @@ export default function ModalScreen() {
         }
 
         // Go back to home
-        router.back();
+        router.replace('/(tabs)/(home)');
       } catch (error) {
         console.error(error);
         if (Platform.OS === 'web') {
