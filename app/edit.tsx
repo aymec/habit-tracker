@@ -304,11 +304,11 @@ export default function ModalScreen() {
                   autoFocus
                 />
                 <View style={styles.editActions}>
-                  <TouchableOpacity onPress={cancelEditHabitName} style={styles.miniButton}>
-                    <Text style={{ color: theme.colors.textSecondary }}>Cancel</Text>
+                  <TouchableOpacity onPress={cancelEditHabitName} style={[styles.miniButton, { borderWidth: 1, borderColor: theme.colors.border }]}>
+                    <Text style={{ color: theme.colors.text }}>{t('common.cancel')}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={saveHabitName} style={[styles.miniButton, { backgroundColor: theme.colors.primary }]}>
-                    <Text style={{ color: '#FFFFFF' }}>Save</Text>
+                    <Text style={{ color: '#FFFFFF' }}>{t('common.save')}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -355,8 +355,8 @@ export default function ModalScreen() {
                   </View>
                 </View>
                 <View style={styles.editActions}>
-                  <TouchableOpacity onPress={cancelOptionEdit} style={styles.miniButton}>
-                    <Text style={{ color: theme.colors.textSecondary }}>{t('common.cancel')}</Text>
+                  <TouchableOpacity onPress={cancelOptionEdit} style={[styles.miniButton, { borderWidth: 1, borderColor: theme.colors.border }]}>
+                    <Text style={{ color: theme.colors.text }}>{t('common.cancel')}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={saveOption} style={[styles.miniButton, { backgroundColor: theme.colors.primary }]}>
                     <Text style={{ color: '#FFFFFF' }}>{t('common.add')}</Text>
@@ -396,11 +396,11 @@ export default function ModalScreen() {
                       />
                     </View>
                     <View style={styles.editActions}>
-                      <TouchableOpacity onPress={cancelOptionEdit} style={styles.miniButton}>
-                        <Text style={{ color: theme.colors.textSecondary }}>Cancel</Text>
+                      <TouchableOpacity onPress={cancelOptionEdit} style={[styles.miniButton, { borderWidth: 1, borderColor: theme.colors.border }]}>
+                        <Text style={{ color: theme.colors.text }}>{t('common.cancel')}</Text>
                       </TouchableOpacity>
                       <TouchableOpacity onPress={saveOption} style={[styles.miniButton, { backgroundColor: theme.colors.primary }]}>
-                        <Text style={{ color: '#FFFFFF' }}>Save</Text>
+                        <Text style={{ color: '#FFFFFF' }}>{t('common.save')}</Text>
                       </TouchableOpacity>
                     </View>
                   </View>

@@ -48,7 +48,7 @@ export default function EntryHistoryScreen() {
               <Text style={[styles.entryLabel, { color: theme.colors.text }]}>
                 {item.label} ({item.value > 0 ? `+${item.value}` : item.value})
               </Text>
-              <Text style={[styles.entryDate, { color: theme.colors.textSecondary }]}>
+              <Text style={[styles.entryDate, { color: theme.colors.text }]}>
                 {formatDate(item.timestamp)}
               </Text>
             </View>

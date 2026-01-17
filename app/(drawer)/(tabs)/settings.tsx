@@ -199,7 +199,7 @@ export default function SettingsScreen() {
 
         {/* Appearance Section */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.textSecondary }]}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
             {t('settings.appearance')}
           </Text>
           <View style={[styles.sectionContent, { backgroundColor: theme.colors.card }]}>
@@ -211,7 +211,7 @@ export default function SettingsScreen() {
 
         {/* Language Section */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.textSecondary }]}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
             {t('settings.language')}
           </Text>
           <View style={[styles.sectionContent, { backgroundColor: theme.colors.card }]}>
@@ -235,7 +235,7 @@ export default function SettingsScreen() {
 
         {/* Data Section */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.textSecondary }]}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
             {t('data.data')}
           </Text>
           <View style={[styles.sectionContent, { backgroundColor: theme.colors.card }]}>
@@ -274,7 +274,7 @@ export default function SettingsScreen() {
 
         {/* About Section */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.textSecondary }]}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
             {t('settings.about')}
           </Text>
           <View style={[styles.sectionContent, { backgroundColor: theme.colors.card }]}>
@@ -282,7 +282,7 @@ export default function SettingsScreen() {
               <Text style={[styles.optionText, { color: theme.colors.text }]}>
                 {t('settings.version')}
               </Text>
-              <Text style={[styles.versionText, { color: theme.colors.textSecondary }]}>
+              <Text style={[styles.versionText, { color: theme.colors.text }]}>
                 {Constants.expoConfig?.version || '1.0'}
               </Text>
             </View>
