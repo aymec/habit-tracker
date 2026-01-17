@@ -54,14 +54,7 @@ export default function HomeScreen() {
               <Text style={[styles.goalName, { color: theme.colors.text }]}>
                 {item.name}
               </Text>
-              <View style={styles.goalRight}>
-                <View style={[styles.countBadge, { backgroundColor: theme.colors.background }]}>
-                  <Text style={[styles.countText, { color: theme.colors.text }]}>
-                    {item.totalCount}
-                  </Text>
-                </View>
-                <Ionicons name="chevron-forward" size={20} color={theme.colors.textSecondary} />
-              </View>
+              <Ionicons name="chevron-forward" size={20} color={theme.colors.textSecondary} />
             </TouchableOpacity>
           )}
         />
@@ -121,20 +114,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     flex: 1,
-  },
-  goalRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  countBadge: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 12,
-  },
-  countText: {
-    fontSize: 14,
-    fontWeight: 'bold',
   },
   footer: {
     padding: 15,
