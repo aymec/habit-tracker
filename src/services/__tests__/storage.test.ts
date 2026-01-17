@@ -207,8 +207,8 @@ describe('Storage Service', () => {
         ];
 
         const entries: Entry[] = [
-          { id: 'e1', habitId: '1', value: 1, timestamp: '2026-01-10' },
-          { id: 'e2', habitId: '2', value: 5, timestamp: '2026-01-10' },
+          { id: 'e1', habitId: '1', label: 'Low', value: 1, timestamp: '2026-01-10' },
+          { id: 'e2', habitId: '2', label: 'High', value: 5, timestamp: '2026-01-10' },
         ];
 
         // Mock responses for all storage calls
@@ -245,7 +245,7 @@ describe('Storage Service', () => {
           { id: 'p1', habitId: '1', label: 'Low', value: 1 },
         ];
         const entries: Entry[] = [
-          { id: 'e1', habitId: '1', value: 1, timestamp: '2026-01-10' },
+          { id: 'e1', habitId: '1', label: 'Low', value: 1, timestamp: '2026-01-10' },
         ];
 
         (AsyncStorage.getItem as jest.Mock)
@@ -346,9 +346,9 @@ describe('Storage Service', () => {
         ];
 
         const entries: Entry[] = [
-          { id: 'e1', habitId: '1', value: 1, timestamp: '2026-01-10' },
-          { id: 'e2', habitId: '2', value: 3, timestamp: '2026-01-10' },
-          { id: 'e3', habitId: '3', value: 5, timestamp: '2026-01-10' },
+          { id: 'e1', habitId: '1', label: 'Low', value: 1, timestamp: '2026-01-10' },
+          { id: 'e2', habitId: '2', label: 'Medium', value: 3, timestamp: '2026-01-10' },
+          { id: 'e3', habitId: '3', label: 'High', value: 5, timestamp: '2026-01-10' },
         ];
 
         (AsyncStorage.getItem as jest.Mock)
@@ -437,10 +437,10 @@ describe('Storage Service', () => {
       it('should return entries sorted by timestamp descending', async () => {
         // Arrange
         const entries: Entry[] = [
-          { id: 'e1', habitId: 'h1', value: 1, timestamp: '2026-01-09T10:00:00Z' },
-          { id: 'e2', habitId: 'h1', value: 2, timestamp: '2026-01-11T10:00:00Z' },
-          { id: 'e3', habitId: 'h1', value: 3, timestamp: '2026-01-10T10:00:00Z' },
-          { id: 'e4', habitId: 'h2', value: 4, timestamp: '2026-01-11T10:00:00Z' },
+          { id: 'e1', habitId: 'h1', label: 'A', value: 1, timestamp: '2026-01-09T10:00:00Z' },
+          { id: 'e2', habitId: 'h1', label: 'B', value: 2, timestamp: '2026-01-11T10:00:00Z' },
+          { id: 'e3', habitId: 'h1', label: 'C', value: 3, timestamp: '2026-01-10T10:00:00Z' },
+          { id: 'e4', habitId: 'h2', label: 'D', value: 4, timestamp: '2026-01-11T10:00:00Z' },
         ];
         (AsyncStorage.getItem as jest.Mock).mockResolvedValue(JSON.stringify(entries));
 
@@ -461,6 +461,7 @@ describe('Storage Service', () => {
         const entry: Entry = {
           id: 'e1',
           habitId: 'h1',
+          label: 'Test',
           value: 5,
           timestamp: '2026-01-11T12:00:00Z',
         };
@@ -482,8 +483,8 @@ describe('Storage Service', () => {
       it('should remove only specified entry', async () => {
         // Arrange
         const entries: Entry[] = [
-          { id: 'e1', habitId: 'h1', value: 1, timestamp: '2026-01-10' },
-          { id: 'e2', habitId: 'h1', value: 2, timestamp: '2026-01-11' },
+          { id: 'e1', habitId: 'h1', label: 'A', value: 1, timestamp: '2026-01-10' },
+          { id: 'e2', habitId: 'h1', label: 'B', value: 2, timestamp: '2026-01-11' },
         ];
         (AsyncStorage.getItem as jest.Mock).mockResolvedValue(JSON.stringify(entries));
         (AsyncStorage.setItem as jest.Mock).mockResolvedValue(undefined);

@@ -14,8 +14,9 @@ export default function TabLayout() {
 
   // Check if we're in the home tab and where exactly
   const isInHomeTab = segments[1] === '(home)';
-  const isAtHomeRoot = isInHomeTab && (segments.length === 2 || segments[2] === 'index');
-  const isOnNestedHomeScreen = isInHomeTab && segments.length > 2 && segments[2] !== 'index';
+  const currentScreen = segments[2] as string | undefined;
+  const isAtHomeRoot = isInHomeTab && (segments.length === 2 || currentScreen === 'index');
+  const isOnNestedHomeScreen = isInHomeTab && segments.length > 2 && currentScreen !== 'index';
 
   return (
     <Tabs
