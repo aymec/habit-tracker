@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 16,
     fontSize: 18,
-    textAlign: 'center',
+    textAlign: 'right',
   },
   perText: {
     fontSize: 16,
