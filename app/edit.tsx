@@ -331,6 +331,48 @@ export default function ModalScreen() {
               {t('habits.options')}
             </Text>
 
+            {/* Add New Option Area */}
+            {isAddingOption ? (
+              <View style={[styles.editOptionContainer, { backgroundColor: theme.colors.card, borderColor: theme.colors.border, marginBottom: 10 }]}>
+                <View style={styles.inputRow}>
+                  <View style={{ flex: 2 }}>
+                    <Text style={[styles.inputLabel, { color: theme.colors.text }]}>{t('habits.optionLabelPlaceholder')}</Text>
+                    <TextInput
+                      style={[styles.miniInput, { color: theme.colors.text, borderColor: theme.colors.border }]}
+                      value={optionLabel}
+                      onChangeText={setOptionLabel}
+                      autoFocus
+                    />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={[styles.inputLabel, { color: theme.colors.text }]}>{t('habits.optionValue')}</Text>
+                    <TextInput
+                      style={[styles.miniInput, { color: theme.colors.text, borderColor: theme.colors.border }]}
+                      value={optionValue}
+                      onChangeText={setOptionValue}
+                      keyboardType="numeric"
+                    />
+                  </View>
+                </View>
+                <View style={styles.editActions}>
+                  <TouchableOpacity onPress={cancelOptionEdit} style={styles.miniButton}>
+                    <Text style={{ color: theme.colors.textSecondary }}>{t('common.cancel')}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={saveOption} style={[styles.miniButton, { backgroundColor: theme.colors.primary }]}>
+                    <Text style={{ color: '#FFFFFF' }}>{t('common.add')}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ) : (
+              <TouchableOpacity
+                style={[styles.addOptionButton, { borderColor: theme.colors.border, marginBottom: 15 }]}
+                onPress={startAddOption}
+              >
+                <Ionicons name="add" size={20} color={theme.colors.primary} />
+                <Text style={{ color: theme.colors.primary, fontWeight: '600' }}>{t('habits.addOption')}</Text>
+              </TouchableOpacity>
+            )}
+
             {/* Options List */}
             {activeHabitOptions.map((option) => {
               if (editingOptionId === option.id) {
@@ -384,48 +426,6 @@ export default function ModalScreen() {
                 </View>
               );
             })}
-
-            {/* Add New Option Area */}
-            {isAddingOption ? (
-              <View style={[styles.editOptionContainer, { backgroundColor: theme.colors.card, borderColor: theme.colors.border, marginTop: 10 }]}>
-                <View style={styles.inputRow}>
-                  <View style={{ flex: 2 }}>
-                    <Text style={[styles.inputLabel, { color: theme.colors.text }]}>{t('habits.optionLabelPlaceholder')}</Text>
-                    <TextInput
-                      style={[styles.miniInput, { color: theme.colors.text, borderColor: theme.colors.border }]}
-                      value={optionLabel}
-                      onChangeText={setOptionLabel}
-                      autoFocus
-                    />
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <Text style={[styles.inputLabel, { color: theme.colors.text }]}>{t('habits.optionValue')}</Text>
-                    <TextInput
-                      style={[styles.miniInput, { color: theme.colors.text, borderColor: theme.colors.border }]}
-                      value={optionValue}
-                      onChangeText={setOptionValue}
-                      keyboardType="numeric"
-                    />
-                  </View>
-                </View>
-                <View style={styles.editActions}>
-                  <TouchableOpacity onPress={cancelOptionEdit} style={styles.miniButton}>
-                    <Text style={{ color: theme.colors.textSecondary }}>{t('common.cancel')}</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={saveOption} style={[styles.miniButton, { backgroundColor: theme.colors.primary }]}>
-                    <Text style={{ color: '#FFFFFF' }}>{t('common.add')}</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            ) : (
-              <TouchableOpacity
-                style={[styles.addOptionButton, { borderColor: theme.colors.border }]}
-                onPress={startAddOption}
-              >
-                <Ionicons name="add" size={20} color={theme.colors.primary} />
-                <Text style={{ color: theme.colors.primary, fontWeight: '600' }}>{t('habits.addOption')}</Text>
-              </TouchableOpacity>
-            )}
           </View>
         )}
 
@@ -608,6 +608,7 @@ const styles = StyleSheet.create({
   deleteSection: {
     marginTop: 20,
     paddingTop: 30,
+    paddingBottom: 40,
     borderTopWidth: 2,
   },
   deleteHabitButton: {
