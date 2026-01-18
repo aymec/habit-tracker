@@ -1,4 +1,6 @@
 import { Tabs, useSegments, useRouter } from 'expo-router';
+import { PixelRatio, Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
@@ -11,6 +13,8 @@ export default function TabLayout() {
   const { t } = useTranslation();
   const segments = useSegments();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
+  const fontScale = PixelRatio.getFontScale();
 
   // Check if we're in the home tab and where exactly
   const isInHomeTab = segments[1] === '(home)';
@@ -34,8 +38,8 @@ export default function TabLayout() {
           borderTopColor: theme.colors.border,
           borderTopWidth: 1,
           elevation: 8, // Add shadow for Android
-          minHeight: 90, // Ensure enough height, allows expansion for large fonts
-          paddingBottom: 10, // Padding at bottom
+          minHeight: (Platform.OS === 'ios' ? 40 : 50) + 15 * fontScale + insets.bottom, // Scale gently with font size for accessibility
+          paddingBottom: insets.bottom > 0 ? 20 + insets.bottom : 10, // Push content above nav bar
           paddingTop: 10,
         },
       }}>

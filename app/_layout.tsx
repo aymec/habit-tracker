@@ -4,6 +4,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-reanimated';
 import { useEffect } from 'react';
 import { Platform, View, useWindowDimensions, StyleSheet } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { HabitProvider } from '../src/context/HabitContext';
 import { ThemeProvider as CustomThemeProvider, useTheme } from '../src/context/ThemeContext';
@@ -55,10 +56,12 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <CustomThemeProvider>
-      <HabitProvider>
-        <RootNavigator />
-      </HabitProvider>
-    </CustomThemeProvider>
+    <SafeAreaProvider>
+      <CustomThemeProvider>
+        <HabitProvider>
+          <RootNavigator />
+        </HabitProvider>
+      </CustomThemeProvider>
+    </SafeAreaProvider>
   );
 }
