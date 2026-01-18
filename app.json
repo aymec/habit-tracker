@@ -4,7 +4,7 @@
     "slug": "ontrack",
     "version": "1.0",
     "orientation": "portrait",
-    "icon": "./assets/images/Tracks_Light/apple-devices/AppIcon.appiconset/icon-ios-1024x1024.png",
+    "icon": "./assets/images/icon-light-1024x1024.png",
     "scheme": "ontrack",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -18,9 +18,9 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#ffffff",
-        "foregroundImage": "./assets/images/Tracks_Light/android/Tracks_Light_Icon.png",
-        "backgroundImage": "./assets/images/Tracks_Light/android/Tracks_Light_Background.png",
-        "monochromeImage": "./assets/images/Tracks_Light/android/Tracks_Light_Monochrome.png"
+        "foregroundImage": "./assets/images/icon-light-android-foreground.png",
+        "backgroundImage": "./assets/images/icon-light-android-background.png",
+        "monochromeImage": "./assets/images/icon-light-android-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
@@ -35,13 +35,13 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/Tracks_Light/apple-devices/AppIcon.appiconset/icon-ios-1024x1024.png",
+          "image": "./assets/images/icon-light-1024x1024.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
           "dark": {
             "backgroundColor": "#000000",
-            "image": "./assets/images/Tracks_Dark/apple-devices/AppIcon.appiconset/icon-ios-1024x1024.png"
+            "image": "./assets/images/icon-dark-1024x1024.png"
           }
         }
       ]
