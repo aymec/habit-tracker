@@ -1,10 +1,25 @@
-# Welcome to my habit tracker app 👋
+# OnTrack - Habit Tracker App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A cross-platform habit tracking app built with React Native and Expo. Track your goals, log entries with customizable quick-add options, and monitor your progress over time.
 
-## Context
+## Features
 
-Get the list of features from the [implementation plan](./implementation_plan.md).
+- **Multiple Goals**: Create and manage multiple independent goals and habits
+- **Customizable Options**: Define quick-add buttons with custom labels and values for each goal (e.g., "Glass S" = 250ml, "Glass L" = 500ml)
+- **Entry History**: View chronological history of all logged entries with timestamps
+- **Target Setting**: Set optional targets per goal (e.g., 2 liters per day)
+- **Edit & Delete**: Modify or remove entries and goals as needed
+- **Dark/Light/System Theme**: Choose your preferred appearance or follow system settings
+- **Multi-language Support**: Available in 12 languages (English, Spanish, French, German, Italian, Portuguese, Dutch, Russian, Japanese, Simplified Chinese, Traditional Chinese, Hindi)
+- **Cross-platform**: Works on iOS, Android, and Web
+- **Local Data Persistence**: All data stored locally on device
+- **Demo Mode**: Try the app instantly with sample data
+
+## Future Improvements
+
+- **RTL (Right-to-Left) Support**: Add support for RTL languages like Arabic and Hebrew
+- **Lazy Loading for Large Lists**: Optimize performance for users with extensive entry histories
+- **Landscape Orientation Support**: Improve layout and usability in landscape mode on mobile devices
 
 ## Development
 
