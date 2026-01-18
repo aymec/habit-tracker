@@ -72,14 +72,6 @@ export default function GoalScreen() {
           headerShown: true,
           title: activeHabit.name,
           headerTitleAlign: 'center',
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => router.back()}
-              style={styles.headerLeft}
-            >
-              <Ionicons name="chevron-back" size={28} color={theme.colors.primary} />
-            </TouchableOpacity>
-          ),
         }}
       />
 
@@ -146,9 +138,6 @@ export default function GoalScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  headerLeft: {
-    padding: 4,
   },
   toolbar: {
     position: 'absolute',
