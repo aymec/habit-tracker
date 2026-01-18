@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Constants from 'expo-constants';
-import { populateTestData, clearAllData } from '../../src/services/storage';
+import { clearAllData } from '../../src/services/storage';
 
 export default function SettingsScreen() {
   const { theme, mode, setMode } = useTheme();
@@ -52,48 +52,6 @@ export default function SettingsScreen() {
       );
     } else {
       setAndroidModalVisible(true);
-    }
-  };
-
-  const handlePopulateData = async () => {
-    if (Platform.OS === 'web') {
-      const confirmed = window.confirm(
-        `${t('data.confirmSetDemoDataTitle')}\n\n${t('data.confirmSetDemoDataMessage')}`
-      );
-      if (confirmed) {
-        try {
-          await populateTestData();
-          await loadHabits();
-        } catch (error) {
-          window.alert(`${t('common.error')}: ${t('data.failedToSetDemoData')}`);
-          console.error(error);
-        }
-      }
-    } else {
-      Alert.alert(
-        t('data.confirmSetDemoDataTitle'),
-        t('data.confirmSetDemoDataMessage'),
-        [
-          {
-            text: t('common.cancel'),
-            style: 'cancel',
-          },
-          {
-            text: t('common.set'),
-            style: 'default',
-            onPress: async () => {
-              try {
-                await populateTestData();
-                await loadHabits();
-              } catch (error) {
-                Alert.alert(t('common.error'), t('data.failedToSetDemoData'));
-                console.error(error);
-              }
-            },
-          },
-        ],
-        { cancelable: true }
-      );
     }
   };
 
@@ -212,21 +170,6 @@ export default function SettingsScreen() {
             {t('data.data')}
           </Text>
           <View style={[styles.sectionContent, { backgroundColor: theme.colors.card }]}>
-            <TouchableOpacity
-              style={[styles.optionRow, { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: theme.colors.border }]}
-              onPress={handlePopulateData}
-            >
-              <Text style={[styles.optionText, { color: theme.colors.text }]}>
-                {t('data.setDemoData')}
-              </Text>
-              <View style={styles.iconContainer}>
-                <Ionicons
-                  name="rocket"
-                  size={20}
-                  color={theme.colors.textSecondary}
-                />
-              </View>
-            </TouchableOpacity>
             <TouchableOpacity
               style={styles.optionRow}
               onPress={handleClearData}

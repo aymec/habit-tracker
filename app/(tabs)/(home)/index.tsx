@@ -1,12 +1,13 @@
-import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, Platform, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';
+import { populateTestData } from '../../../src/services/storage';
 
 export default function HomeScreen() {
-  const { habits, selectHabit } = useHabit();
+  const { habits, selectHabit, loadHabits } = useHabit();
   const { theme } = useTheme();
   const { t } = useTranslation();
   const router = useRouter();
@@ -14,6 +15,28 @@ export default function HomeScreen() {
   const handleGoalPress = (goalId: string) => {
     selectHabit(goalId);
     router.push('/(tabs)/(home)/goal');
+  };
+
+  const handleStartDemo = async () => {
+    try {
+      await populateTestData();
+      await loadHabits();
+      if (Platform.OS === 'web') {
+        window.alert(`${t('data.demoDataSetTitle')}\n\n${t('data.demoDataSetMessage')}`);
+      } else {
+        Alert.alert(
+          t('data.demoDataSetTitle'),
+          t('data.demoDataSetMessage')
+        );
+      }
+    } catch (error) {
+      if (Platform.OS === 'web') {
+        window.alert(`${t('common.error')}: ${t('data.failedToSetDemoData')}`);
+      } else {
+        Alert.alert(t('common.error'), t('data.failedToSetDemoData'));
+      }
+      console.error(error);
+    }
   };
 
   return (
@@ -54,6 +77,16 @@ export default function HomeScreen() {
 
       {/* Fixed Add Button */}
       <View style={[styles.footer, { backgroundColor: theme.colors.background }]}>
+        {habits.length === 0 && (
+          <TouchableOpacity
+            style={[styles.demoButton, { borderColor: theme.colors.primary }]}
+            onPress={handleStartDemo}
+          >
+            <Text style={[styles.demoButtonText, { color: theme.colors.primary }]}>
+              {t('habits.startDemo')}
+            </Text>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity
           style={[styles.addButton, { backgroundColor: theme.colors.primary }]}
           onPress={() => router.push('/(tabs)/(home)/name')}
@@ -107,6 +140,17 @@ const styles = StyleSheet.create({
   },
   addButtonText: {
     color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  demoButton: {
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    borderWidth: 2,
+    marginBottom: 10,
+  },
+  demoButtonText: {
     fontWeight: 'bold',
     fontSize: 16,
   },
