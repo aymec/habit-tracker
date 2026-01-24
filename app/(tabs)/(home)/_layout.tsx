@@ -58,8 +58,6 @@ function CustomHomeHeader() {
 }
 
 export default function HomeStackLayout() {
-  const { t } = useTranslation();
-
   return (
     <Stack
       screenOptions={{
