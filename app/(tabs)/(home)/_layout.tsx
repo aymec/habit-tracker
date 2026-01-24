@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Stack } from 'expo-router';
 import { Image, Platform, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -15,8 +16,16 @@ function CustomHomeHeader() {
   const { width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
 
+  // Avoid hydration mismatch: these hooks return different values at build time
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  // Use consistent defaults until mounted on web
+  const effectiveWidth = Platform.OS === 'web' && !mounted ? 0 : width;
+  const effectiveInsetsTop = Platform.OS === 'web' && !mounted ? 0 : insets.top;
+
   // Show app name on web when width is sufficient
-  const showAppName = Platform.OS === 'web' && width >= 500;
+  const showAppName = Platform.OS === 'web' && effectiveWidth >= 500;
 
   return (
     <View
@@ -24,7 +33,7 @@ function CustomHomeHeader() {
         styles.header,
         {
           backgroundColor: theme.colors.header,
-          paddingTop: insets.top,
+          paddingTop: effectiveInsetsTop,
           borderBottomColor: theme.colors.border,
           ...(Platform.OS === 'web' && {
             borderBottomLeftRadius: 16,

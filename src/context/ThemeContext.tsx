@@ -47,6 +47,10 @@ export const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [mode, setModeState] = useState<ThemeMode>('system');
   const [isLoading, setIsLoading] = useState(true);
 
+  // Avoid hydration mismatch: useColorScheme returns null at build time
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   // Load saved theme mode on mount
   useEffect(() => {
     const loadThemeMode = async () => {
@@ -74,8 +78,10 @@ export const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }
   };
 
+  // Use null for system scheme until mounted to ensure consistent hydration
+  const effectiveSystemScheme = mounted ? systemColorScheme : null;
   const isDark =
-    mode === 'dark' || (mode === 'system' && systemColorScheme === 'dark');
+    mode === 'dark' || (mode === 'system' && effectiveSystemScheme === 'dark');
 
   const theme = isDark ? darkTheme : lightTheme;
 
