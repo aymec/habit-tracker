@@ -82,5 +82,26 @@
     "failedToClearData": "Het wissen van gegevens is mislukt.",
     "setDemoData": "Demogegevens instellen",
     "clearAllData": "Alle gegevens wissen"
+  },
+  "privacy": {
+    "lastUpdated": "Laatst bijgewerkt: 12 januari 2026",
+    "intro": "Uw privacy is van cruciaal belang voor ons. Bij OnTrack hebben we een eenvoudige filosofie: uw gegevens zijn van u.",
+    "section1Title": "1. Gegevensverzameling en -opslag",
+    "section1Intro": "OnTrack - Habit Tracker is ontworpen om als een volledig lokale applicatie te functioneren.",
+    "section1Bullet1": "Persoonlijke gegevens: We vereisen niet dat u een account aanmaakt of persoonlijke informatie (zoals naam, e-mail of telefoonnummer) verstrekt om de app te gebruiken.",
+    "section1Bullet2": "Gewoontegegevens: Alle gegevens die u invoert over uw gewoontes, reeksen en schema's worden lokaal op uw apparaat opgeslagen.",
+    "section1Bullet3": "Geen serveropslag: We beheren geen externe servers om uw gewoontegegevens te verzamelen, op te slaan of te verwerken.",
+    "section2Title": "2. Gegevens delen",
+    "section2Text": "Aangezien we uw gegevens niet verzamelen, kunnen en zullen we uw informatie niet verkopen, verhandelen of delen met derden.",
+    "section3Title": "3. Diensten van derden",
+    "section3Text": "De app is gebouwd met React Native en Expo. Hoewel de app zelf geen gegevens verzamelt, kan het onderliggende besturingssysteem (iOS/Android) of de app store (Google Play/Apple App Store) basistelemetrie of crashrapporten verzamelen volgens hun eigen privacybeleid.",
+    "section4Title": "4. Gegevensbehoud en -verwijdering",
+    "section4Text": "Uw gegevens blijven op uw apparaat zolang de app is geïnstalleerd. Als u de OnTrack-app verwijdert, worden alle lokaal opgeslagen gewoontegegevens permanent door het besturingssysteem verwijderd. We kunnen deze gegevens niet voor u herstellen omdat we er nooit toegang toe hebben gehad.",
+    "section5Title": "5. Wijzigingen in dit beleid",
+    "section5Text": "We kunnen ons privacybeleid van tijd tot tijd bijwerken. Eventuele wijzigingen worden weergegeven door de datum \"Laatst bijgewerkt\" bovenaan deze pagina bij te werken.",
+    "section6Title": "6. Neem contact met ons op",
+    "section6TextBefore": "Als u vragen heeft over dit privacybeleid, kunt u contact met ons opnemen via GitHub door ",
+    "section6Link": "een melding te openen",
+    "section6TextAfter": " in de projectrepository."
   }
 }

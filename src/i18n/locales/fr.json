@@ -82,5 +82,26 @@
     "failedToClearData": "Échec de la suppression des données.",
     "setDemoData": "Définir les données de démonstration",
     "clearAllData": "Effacer toutes les données"
+  },
+  "privacy": {
+    "lastUpdated": "Dernière mise à jour : 12 janvier 2026",
+    "intro": "Votre vie privée est d'une importance capitale pour nous. Chez OnTrack, nous avons une philosophie simple : vos données vous appartiennent.",
+    "section1Title": "1. Collecte et stockage des données",
+    "section1Intro": "OnTrack - Habit Tracker est conçu pour fonctionner comme une application locale uniquement.",
+    "section1Bullet1": "Données personnelles : Nous ne vous demandons pas de créer un compte ni de fournir des informations personnelles (comme votre nom, email ou numéro de téléphone) pour utiliser l'application.",
+    "section1Bullet2": "Données d'habitudes : Toutes les données que vous saisissez concernant vos habitudes, séries et calendriers sont stockées localement sur votre appareil.",
+    "section1Bullet3": "Pas de stockage serveur : Nous n'exploitons aucun serveur externe pour collecter, stocker ou traiter vos données d'habitudes.",
+    "section2Title": "2. Partage des données",
+    "section2Text": "Puisque nous ne collectons pas vos données, nous ne pouvons pas et ne vendons, n'échangeons ni ne partageons vos informations avec des tiers.",
+    "section3Title": "3. Services tiers",
+    "section3Text": "L'application est construite avec React Native et Expo. Bien que l'application elle-même ne collecte pas de données, le système d'exploitation sous-jacent (iOS/Android) ou la boutique d'applications (Google Play/Apple App Store) peut collecter des données de télémétrie de base ou des rapports d'erreur conformément à leurs propres politiques de confidentialité.",
+    "section4Title": "4. Conservation et suppression des données",
+    "section4Text": "Vos données restent sur votre appareil tant que l'application est installée. Si vous supprimez l'application OnTrack, toutes les données d'habitudes stockées localement seront définitivement supprimées par le système d'exploitation. Nous ne pouvons pas récupérer ces données pour vous car nous n'y avons jamais eu accès.",
+    "section5Title": "5. Modifications de cette politique",
+    "section5Text": "Nous pouvons mettre à jour notre politique de confidentialité de temps en temps. Tout changement sera reflété en mettant à jour la date « Dernière mise à jour » en haut de cette page.",
+    "section6Title": "6. Nous contacter",
+    "section6TextBefore": "Si vous avez des questions concernant cette politique de confidentialité, vous pouvez nous contacter via GitHub en ",
+    "section6Link": "ouvrant un ticket",
+    "section6TextAfter": " dans le dépôt du projet."
   }
 }

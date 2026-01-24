@@ -82,5 +82,26 @@
     "failedToClearData": "清除資料失敗。",
     "setDemoData": "設定示範資料",
     "clearAllData": "清除所有資料"
+  },
+  "privacy": {
+    "lastUpdated": "最後更新：2026年1月12日",
+    "intro": "您的隱私對我們至關重要。在OnTrack，我們有一個簡單的理念：您的資料屬於您。",
+    "section1Title": "1. 資料收集和儲存",
+    "section1Intro": "OnTrack - 習慣追蹤器被設計為一個完全本地運行的應用程式。",
+    "section1Bullet1": "個人資料：我們不要求您建立帳戶或提供任何個人資訊（如姓名、電子郵件或電話號碼）來使用此應用程式。",
+    "section1Bullet2": "習慣資料：您輸入的關於習慣、連續記錄和計畫的所有資料都儲存在您的裝置本地。",
+    "section1Bullet3": "無伺服器儲存：我們不營運任何外部伺服器來收集、儲存或處理您的習慣資料。",
+    "section2Title": "2. 資料共享",
+    "section2Text": "由於我們不收集您的資料，我們不能也不會向任何第三方出售、交易或分享您的資訊。",
+    "section3Title": "3. 第三方服務",
+    "section3Text": "該應用程式使用React Native和Expo建構。雖然應用程式本身不收集資料，但底層作業系統（iOS/Android）或應用程式商店（Google Play/Apple App Store）可能會根據其各自的隱私權政策收集基本遙測資料或當機報告。",
+    "section4Title": "4. 資料保留和刪除",
+    "section4Text": "只要應用程式安裝在您的裝置上，您的資料就會保留在裝置上。如果您刪除OnTrack應用程式，所有本地儲存的習慣資料將被作業系統永久刪除。由於我們從未存取過這些資料，因此無法為您恢復。",
+    "section5Title": "5. 本政策的變更",
+    "section5Text": "我們可能會不時更新我們的隱私權政策。任何變更都將透過更新本頁頂部的「最後更新」日期來反映。",
+    "section6Title": "6. 聯絡我們",
+    "section6TextBefore": "如果您對本隱私權政策有任何疑問，可以透過GitHub在專案儲存庫中",
+    "section6Link": "提交問題",
+    "section6TextAfter": "與我們聯絡。"
   }
 }

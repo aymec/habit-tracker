@@ -23,69 +23,69 @@ export default function PrivacyPolicyScreen() {
 
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={[styles.lastUpdated, { color: theme.colors.textSecondary }]}>
-          Last Updated: January 12, 2026
+          {t('privacy.lastUpdated')}
         </Text>
 
         <Text style={[styles.intro, { color: theme.colors.text }]}>
-          Your privacy is critically important to us. At OnTrack, we have a simple philosophy: your data belongs to you.
+          {t('privacy.intro')}
         </Text>
 
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-          1. Data Collection and Storage
+          {t('privacy.section1Title')}
         </Text>
         <Text style={[styles.paragraph, { color: theme.colors.text }]}>
-          OnTrack - Habit Tracker is designed to function as a local-only application.
+          {t('privacy.section1Intro')}
         </Text>
         <Text style={[styles.bullet, { color: theme.colors.text }]}>
-          • Personal Data: We do not require you to create an account or provide any personal information (such as name, email, or phone number) to use the app.
+          • {t('privacy.section1Bullet1')}
         </Text>
         <Text style={[styles.bullet, { color: theme.colors.text }]}>
-          • Habit Data: All data you input regarding your habits, streaks, and schedules is stored locally on your device.
+          • {t('privacy.section1Bullet2')}
         </Text>
         <Text style={[styles.bullet, { color: theme.colors.text }]}>
-          • No Server Storage: We do not operate any external servers to collect, store, or process your habit data.
+          • {t('privacy.section1Bullet3')}
         </Text>
 
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-          2. Data Sharing
+          {t('privacy.section2Title')}
         </Text>
         <Text style={[styles.paragraph, { color: theme.colors.text }]}>
-          Since we do not collect your data, we cannot and do not sell, trade, or share your information with any third parties.
+          {t('privacy.section2Text')}
         </Text>
 
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-          3. Third-Party Services
+          {t('privacy.section3Title')}
         </Text>
         <Text style={[styles.paragraph, { color: theme.colors.text }]}>
-          The app is built using React Native and Expo. While the app itself does not collect data, the underlying operating system (iOS/Android) or the app store (Google Play/Apple App Store) may collect basic telemetry or crash reports as governed by their own privacy policies.
+          {t('privacy.section3Text')}
         </Text>
 
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-          4. Data Retention and Deletion
+          {t('privacy.section4Title')}
         </Text>
         <Text style={[styles.paragraph, { color: theme.colors.text }]}>
-          Your data stays on your device for as long as the app is installed. If you delete the OnTrack app, all locally stored habit data will be permanently deleted by the operating system. We cannot recover this data for you as we never had access to it.
+          {t('privacy.section4Text')}
         </Text>
 
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-          5. Changes to This Policy
+          {t('privacy.section5Title')}
         </Text>
         <Text style={[styles.paragraph, { color: theme.colors.text }]}>
-          We may update our Privacy Policy from time to time. Any changes will be reflected by updating the &ldquo;Last Updated&rdquo; date at the top of this page.
+          {t('privacy.section5Text')}
         </Text>
 
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-          6. Contact Us
+          {t('privacy.section6Title')}
         </Text>
         <Text style={[styles.paragraph, { color: theme.colors.text }]}>
-          If you have any questions about this Privacy Policy, you can reach out via GitHub by{' '}
+          {t('privacy.section6TextBefore')}
           <Text
             style={[styles.link, { color: theme.colors.primary }]}
             onPress={handleOpenIssues}
           >
-            opening an issue
+            {t('privacy.section6Link')}
           </Text>
-          {' '}in the project repository.
+          {t('privacy.section6TextAfter')}
         </Text>
       </ScrollView>
     </View>

@@ -82,5 +82,26 @@
     "failedToClearData": "Error al borrar los datos.",
     "setDemoData": "Establecer datos de demostración",
     "clearAllData": "Limpiar todos los datos"
+  },
+  "privacy": {
+    "lastUpdated": "Última actualización: 12 de enero de 2026",
+    "intro": "Tu privacidad es de vital importancia para nosotros. En OnTrack, tenemos una filosofía simple: tus datos te pertenecen.",
+    "section1Title": "1. Recopilación y almacenamiento de datos",
+    "section1Intro": "OnTrack - Habit Tracker está diseñado para funcionar como una aplicación solo local.",
+    "section1Bullet1": "Datos personales: No requerimos que crees una cuenta ni que proporciones información personal (como nombre, correo electrónico o número de teléfono) para usar la aplicación.",
+    "section1Bullet2": "Datos de hábitos: Todos los datos que ingresas sobre tus hábitos, rachas y horarios se almacenan localmente en tu dispositivo.",
+    "section1Bullet3": "Sin almacenamiento en servidor: No operamos servidores externos para recopilar, almacenar o procesar tus datos de hábitos.",
+    "section2Title": "2. Compartir datos",
+    "section2Text": "Como no recopilamos tus datos, no podemos ni vendemos, intercambiamos o compartimos tu información con terceros.",
+    "section3Title": "3. Servicios de terceros",
+    "section3Text": "La aplicación está construida usando React Native y Expo. Aunque la aplicación en sí no recopila datos, el sistema operativo subyacente (iOS/Android) o la tienda de aplicaciones (Google Play/Apple App Store) pueden recopilar telemetría básica o informes de errores según sus propias políticas de privacidad.",
+    "section4Title": "4. Retención y eliminación de datos",
+    "section4Text": "Tus datos permanecen en tu dispositivo mientras la aplicación esté instalada. Si eliminas la aplicación OnTrack, todos los datos de hábitos almacenados localmente serán eliminados permanentemente por el sistema operativo. No podemos recuperar estos datos ya que nunca tuvimos acceso a ellos.",
+    "section5Title": "5. Cambios en esta política",
+    "section5Text": "Podemos actualizar nuestra Política de Privacidad de vez en cuando. Cualquier cambio se reflejará actualizando la fecha de \"Última actualización\" en la parte superior de esta página.",
+    "section6Title": "6. Contáctanos",
+    "section6TextBefore": "Si tienes alguna pregunta sobre esta Política de Privacidad, puedes contactarnos a través de GitHub ",
+    "section6Link": "abriendo un reporte",
+    "section6TextAfter": " en el repositorio del proyecto."
   }
 }

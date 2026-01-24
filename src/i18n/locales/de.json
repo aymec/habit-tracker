@@ -82,5 +82,26 @@
     "failedToClearData": "Fehler beim Löschen der Daten.",
     "setDemoData": "Demo-Daten einstellen",
     "clearAllData": "Alle Daten löschen"
+  },
+  "privacy": {
+    "lastUpdated": "Zuletzt aktualisiert: 12. Januar 2026",
+    "intro": "Ihre Privatsphäre ist uns äußerst wichtig. Bei OnTrack haben wir eine einfache Philosophie: Ihre Daten gehören Ihnen.",
+    "section1Title": "1. Datenerfassung und -speicherung",
+    "section1Intro": "OnTrack - Habit Tracker ist als rein lokale Anwendung konzipiert.",
+    "section1Bullet1": "Persönliche Daten: Wir verlangen nicht, dass Sie ein Konto erstellen oder persönliche Informationen (wie Name, E-Mail oder Telefonnummer) angeben, um die App zu nutzen.",
+    "section1Bullet2": "Gewohnheitsdaten: Alle Daten, die Sie zu Ihren Gewohnheiten, Serien und Zeitplänen eingeben, werden lokal auf Ihrem Gerät gespeichert.",
+    "section1Bullet3": "Keine Server-Speicherung: Wir betreiben keine externen Server, um Ihre Gewohnheitsdaten zu sammeln, zu speichern oder zu verarbeiten.",
+    "section2Title": "2. Datenweitergabe",
+    "section2Text": "Da wir Ihre Daten nicht erfassen, können und werden wir Ihre Informationen nicht an Dritte verkaufen, tauschen oder weitergeben.",
+    "section3Title": "3. Dienste von Drittanbietern",
+    "section3Text": "Die App wurde mit React Native und Expo erstellt. Obwohl die App selbst keine Daten erfasst, kann das zugrunde liegende Betriebssystem (iOS/Android) oder der App Store (Google Play/Apple App Store) grundlegende Telemetriedaten oder Absturzberichte gemäß ihren eigenen Datenschutzrichtlinien erfassen.",
+    "section4Title": "4. Datenspeicherung und -löschung",
+    "section4Text": "Ihre Daten verbleiben auf Ihrem Gerät, solange die App installiert ist. Wenn Sie die OnTrack-App löschen, werden alle lokal gespeicherten Gewohnheitsdaten vom Betriebssystem dauerhaft gelöscht. Wir können diese Daten nicht für Sie wiederherstellen, da wir nie Zugriff darauf hatten.",
+    "section5Title": "5. Änderungen dieser Richtlinie",
+    "section5Text": "Wir können unsere Datenschutzrichtlinie von Zeit zu Zeit aktualisieren. Alle Änderungen werden durch Aktualisierung des Datums «Zuletzt aktualisiert» oben auf dieser Seite widergespiegelt.",
+    "section6Title": "6. Kontaktieren Sie uns",
+    "section6TextBefore": "Wenn Sie Fragen zu dieser Datenschutzrichtlinie haben, können Sie uns über GitHub kontaktieren, indem Sie ",
+    "section6Link": "ein Ticket zu erstellen",
+    "section6TextAfter": " im Projekt-Repository."
   }
 }

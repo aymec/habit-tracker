@@ -82,5 +82,26 @@
     "failedToClearData": "清除数据失败。",
     "setDemoData": "设置演示数据",
     "clearAllData": "清除所有数据"
+  },
+  "privacy": {
+    "lastUpdated": "最后更新：2026年1月12日",
+    "intro": "您的隐私对我们至关重要。在OnTrack，我们有一个简单的理念：您的数据属于您。",
+    "section1Title": "1. 数据收集和存储",
+    "section1Intro": "OnTrack - 习惯追踪器被设计为一个完全本地运行的应用程序。",
+    "section1Bullet1": "个人数据：我们不要求您创建账户或提供任何个人信息（如姓名、电子邮件或电话号码）来使用此应用。",
+    "section1Bullet2": "习惯数据：您输入的关于习惯、连续记录和计划的所有数据都存储在您的设备本地。",
+    "section1Bullet3": "无服务器存储：我们不运营任何外部服务器来收集、存储或处理您的习惯数据。",
+    "section2Title": "2. 数据共享",
+    "section2Text": "由于我们不收集您的数据，我们不能也不会向任何第三方出售、交易或分享您的信息。",
+    "section3Title": "3. 第三方服务",
+    "section3Text": "该应用使用React Native和Expo构建。虽然应用本身不收集数据，但底层操作系统（iOS/Android）或应用商店（Google Play/Apple App Store）可能会根据其各自的隐私政策收集基本遥测数据或崩溃报告。",
+    "section4Title": "4. 数据保留和删除",
+    "section4Text": "只要应用安装在您的设备上，您的数据就会保留在设备上。如果您删除OnTrack应用，所有本地存储的习惯数据将被操作系统永久删除。由于我们从未访问过这些数据，因此无法为您恢复。",
+    "section5Title": "5. 本政策的变更",
+    "section5Text": "我们可能会不时更新我们的隐私政策。任何更改都将通过更新本页顶部的「最后更新」日期来反映。",
+    "section6Title": "6. 联系我们",
+    "section6TextBefore": "如果您对本隐私政策有任何疑问，可以通过GitHub在项目仓库中",
+    "section6Link": "提交问题",
+    "section6TextAfter": "与我们联系。"
   }
 }
