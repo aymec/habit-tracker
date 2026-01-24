@@ -41,6 +41,11 @@ export default function TabLayout() {
           minHeight: (Platform.OS === 'ios' ? 40 : 50) + 15 * fontScale + insets.bottom, // Scale gently with font size for accessibility
           paddingBottom: insets.bottom > 0 ? 20 + insets.bottom : 10, // Push content above nav bar
           paddingTop: 10,
+          ...(Platform.OS === 'web' && {
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+            overflow: 'hidden',
+          }),
         },
       }}>
       <Tabs.Screen

@@ -1,9 +1,9 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import 'react-native-reanimated';
 import { useEffect } from 'react';
-import { Platform, View, useWindowDimensions, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, View, useWindowDimensions } from 'react-native';
+import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { HabitProvider } from '../src/context/HabitContext';
@@ -28,7 +28,7 @@ function RootNavigator() {
   // On web, constrain width to not exceed window height
   if (Platform.OS === 'web') {
     return (
-      <View style={[styles.webContainer, { backgroundColor: theme.colors.border }]}>
+      <View style={[styles.webContainer, { backgroundColor: theme.colors.background }]}>
         <View style={[styles.webContent, { maxWidth: height }]}>
           {content}
         </View>
