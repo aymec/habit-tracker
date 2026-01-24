@@ -154,7 +154,7 @@ export default function GoalScreen() {
       </ScrollView>
 
       {/* Toolbar */}
-      <View style={[styles.toolbar, { backgroundColor: 'transparent' }]} pointerEvents="box-none">
+      <View style={[styles.toolbar, { backgroundColor: 'transparent', pointerEvents: 'box-none' }]}>
         <TouchableOpacity
           onPress={() => router.push({ pathname: '/(tabs)/(home)/edit', params: { mode: 'edit' } })}
           style={[styles.toolbarButton, { borderColor: theme.colors.border, backgroundColor: theme.colors.background }]}
@@ -233,11 +233,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 16,
     borderWidth: 1,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+      },
+      android: {
+        elevation: 2,
+      },
+      web: {
+        boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1)',
+      },
+    }),
   },
   optionLabel: {
     fontSize: 18,
