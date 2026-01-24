@@ -138,9 +138,13 @@ npm run start       # Start Expo dev server
 npm run ios         # Run on iOS simulator
 npm run android     # Run on Android emulator
 npm run web         # Run web version
+npm run deploy      # Build and deploy web to GitHub Pages
 npm run lint        # ESLint
 npm test            # Jest tests
 ```
+
+### Web Deployment
+The `scripts/fix-asset-paths.js` script runs during `npm run deploy` to fix asset paths for GitHub Pages compatibility. It renames `node_modules` to `vendor` and `@scoped` packages to `_at_scoped` to avoid issues with `.gitignore` and URL encoding.
 
 ### Native Rebuilds
 Required when changing native config (app.json android/ios sections, native packages):

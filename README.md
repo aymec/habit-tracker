@@ -62,7 +62,31 @@ npm run android
 #### 3.3 Web
 
 ```bash
-#TODO
+npm run web
+```
+
+This starts the Expo dev server and opens the app in your browser at http://localhost:8081.
+
+## Deploy
+
+### iOS
+
+// TODO
+
+### Android
+
+// TODO
+
+### Web
+
+```bash
+npx expo export -p web
+npm run deploy
+```
+
+To test the bundle before deploying it, run:
+```bash
+npx serve dist
 ```
 
 ## Testing
