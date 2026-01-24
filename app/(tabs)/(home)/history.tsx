@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { Stack, useRouter } from 'expo-router';
 import { Entry } from '../../../src/models/types';
+import { formatNumberWithSign } from '../../../src/utils/format';
 
 export default function EntryHistoryScreen() {
   const { activeHabitEntries, removeEntry, activeHabit, habits } = useHabit();
@@ -64,7 +65,7 @@ export default function EntryHistoryScreen() {
           <View style={[styles.entryItem, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
             <View style={styles.entryInfo}>
               <Text style={[styles.entryLabel, { color: theme.colors.text }]}>
-                {item.label} ({item.value > 0 ? `+${item.value}` : item.value})
+                {item.label} ({formatNumberWithSign(item.value)})
               </Text>
               <Text style={[styles.entryDate, { color: theme.colors.text }]}>
                 {formatDate(item.timestamp)}

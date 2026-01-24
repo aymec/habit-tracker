@@ -1,12 +1,12 @@
-import { Tabs, useSegments, useRouter } from 'expo-router';
-import { PixelRatio, Platform } from 'react-native';
+import { Tabs, useRouter, useSegments } from 'expo-router';
+import { PixelRatio, Platform, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
-import { useTheme } from '../../src/context/ThemeContext';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../../src/context/ThemeContext';
 
 export default function TabLayout() {
   const { theme } = useTheme();
@@ -15,6 +15,12 @@ export default function TabLayout() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const fontScale = PixelRatio.getFontScale();
+  const { width: windowWidth } = useWindowDimensions();
+
+  // On web, when window is wide enough, labels appear next to icons - use larger font
+  const TAB_LABEL_SIDE_BY_SIDE_THRESHOLD = 768;
+  const isWebWideLabelLayout = Platform.OS === 'web' && windowWidth >= TAB_LABEL_SIDE_BY_SIDE_THRESHOLD;
+  const tabBarFontSize = isWebWideLabelLayout ? 16 : 12;
 
   // Check if we're in the home tab and where exactly
   const isInHomeTab = segments[1] === '(home)';
@@ -31,7 +37,7 @@ export default function TabLayout() {
         tabBarBackground: TabBarBackground,
         tabBarAllowFontScaling: true,
         tabBarLabelStyle: {
-          fontSize: 12,
+          fontSize: tabBarFontSize,
         },
         tabBarStyle: {
           backgroundColor: theme.colors.header,
@@ -45,6 +51,7 @@ export default function TabLayout() {
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
             overflow: 'hidden',
+            minHeight: 60 + 15 * fontScale,
           }),
         },
       }}>
@@ -69,7 +76,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="(settings)"
         options={{
           title: t('settings.title'),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="gear" color={color} />,

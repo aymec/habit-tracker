@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Platform, ActionSheetIOS, Alert } from 'react-native';
-import { useTheme } from '../../src/context/ThemeContext';
-import { useHabit } from '../../src/context/HabitContext';
+import { useTheme } from '../../../src/context/ThemeContext';
+import { useHabit } from '../../../src/context/HabitContext';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Stack, useRouter } from 'expo-router';
 import Constants from 'expo-constants';
-import { clearAllData } from '../../src/services/storage';
+import { clearAllData } from '../../../src/services/storage';
 
 export default function SettingsScreen() {
   const { theme, mode, setMode } = useTheme();
   const { t, i18n } = useTranslation();
   const { loadHabits } = useHabit();
+  const router = useRouter();
 
   const [androidModalVisible, setAndroidModalVisible] = useState(false);
 
@@ -125,7 +127,9 @@ export default function SettingsScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['bottom']}>
+      <Stack.Screen options={{ title: t('settings.title'), headerTitleAlign: 'center' }} />
+
       <ScrollView contentContainerStyle={styles.content}>
 
         {/* Appearance Section */}
@@ -194,7 +198,7 @@ export default function SettingsScreen() {
             {t('settings.about')}
           </Text>
           <View style={[styles.sectionContent, { backgroundColor: theme.colors.card }]}>
-            <View style={styles.optionRow}>
+            <View style={[styles.optionRow, { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: theme.colors.border }]}>
               <Text style={[styles.optionText, { color: theme.colors.text }]}>
                 {t('settings.version')}
               </Text>
@@ -202,6 +206,21 @@ export default function SettingsScreen() {
                 {Constants.expoConfig?.version || '1.0'}
               </Text>
             </View>
+            <TouchableOpacity
+              style={styles.optionRow}
+              onPress={() => router.push('/(settings)/privacy')}
+            >
+              <Text style={[styles.optionText, { color: theme.colors.text }]}>
+                {t('settings.privacyPolicy')}
+              </Text>
+              <View style={styles.iconContainer}>
+                <Ionicons
+                  name="chevron-forward"
+                  size={20}
+                  color={theme.colors.textSecondary}
+                />
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
 

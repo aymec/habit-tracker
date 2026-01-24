@@ -1,12 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, Stack } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import { useMemo, useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { TargetPeriod, Entry } from '../../../src/models/types';
+import { formatNumber, formatNumberWithSign } from '../../../src/utils/format';
 
 const getStartOfPeriod = (period: TargetPeriod): Date => {
   const now = new Date();
@@ -32,12 +33,13 @@ const calculatePeriodCount = (entries: Entry[], period: TargetPeriod): number =>
 };
 
 const formatCount = (count: number): string => {
-  const rounded = Math.round(count * 100) / 100;
-  if (Number.isInteger(rounded)) {
-    return rounded.toString();
-  }
-  return rounded.toFixed(2);
+  return formatNumber(count);
 };
+
+const BASE_FONT_SIZE = 80;
+const CONTAINER_PADDING = 40; // 20px on each side
+// Approximate character width as a ratio of font size (for tabular-nums bold font)
+const CHAR_WIDTH_RATIO = 0.6;
 
 export default function GoalScreen() {
   const { activeHabit, activeHabitOptions, activeHabitEntries, logEntry, habits } = useHabit();
@@ -45,6 +47,7 @@ export default function GoalScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const isFocused = useIsFocused();
+  const { width: windowWidth } = useWindowDimensions();
 
   // Redirect to home if no habits exist (data was cleared) - only when screen is focused
   useEffect(() => {
@@ -59,6 +62,21 @@ export default function GoalScreen() {
     if (!activeHabit.target) return activeHabit.totalCount;
     return calculatePeriodCount(activeHabitEntries, activeHabit.target.period);
   }, [activeHabit, activeHabitEntries]);
+
+  // Calculate dynamic font size for web (adjustsFontSizeToFit doesn't work on web)
+  const counterFontSize = useMemo(() => {
+    if (Platform.OS !== 'web') return BASE_FONT_SIZE;
+
+    const formattedText = formatCount(displayCount);
+    const availableWidth = windowWidth - CONTAINER_PADDING;
+    const textWidth = formattedText.length * BASE_FONT_SIZE * CHAR_WIDTH_RATIO;
+
+    if (textWidth <= availableWidth) return BASE_FONT_SIZE;
+
+    // Scale down the font to fit
+    const scaledSize = Math.floor((availableWidth / formattedText.length) / CHAR_WIDTH_RATIO);
+    return Math.max(scaledSize, 24); // Minimum font size of 24
+  }, [displayCount, windowWidth]);
 
   // If no habit is selected (shouldn't happen, but safe to handle)
   if (!activeHabit || habits.length === 0) {
@@ -78,13 +96,17 @@ export default function GoalScreen() {
       <ScrollView contentContainerStyle={styles.content}>
         {/* Counter Display */}
         <View style={styles.counterContainer}>
-          <Text style={[styles.counterValue, { color: theme.colors.primary }]}>
+          <Text
+            style={[styles.counterValue, { color: theme.colors.primary, fontSize: counterFontSize }]}
+            numberOfLines={1}
+            adjustsFontSizeToFit
+          >
             {formatCount(displayCount)}
           </Text>
           <Text style={[styles.counterLabel, { color: theme.colors.text }]}>
             {activeHabit.target
               ? t('habits.vsTarget', {
-                  value: activeHabit.target.value,
+                  value: formatNumber(activeHabit.target.value),
                   period: t(`habits.period.${activeHabit.target.period}`)
                 })
               : t('history.totalCount')}
@@ -109,7 +131,7 @@ export default function GoalScreen() {
                 {option.label}
               </Text>
               <Text style={[styles.optionValue, { color: theme.colors.text }]}>
-                {option.value > 0 ? `+${option.value}` : option.value}
+                {formatNumberWithSign(option.value)}
               </Text>
             </TouchableOpacity>
           ))}
@@ -167,6 +189,8 @@ const styles = StyleSheet.create({
   counterContainer: {
     alignItems: 'center',
     marginBottom: 50,
+    width: '100%',
+    paddingHorizontal: 20,
   },
   counterValue: {
     fontSize: 80,

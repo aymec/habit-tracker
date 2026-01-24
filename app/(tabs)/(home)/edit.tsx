@@ -8,6 +8,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { useRouter, Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Option, TargetPeriod, HabitTarget } from '../../../src/models/types';
+import { formatNumber, formatNumberWithSign } from '../../../src/utils/format';
 
 export default function ModalScreen() {
   const { theme } = useTheme();
@@ -118,7 +119,7 @@ export default function ModalScreen() {
   const formatTarget = (target?: HabitTarget): string => {
     if (!target) return t('habits.noTarget');
     return t('habits.targetDisplay', {
-      value: target.value,
+      value: formatNumber(target.value),
       period: t(`habits.period.${target.period}`)
     });
   };
@@ -476,7 +477,7 @@ export default function ModalScreen() {
                   <View style={styles.optionInfo}>
                     <Text style={[styles.optionLabel, { color: theme.colors.text }]}>{option.label}</Text>
                     <Text style={[styles.optionValue, { color: theme.colors.textSecondary }]}>
-                      ({option.value > 0 ? `+${option.value}` : option.value})
+                      ({formatNumberWithSign(option.value)})
                     </Text>
                   </View>
                   <View style={styles.optionActions}>
