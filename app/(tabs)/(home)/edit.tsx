@@ -3,9 +3,10 @@ import { Platform, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, S
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTranslation } from 'react-i18next';
-import { useState, useEffect } from 'react';
-import { useIsFocused } from '@react-navigation/native';
+import { useState, useEffect, useCallback } from 'react';
+import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 import { useRouter, Stack } from 'expo-router';
+import Head from 'expo-router/head';
 import { Ionicons } from '@expo/vector-icons';
 import { Option, TargetPeriod, HabitTarget } from '../../../src/models/types';
 import { formatNumber, formatNumberWithSign } from '../../../src/utils/format';
@@ -23,6 +24,16 @@ export default function ModalScreen() {
       router.dismissAll();
     }
   }, [habits, router, isFocused]);
+
+  // Update document title on focus for web (Head component doesn't update on tab switch)
+  const pageTitle = activeHabit?.name ? `${t('common.edit')} ${activeHabit.name}` : t('habits.editHabit');
+  useFocusEffect(
+    useCallback(() => {
+      if (Platform.OS === 'web') {
+        document.title = `${pageTitle} | OnTrack`;
+      }
+    }, [pageTitle])
+  );
 
   const [isEditingHabitName, setIsEditingHabitName] = useState(false);
   const [editedHabitName, setEditedHabitName] = useState('');
@@ -272,11 +283,16 @@ export default function ModalScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      {Platform.OS === 'web' && (
+        <Head>
+          <title>{pageTitle} | OnTrack</title>
+        </Head>
+      )}
       {/* Use Stack.Screen to configure the header */}
       <Stack.Screen
         options={{
           headerShown: true,
-          title: activeHabit?.name ? `${t('common.edit')} ${activeHabit.name}` : t('habits.editHabit'),
+          title: pageTitle,
           headerTitleAlign: 'center',
         }}
       />

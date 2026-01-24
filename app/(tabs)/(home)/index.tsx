@@ -1,9 +1,12 @@
+import { useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Platform, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';
+import Head from 'expo-router/head';
 import { populateTestData } from '../../../src/services/storage';
 
 export default function HomeScreen() {
@@ -11,6 +14,15 @@ export default function HomeScreen() {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const router = useRouter();
+
+  // Update document title on focus for web (Head component doesn't update on tab switch)
+  useFocusEffect(
+    useCallback(() => {
+      if (Platform.OS === 'web') {
+        document.title = `${t('habits.title')} | OnTrack`;
+      }
+    }, [t])
+  );
 
   const handleGoalPress = (goalId: string) => {
     selectHabit(goalId);
@@ -41,6 +53,11 @@ export default function HomeScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      {Platform.OS === 'web' && (
+        <Head>
+          <title>{t('habits.title')} | OnTrack</title>
+        </Head>
+      )}
       {habits.length === 0 ? (
         <View style={[styles.emptyState, { backgroundColor: theme.colors.background }]}>
           <Ionicons name="clipboard-outline" size={80} color={theme.colors.textSecondary} />

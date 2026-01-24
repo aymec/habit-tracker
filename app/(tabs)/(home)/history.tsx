@@ -1,11 +1,12 @@
 import { StyleSheet, View, Text, FlatList, TouchableOpacity, Alert, Platform } from 'react-native';
-import { useEffect } from 'react';
-import { useIsFocused } from '@react-navigation/native';
+import { useEffect, useCallback } from 'react';
+import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { Stack, useRouter } from 'expo-router';
+import Head from 'expo-router/head';
 import { Entry } from '../../../src/models/types';
 import { formatNumberWithSign } from '../../../src/utils/format';
 
@@ -22,6 +23,17 @@ export default function EntryHistoryScreen() {
       router.dismissAll();
     }
   }, [habits, router, isFocused]);
+
+  const pageTitle = activeHabit?.name ? `${activeHabit.name} ${t('history.title')}` : t('history.title');
+
+  // Update document title on focus for web (Head component doesn't update on tab switch)
+  useFocusEffect(
+    useCallback(() => {
+      if (Platform.OS === 'web') {
+        document.title = `${pageTitle} | OnTrack`;
+      }
+    }, [pageTitle])
+  );
 
   const handleDeleteEntry = (entry: Entry) => {
     if (Platform.OS === 'web') {
@@ -55,7 +67,12 @@ export default function EntryHistoryScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <Stack.Screen options={{ title: activeHabit?.name ? `${activeHabit.name} ${t('history.title')}` : t('history.title'), headerTitleAlign: 'center' }} />
+      {Platform.OS === 'web' && (
+        <Head>
+          <title>{pageTitle} | OnTrack</title>
+        </Head>
+      )}
+      <Stack.Screen options={{ title: pageTitle, headerTitleAlign: 'center' }} />
 
       <FlatList
         data={activeHabitEntries}

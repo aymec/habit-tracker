@@ -1,5 +1,8 @@
+import { useCallback } from 'react';
 import { Linking, Platform, StyleSheet, View, Text, ScrollView } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { Stack } from 'expo-router';
+import Head from 'expo-router/head';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useTranslation } from 'react-i18next';
 
@@ -8,6 +11,15 @@ const ISSUES_URL = 'https://github.com/aymec/habit-tracker/issues';
 export default function PrivacyPolicyScreen() {
   const { theme } = useTheme();
   const { t } = useTranslation();
+
+  // Update document title on focus for web (Head component doesn't update on tab switch)
+  useFocusEffect(
+    useCallback(() => {
+      if (Platform.OS === 'web') {
+        document.title = `${t('settings.privacyPolicy')} | OnTrack`;
+      }
+    }, [t])
+  );
 
   const handleOpenIssues = () => {
     if (Platform.OS === 'web') {
@@ -19,6 +31,11 @@ export default function PrivacyPolicyScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      {Platform.OS === 'web' && (
+        <Head>
+          <title>{t('settings.privacyPolicy')} | OnTrack</title>
+        </Head>
+      )}
       <Stack.Screen options={{ title: t('settings.privacyPolicy'), headerTitleAlign: 'center' }} />
 
       <ScrollView contentContainerStyle={styles.content}>

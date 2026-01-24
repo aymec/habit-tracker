@@ -1,9 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, Stack } from 'expo-router';
+import Head from 'expo-router/head';
 import { useTranslation } from 'react-i18next';
 import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
-import { useMemo, useEffect } from 'react';
-import { useIsFocused } from '@react-navigation/native';
+import { useMemo, useEffect, useCallback } from 'react';
+import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { TargetPeriod, Entry } from '../../../src/models/types';
@@ -56,6 +57,15 @@ export default function GoalScreen() {
     }
   }, [habits, router, isFocused]);
 
+  // Update document title on focus for web (Head component doesn't update on tab switch)
+  useFocusEffect(
+    useCallback(() => {
+      if (Platform.OS === 'web' && activeHabit) {
+        document.title = `${activeHabit.name} | OnTrack`;
+      }
+    }, [activeHabit])
+  );
+
   // Calculate the display count based on target period
   const displayCount = useMemo(() => {
     if (!activeHabit) return 0;
@@ -85,6 +95,11 @@ export default function GoalScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      {Platform.OS === 'web' && (
+        <Head>
+          <title>{activeHabit.name} | OnTrack</title>
+        </Head>
+      )}
       <Stack.Screen
         options={{
           headerShown: true,

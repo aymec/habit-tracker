@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Platform, ActionSheetIOS, Alert } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack, useRouter } from 'expo-router';
+import Head from 'expo-router/head';
 import Constants from 'expo-constants';
 import { clearAllData } from '../../../src/services/storage';
 
@@ -16,6 +18,15 @@ export default function SettingsScreen() {
   const router = useRouter();
 
   const [androidModalVisible, setAndroidModalVisible] = useState(false);
+
+  // Update document title on focus for web (Head component doesn't update on tab switch)
+  useFocusEffect(
+    useCallback(() => {
+      if (Platform.OS === 'web') {
+        document.title = `${t('settings.title')} | OnTrack`;
+      }
+    }, [t])
+  );
 
   const languages = [
     // Latin alphabet (Alphabetical order)
@@ -128,6 +139,11 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['bottom']}>
+      {Platform.OS === 'web' && (
+        <Head>
+          <title>{t('settings.title')} | OnTrack</title>
+        </Head>
+      )}
       <Stack.Screen options={{ title: t('settings.title'), headerTitleAlign: 'center' }} />
 
       <ScrollView contentContainerStyle={styles.content}>

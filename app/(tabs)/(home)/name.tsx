@@ -1,8 +1,10 @@
+import { useCallback, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Platform, Alert } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
 import { useRouter, Stack } from 'expo-router';
+import Head from 'expo-router/head';
 
 export default function NameScreen() {
   const { theme } = useTheme();
@@ -10,6 +12,15 @@ export default function NameScreen() {
   const router = useRouter();
 
   const [habitName, setHabitName] = useState('');
+
+  // Update document title on focus for web (Head component doesn't update on tab switch)
+  useFocusEffect(
+    useCallback(() => {
+      if (Platform.OS === 'web') {
+        document.title = `${t('habits.newHabit')} | OnTrack`;
+      }
+    }, [t])
+  );
 
   const handleNext = () => {
     if (!habitName.trim()) {
@@ -29,6 +40,11 @@ export default function NameScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      {Platform.OS === 'web' && (
+        <Head>
+          <title>{t('habits.newHabit')} | OnTrack</title>
+        </Head>
+      )}
       <Stack.Screen
         options={{
           headerShown: true,

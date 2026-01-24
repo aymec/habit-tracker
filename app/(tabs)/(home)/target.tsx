@@ -1,9 +1,11 @@
+import { useCallback, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Platform, Alert } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
+import Head from 'expo-router/head';
 import { TargetPeriod } from '../../../src/models/types';
 
 const PERIODS: TargetPeriod[] = ['day', 'week', 'month', 'year'];
@@ -18,6 +20,15 @@ export default function TargetScreen() {
 
   const [targetValue, setTargetValue] = useState('');
   const [selectedPeriod, setSelectedPeriod] = useState<TargetPeriod>('day');
+
+  // Update document title on focus for web (Head component doesn't update on tab switch)
+  useFocusEffect(
+    useCallback(() => {
+      if (Platform.OS === 'web') {
+        document.title = `${t('habits.setTarget')} | OnTrack`;
+      }
+    }, [t])
+  );
 
   const navigateToEdit = () => {
     // Dismiss all creation screens (name, target), then push goal and edit
@@ -100,6 +111,11 @@ export default function TargetScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      {Platform.OS === 'web' && (
+        <Head>
+          <title>{t('habits.setTarget')} | OnTrack</title>
+        </Head>
+      )}
       <Stack.Screen
         options={{
           headerShown: true,
