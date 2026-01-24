@@ -1,7 +1,7 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Platform, StyleSheet, View, useWindowDimensions } from 'react-native';
 import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -17,6 +17,10 @@ function RootNavigator() {
   const { isDark, theme } = useTheme();
   const { height } = useWindowDimensions();
 
+  // Avoid hydration mismatch: useWindowDimensions returns 0 at build time
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const content = (
     <ThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{ headerShown: false }}>
@@ -29,7 +33,7 @@ function RootNavigator() {
   if (Platform.OS === 'web') {
     return (
       <View style={[styles.webContainer, { backgroundColor: theme.colors.background }]}>
-        <View style={[styles.webContent, { maxWidth: height }]}>
+        <View style={[styles.webContent, mounted ? { maxWidth: height } : undefined]}>
           {content}
         </View>
       </View>
