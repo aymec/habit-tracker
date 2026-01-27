@@ -347,3 +347,16 @@ To learn more about developing your project with Expo, look at the following res
 
 - [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
 - [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+
+## 📜 License & Attribution
+
+This project is multi-licensed to balance open collaboration with clear attribution:
+
+* **Software/Code:** Licensed under the [MIT License](LICENSE). You are free to use, copy, and modify the code as long as the original copyright notice is retained.
+* **Documentation & non-image assets:** All written documentation, guides, and non-image assets are licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). 
+* **Images & Icons:** All app icons and screenshots were generated using AI (Gemini). These are provided free of charge with no rights reserved; you may use them without attribution.
+
+### How to Attribute
+If you use the code or documentation in your own project, please include a link back to this repository:
+> **OnTrack - Habit Tracker** by Aymeric Chalochet
+
