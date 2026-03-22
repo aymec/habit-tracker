@@ -2,7 +2,7 @@
 
 A cross-platform habit tracking app built with React Native and Expo. Track your goals, log entries with customizable quick-add options, and monitor your progress over time.
 
-[<image alt="Download on the App Store" src="./assets/images/download-on-the-app-store.svg" height="60">]() [<image alt="Get it on Google Play" src="./assets/images/get-it-on-google-play.png" height="60">](https://play.google.com/store/apps/details?id=com.aym3r1c.ontrack) 
+[<image alt="Download on the App Store" src="./assets/images/download-on-the-app-store.svg" height="60">](https://apps.apple.com/app/ontrack-habit-tracker/id6757606065) [<image alt="Get it on Google Play" src="./assets/images/get-it-on-google-play.png" height="60">](https://play.google.com/store/apps/details?id=com.aym3r1c.ontrack) 
 *iOS Pending review
 
 Also available at https://ontrack.aymeric.fyi
