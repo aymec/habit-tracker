@@ -58,21 +58,47 @@ const setStoredLanguage = async (language: string): Promise<void> => {
   }
 };
 
+// Normalize OS language tags to our resource keys
+// Handles: zh-Hans, zh-Hans-CN, zh-Hant, zh-Hant-TW, zh-CN, zh-TW, etc.
+const SUPPORTED_LANGUAGES = Object.keys(RESOURCES);
+const normalizeLanguage = (tag: string, languageCode: string | null): string | null => {
+  if (SUPPORTED_LANGUAGES.includes(tag)) return tag;
+
+  // Map script-based Chinese tags (iOS) to our region-based keys
+  if (tag.startsWith('zh-Hans') || tag === 'zh-CN') return 'zh-CN';
+  if (tag.startsWith('zh-Hant') || tag === 'zh-TW') return 'zh-TW';
+
+  // Try base language code (e.g. "fr" from "fr-FR")
+  if (languageCode && SUPPORTED_LANGUAGES.includes(languageCode)) return languageCode;
+
+  return null;
+};
+
 const LANGUAGE_DETECTOR = {
   type: 'languageDetector' as const,
   async: true,
   detect: async (callback: (lang: string) => void) => {
     try {
-      // Check stored language preference first
+      const locale = Localization.getLocales()[0];
+      const tag = locale.languageTag || locale.languageCode || 'en';
+
+      // On native, prefer the OS-level language (includes iOS per-app setting)
+      if (Platform.OS !== 'web') {
+        const osLang = normalizeLanguage(tag, locale.languageCode);
+        if (osLang) {
+          await setStoredLanguage(osLang);
+          return callback(osLang);
+        }
+      }
+
+      // Check stored language preference (primary method for web)
       const storedLanguage = await getStoredLanguage();
       if (storedLanguage) {
         return callback(storedLanguage);
       }
 
-      // Fallback to device language
-      // expo-localization returns locales like "en-US", we just want "en"
-      const deviceLanguage = Localization.getLocales()[0].languageCode;
-      return callback(deviceLanguage || 'en');
+      // Fallback to normalized device language
+      return callback(normalizeLanguage(tag, locale.languageCode) || 'en');
     } catch (error) {
       console.log('Error reading language', error);
       callback('en');

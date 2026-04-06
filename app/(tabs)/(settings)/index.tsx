@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Platform, ActionSheetIOS, Alert } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Platform, Linking, Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useHabit } from '../../../src/context/HabitContext';
@@ -48,21 +48,7 @@ export default function SettingsScreen() {
 
   const handleLanguagePress = () => {
     if (Platform.OS === 'ios') {
-      const options = [...languages.map(l => l.label), t('common.cancel')];
-      const cancelButtonIndex = options.length - 1;
-
-      ActionSheetIOS.showActionSheetWithOptions(
-        {
-          options,
-          cancelButtonIndex,
-          title: t('settings.language'),
-        },
-        (buttonIndex) => {
-          if (buttonIndex !== cancelButtonIndex) {
-            changeLanguage(languages[buttonIndex].code);
-          }
-        }
-      );
+      Linking.openSettings();
     } else {
       setAndroidModalVisible(true);
     }
@@ -170,16 +156,33 @@ export default function SettingsScreen() {
               style={styles.optionRow}
               onPress={handleLanguagePress}
             >
-              <Text style={[styles.optionText, { color: theme.colors.text }]}>
-                {languages.find(l => l.code === i18n.language)?.label || 'English'}
-              </Text>
-              <View style={styles.iconContainer}>
-                <Ionicons
-                  name={Platform.OS === 'ios' ? "chevron-down" : "caret-down"}
-                  size={20}
-                  color={theme.colors.textSecondary}
-                />
-              </View>
+              {Platform.OS === 'ios' ? (
+                <>
+                  <Text style={[styles.optionText, { color: theme.colors.text }]}>
+                    {t('settings.language')}
+                  </Text>
+                  <View style={styles.iconContainer}>
+                    <Ionicons
+                      name="chevron-forward"
+                      size={20}
+                      color={theme.colors.textSecondary}
+                    />
+                  </View>
+                </>
+              ) : (
+                <>
+                  <Text style={[styles.optionText, { color: theme.colors.text }]}>
+                    {languages.find(l => l.code === i18n.language)?.label || 'English'}
+                  </Text>
+                  <View style={styles.iconContainer}>
+                    <Ionicons
+                      name="caret-down"
+                      size={20}
+                      color={theme.colors.textSecondary}
+                    />
+                  </View>
+                </>
+              )}
             </TouchableOpacity>
           </View>
         </View>
