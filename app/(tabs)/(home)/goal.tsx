@@ -159,7 +159,7 @@ export default function GoalScreen() {
       </ScrollView>
 
       {/* Toolbar */}
-      <View style={[styles.toolbar, { bottom: Math.max(15, insets.bottom + 10), pointerEvents: 'box-none' }]}>
+      <View style={[styles.toolbar, { bottom: Math.max(15, insets.bottom + 60), pointerEvents: 'box-none' }]}>
         <GlassCard
           glassEffect="regular"
           fallbackBackgroundColor={theme.colors.card}

@@ -96,7 +96,7 @@ export default function HomeScreen() {
       )}
 
       {/* Fixed Add Button */}
-      <View style={[styles.footer, { backgroundColor: theme.colors.background, paddingBottom: Math.max(25, insets.bottom + 10) }]}>
+      <View style={[styles.footer, { backgroundColor: theme.colors.background, paddingBottom: Math.max(25, insets.bottom + 60) }]}>
         {habits.length === 0 && (
           <TouchableOpacity
             style={[styles.demoButton, { borderColor: theme.colors.primary }]}
