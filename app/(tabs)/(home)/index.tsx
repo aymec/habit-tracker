@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';
 import Head from 'expo-router/head';
 import { populateTestData } from '../../../src/services/storage';
+import { GlassCard } from '../../../components/ui/glass-card';
 
 export default function HomeScreen() {
   const { habits, selectHabit, loadHabits } = useHabit();
@@ -72,22 +73,22 @@ export default function HomeScreen() {
           contentContainerStyle={styles.goalList}
           style={{ backgroundColor: theme.colors.background }}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              style={[
-                styles.goalItem,
-                {
-                  backgroundColor: theme.colors.card,
-                  borderColor: theme.colors.border,
-                  borderRadius: theme.borderRadius.m
-                }
-              ]}
-              onPress={() => handleGoalPress(item.id)}
+            <GlassCard
+              fallbackBackgroundColor={theme.colors.card}
+              fallbackBorderColor={theme.colors.border}
+              borderRadius={theme.borderRadius.m}
+              style={styles.goalItemOuter}
             >
-              <Text style={[styles.goalName, { color: theme.colors.text }]}>
-                {item.name}
-              </Text>
-              <Ionicons name="chevron-forward" size={20} color={theme.colors.textSecondary} />
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.goalItem}
+                onPress={() => handleGoalPress(item.id)}
+              >
+                <Text style={[styles.goalName, { color: theme.colors.text }]}>
+                  {item.name}
+                </Text>
+                <Ionicons name="chevron-forward" size={20} color={theme.colors.textSecondary} />
+              </TouchableOpacity>
+            </GlassCard>
           )}
         />
       )}
@@ -133,13 +134,14 @@ const styles = StyleSheet.create({
   goalList: {
     padding: 15,
   },
+  goalItemOuter: {
+    marginBottom: 10,
+  },
   goalItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 15,
-    marginBottom: 10,
-    borderWidth: 1,
   },
   goalName: {
     fontSize: 16,
