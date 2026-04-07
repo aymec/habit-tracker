@@ -164,26 +164,26 @@ export default function GoalScreen() {
           glassEffect="regular"
           fallbackBackgroundColor={theme.colors.card}
           fallbackBorderColor={theme.colors.border}
-          borderRadius={22}
+          borderRadius={27}
         >
           <TouchableOpacity
             onPress={() => router.push({ pathname: '/(tabs)/(home)/edit', params: { mode: 'edit' } })}
             style={styles.toolbarButton}
           >
-            <Ionicons name="build-outline" size={24} color={theme.colors.text} />
+            <Ionicons name="build-outline" size={29} color={theme.colors.text} />
           </TouchableOpacity>
         </GlassCard>
         <GlassCard
           glassEffect="regular"
           fallbackBackgroundColor={theme.colors.card}
           fallbackBorderColor={theme.colors.border}
-          borderRadius={22}
+          borderRadius={27}
         >
           <TouchableOpacity
             onPress={() => router.push('/(tabs)/(home)/history')}
             style={styles.toolbarButton}
           >
-            <Ionicons name="calendar-number-outline" size={24} color={theme.colors.text} />
+            <Ionicons name="calendar-number-outline" size={29} color={theme.colors.text} />
           </TouchableOpacity>
         </GlassCard>
       </View>
@@ -204,8 +204,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   toolbarButton: {
-    width: 44,
-    height: 44,
+    width: 53,
+    height: 53,
     alignItems: 'center',
     justifyContent: 'center',
   },
