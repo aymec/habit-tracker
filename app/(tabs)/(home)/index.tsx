@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Platform, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +16,7 @@ export default function HomeScreen() {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   // Update document title on focus for web (Head component doesn't update on tab switch)
   useFocusEffect(
@@ -94,7 +96,7 @@ export default function HomeScreen() {
       )}
 
       {/* Fixed Add Button */}
-      <View style={[styles.footer, { backgroundColor: theme.colors.background }]}>
+      <View style={[styles.footer, { backgroundColor: theme.colors.background, paddingBottom: Math.max(25, insets.bottom + 10) }]}>
         {habits.length === 0 && (
           <TouchableOpacity
             style={[styles.demoButton, { borderColor: theme.colors.primary }]}
@@ -150,7 +152,6 @@ const styles = StyleSheet.create({
   },
   footer: {
     padding: 15,
-    paddingBottom: 25,
   },
   addButton: {
     padding: 15,

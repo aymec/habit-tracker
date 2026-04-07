@@ -38,9 +38,8 @@ export default function HomeStackLayout() {
 
 const styles = StyleSheet.create({
   logoImage: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    marginLeft: 8,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
   },
 });

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import { useMemo, useEffect, useCallback } from 'react';
 import { useIsFocused, useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { TargetPeriod, Entry } from '../../../src/models/types';
@@ -50,6 +51,7 @@ export default function GoalScreen() {
   const router = useRouter();
   const isFocused = useIsFocused();
   const { width: windowWidth } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
 
   // Redirect to home if no habits exist (data was cleared) - only when screen is focused
   useEffect(() => {
@@ -157,19 +159,33 @@ export default function GoalScreen() {
       </ScrollView>
 
       {/* Toolbar */}
-      <View style={[styles.toolbar, { backgroundColor: 'transparent', pointerEvents: 'box-none' }]}>
-        <TouchableOpacity
-          onPress={() => router.push({ pathname: '/(tabs)/(home)/edit', params: { mode: 'edit' } })}
-          style={[styles.toolbarButton, { borderColor: theme.colors.border, backgroundColor: theme.colors.background }]}
+      <View style={[styles.toolbar, { bottom: Math.max(15, insets.bottom + 10), pointerEvents: 'box-none' }]}>
+        <GlassCard
+          glassEffect="regular"
+          fallbackBackgroundColor={theme.colors.card}
+          fallbackBorderColor={theme.colors.border}
+          borderRadius={22}
         >
-          <Ionicons name="build-outline" size={24} color={theme.colors.text} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => router.push('/(tabs)/(home)/history')}
-          style={[styles.toolbarButton, { borderColor: theme.colors.border, backgroundColor: theme.colors.background }]}
+          <TouchableOpacity
+            onPress={() => router.push({ pathname: '/(tabs)/(home)/edit', params: { mode: 'edit' } })}
+            style={styles.toolbarButton}
+          >
+            <Ionicons name="build-outline" size={24} color={theme.colors.text} />
+          </TouchableOpacity>
+        </GlassCard>
+        <GlassCard
+          glassEffect="regular"
+          fallbackBackgroundColor={theme.colors.card}
+          fallbackBorderColor={theme.colors.border}
+          borderRadius={22}
         >
-          <Ionicons name="calendar-number-outline" size={24} color={theme.colors.text} />
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => router.push('/(tabs)/(home)/history')}
+            style={styles.toolbarButton}
+          >
+            <Ionicons name="calendar-number-outline" size={24} color={theme.colors.text} />
+          </TouchableOpacity>
+        </GlassCard>
       </View>
     </View>
   );
@@ -181,19 +197,15 @@ const styles = StyleSheet.create({
   },
   toolbar: {
     position: 'absolute',
-    bottom: 0,
     left: 0,
     right: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    paddingVertical: 15,
   },
   toolbarButton: {
     width: 44,
     height: 44,
-    borderWidth: 1,
-    borderRadius: 22,
     alignItems: 'center',
     justifyContent: 'center',
   },
