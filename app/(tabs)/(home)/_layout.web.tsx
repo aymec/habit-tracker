@@ -61,6 +61,10 @@ export default function WebHomeStackLayout() {
     <Stack
       screenOptions={{
         headerBackButtonDisplayMode: 'minimal',
+        headerStyle: {
+          borderBottomLeftRadius: 16,
+          borderBottomRightRadius: 16,
+        },
       }}>
       <Stack.Screen
         name="index"

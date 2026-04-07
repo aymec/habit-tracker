@@ -10,6 +10,9 @@ import { useRouter } from 'expo-router';
 import Head from 'expo-router/head';
 import { populateTestData } from '../../../src/services/storage';
 import { GlassCard } from '../../../components/ui/glass-card';
+import { isLiquidGlassAvailable } from 'expo-glass-effect';
+
+const liquidGlass = isLiquidGlassAvailable();
 
 export default function HomeScreen() {
   const { habits, selectHabit, loadHabits } = useHabit();
@@ -96,7 +99,7 @@ export default function HomeScreen() {
       )}
 
       {/* Fixed Add Button */}
-      <View style={[styles.footer, { backgroundColor: theme.colors.background, paddingBottom: Platform.OS === 'ios' ? Math.max(25, insets.bottom + 60) : 25 }]}>
+      <View style={[styles.footer, { backgroundColor: theme.colors.background, paddingBottom: liquidGlass ? Math.max(25, insets.bottom + 60) : 25 }]}>
         {habits.length === 0 && (
           <TouchableOpacity
             style={[styles.demoButton, { borderColor: theme.colors.primary }]}

@@ -11,6 +11,9 @@ import { useTheme } from '../../../src/context/ThemeContext';
 import { TargetPeriod, Entry } from '../../../src/models/types';
 import { formatNumber, formatNumberWithSign } from '../../../src/utils/format';
 import { GlassCard } from '../../../components/ui/glass-card';
+import { isLiquidGlassAvailable } from 'expo-glass-effect';
+
+const liquidGlass = isLiquidGlassAvailable();
 
 const getStartOfPeriod = (period: TargetPeriod): Date => {
   const now = new Date();
@@ -159,7 +162,7 @@ export default function GoalScreen() {
       </ScrollView>
 
       {/* Toolbar */}
-      <View style={[styles.toolbar, { bottom: Platform.OS === 'ios' ? Math.max(15, insets.bottom + 60) : 15, pointerEvents: 'box-none' }]}>
+      <View style={[styles.toolbar, { bottom: liquidGlass ? Math.max(15, insets.bottom + 60) : 15, pointerEvents: 'box-none' }]}>
         <GlassCard
           glassEffect="regular"
           fallbackBackgroundColor={theme.colors.card}
