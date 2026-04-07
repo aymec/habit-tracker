@@ -19,6 +19,7 @@ export default function HomeStackLayout() {
         name="index"
         options={{
           title: t('habits.title'),
+          headerTitleAlign: 'center',
           headerLeft: () => (
             <Image
               source={isDark ? iconLight : iconDark}
