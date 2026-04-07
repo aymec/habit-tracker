@@ -9,6 +9,7 @@ import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { TargetPeriod, Entry } from '../../../src/models/types';
 import { formatNumber, formatNumberWithSign } from '../../../src/utils/format';
+import { GlassCard } from '../../../components/ui/glass-card';
 
 const getStartOfPeriod = (period: TargetPeriod): Date => {
   const now = new Date();
@@ -131,24 +132,26 @@ export default function GoalScreen() {
         {/* Option Buttons */}
         <View style={styles.optionsContainer}>
           {activeHabitOptions.map((option) => (
-            <TouchableOpacity
+            <GlassCard
               key={option.id}
-              style={[
-                styles.optionButton,
-                {
-                  backgroundColor: theme.colors.card,
-                  borderColor: theme.colors.border,
-                }
-              ]}
-              onPress={() => logEntry(activeHabit.id, option.label, option.value)}
+              glassEffect="clear"
+              fallbackBackgroundColor={theme.colors.card}
+              fallbackBorderColor={theme.colors.border}
+              borderRadius={16}
+              style={styles.optionButtonOuter}
             >
-              <Text style={[styles.optionLabel, { color: theme.colors.text }]}>
-                {option.label}
-              </Text>
-              <Text style={[styles.optionValue, { color: theme.colors.text }]}>
-                {formatNumberWithSign(option.value)}
-              </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.optionButton}
+                onPress={() => logEntry(activeHabit.id, option.label, option.value)}
+              >
+                <Text style={[styles.optionLabel, { color: theme.colors.text }]}>
+                  {option.label}
+                </Text>
+                <Text style={[styles.optionValue, { color: theme.colors.text }]}>
+                  {formatNumberWithSign(option.value)}
+                </Text>
+              </TouchableOpacity>
+            </GlassCard>
           ))}
         </View>
       </ScrollView>
@@ -226,13 +229,9 @@ const styles = StyleSheet.create({
     gap: 15,
     paddingHorizontal: 20,
   },
-  optionButton: {
+  optionButtonOuter: {
     width: 100,
     height: 80,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 16,
-    borderWidth: 1,
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -247,6 +246,11 @@ const styles = StyleSheet.create({
         boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1)',
       },
     }),
+  },
+  optionButton: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   optionLabel: {
     fontSize: 18,
