@@ -76,11 +76,24 @@ This starts the Expo dev server and opens the app in your browser at http://loca
 
 ### iOS
 
-// TODO
+Build on Expo
+```bash
+eas build --platform ios --profile production
+```
+
+Push to AppStoreConnect
+```bash
+eas submit --platform ios
+```
 
 ### Android
 
-// TODO
+Build on Expo
+```bash
+eas build --platform ios --profile production
+```
+
+Download the AAB build artifact from Expo then manually upload it to the Google Play Console (I didn't want to share my Google credentials with Expo)
 
 ### Web
 
