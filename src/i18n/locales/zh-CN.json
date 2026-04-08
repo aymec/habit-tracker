@@ -44,7 +44,7 @@
     "invalidTargetMessage": "请输入有效的数字，或不设置目标继续。您可以稍后添加。",
     "noTarget": "未设置",
     "per": "每",
-    "defaultOptionLabel": "自定义",
+    "defaultOptionLabel": "一本书",
     "targetDisplay": "每{{period}}{{value}}{{unit}}",
     "vsTarget": "vs. 每{{period}}{{value}}{{unit}}",
     "period": {

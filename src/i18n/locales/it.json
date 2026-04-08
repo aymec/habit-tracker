@@ -44,7 +44,7 @@
     "invalidTargetMessage": "Inserisci un numero valido o continua senza impostare un obiettivo. Potrai aggiungerne uno in seguito.",
     "noTarget": "Non impostato",
     "per": "al",
-    "defaultOptionLabel": "Personalizza",
+    "defaultOptionLabel": "Un libro",
     "targetDisplay": "{{value}}{{unit}} al {{period}}",
     "vsTarget": "vs. {{value}}{{unit}} al {{period}}",
     "period": {

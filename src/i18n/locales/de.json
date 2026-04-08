@@ -44,7 +44,7 @@
     "invalidTargetMessage": "Bitte geben Sie eine gültige Zahl ein oder fahren Sie ohne Ziel fort. Sie können später jederzeit eines hinzufügen.",
     "noTarget": "Nicht festgelegt",
     "per": "pro",
-    "defaultOptionLabel": "Anpassen",
+    "defaultOptionLabel": "Ein Buch",
     "targetDisplay": "{{value}}{{unit}} pro {{period}}",
     "vsTarget": "vs. {{value}}{{unit}} pro {{period}}",
     "period": {

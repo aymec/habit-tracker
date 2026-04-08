@@ -44,7 +44,7 @@
     "invalidTargetMessage": "Por favor ingresa un número válido o continúa sin establecer una meta. Puedes agregar una más tarde.",
     "noTarget": "No establecido",
     "per": "por",
-    "defaultOptionLabel": "Personalizar",
+    "defaultOptionLabel": "Un libro",
     "targetDisplay": "{{value}}{{unit}} por {{period}}",
     "vsTarget": "vs. {{value}}{{unit}} por {{period}}",
     "period": {

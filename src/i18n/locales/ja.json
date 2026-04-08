@@ -44,7 +44,7 @@
     "invalidTargetMessage": "有効な数値を入力するか、目標を設定せずに続けてください。後からいつでも追加できます。",
     "noTarget": "未設定",
     "per": "/",
-    "defaultOptionLabel": "カスタマイズ",
+    "defaultOptionLabel": "1冊",
     "targetDisplay": "{{period}}{{value}}{{unit}}",
     "vsTarget": "vs. {{period}}{{value}}{{unit}}",
     "period": {

@@ -44,7 +44,7 @@
     "invalidTargetMessage": "Voer een geldig getal in of ga door zonder doel. Je kunt er later altijd een toevoegen.",
     "noTarget": "Niet ingesteld",
     "per": "per",
-    "defaultOptionLabel": "Aanpassen",
+    "defaultOptionLabel": "Een boek",
     "targetDisplay": "{{value}}{{unit}} per {{period}}",
     "vsTarget": "vs. {{value}}{{unit}} per {{period}}",
     "period": {

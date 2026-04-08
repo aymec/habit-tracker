@@ -44,7 +44,7 @@
     "invalidTargetMessage": "कृपया एक मान्य संख्या दर्ज करें, या बिना लक्ष्य सेट किए जारी रखें। आप बाद में कभी भी जोड़ सकते हैं।",
     "noTarget": "सेट नहीं",
     "per": "प्रति",
-    "defaultOptionLabel": "अनुकूलित करें",
+    "defaultOptionLabel": "एक किताब",
     "targetDisplay": "{{value}}{{unit}} प्रति {{period}}",
     "vsTarget": "vs. {{value}}{{unit}} प्रति {{period}}",
     "period": {
