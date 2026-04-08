@@ -1,13 +1,33 @@
-import { useEffect, useState } from 'react';
 import { Tabs, useRouter, useSegments } from 'expo-router';
-import { PixelRatio, Platform, useWindowDimensions } from 'react-native';
+import { NativeTabs, Icon, Label } from 'expo-router/unstable-native-tabs';
+import { PixelRatio } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { isLiquidGlassAvailable } from 'expo-glass-effect';
 
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../src/context/ThemeContext';
 
-export default function TabLayout() {
+const liquidGlass = isLiquidGlassAvailable();
+
+function LiquidGlassTabs() {
+  const { t } = useTranslation();
+
+  return (
+    <NativeTabs>
+      <NativeTabs.Trigger name="(home)">
+        <Icon sf="house.fill" />
+        <Label>{t('habits.title')}</Label>
+      </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="(settings)">
+        <Icon sf="gear" />
+        <Label>{t('settings.title')}</Label>
+      </NativeTabs.Trigger>
+    </NativeTabs>
+  );
+}
+
+function ClassicTabs() {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const segments = useSegments();
@@ -33,8 +53,7 @@ export default function TabLayout() {
           backgroundColor: theme.colors.header,
           borderTopColor: theme.colors.border,
           borderTopWidth: 1,
-          elevation: 8,
-          minHeight: 50 + 15 * fontScale + insets.bottom,
+          minHeight: 40 + 15 * fontScale + insets.bottom,
           paddingBottom: insets.bottom > 0 ? 20 + insets.bottom : 10,
           paddingTop: 10,
         },
@@ -65,4 +84,8 @@ export default function TabLayout() {
       />
     </Tabs>
   );
+}
+
+export default function TabLayout() {
+  return liquidGlass ? <LiquidGlassTabs /> : <ClassicTabs />;
 }

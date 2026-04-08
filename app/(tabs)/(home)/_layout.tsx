@@ -1,131 +1,46 @@
-import { useEffect, useState } from 'react';
 import { Stack } from 'expo-router';
-import { Image, Platform, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Image, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../../src/context/ThemeContext';
 
 const iconLight = require('../../../assets/images/icon-light-128x128.webp');
 const iconDark = require('../../../assets/images/icon-dark-128x128.webp');
 
-const HEADER_CONTENT_HEIGHT = 54;
-
-function CustomHomeHeader() {
-  const { isDark, theme } = useTheme();
-  const { t } = useTranslation();
-  const { width } = useWindowDimensions();
-  const insets = useSafeAreaInsets();
-
-  // Avoid hydration mismatch: these hooks return different values at build time
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
-  // Use consistent defaults until mounted on web
-  const effectiveWidth = Platform.OS === 'web' && !mounted ? 0 : width;
-  const effectiveInsetsTop = Platform.OS === 'web' && !mounted ? 0 : insets.top;
-
-  // Show app name on web when width is sufficient
-  const showAppName = Platform.OS === 'web' && effectiveWidth >= 500;
-
-  return (
-    <View
-      style={[
-        styles.header,
-        {
-          backgroundColor: theme.colors.header,
-          paddingTop: effectiveInsetsTop,
-          borderBottomColor: theme.colors.border,
-          ...(Platform.OS === 'web' && {
-            borderBottomLeftRadius: 16,
-            borderBottomRightRadius: 16,
-          }),
-        },
-      ]}
-    >
-      <View style={styles.headerContent}>
-        {/* Logo on the left */}
-        <View style={styles.logoContainer}>
-          <Image
-            source={isDark ? iconLight : iconDark}
-            style={styles.logoImage}
-          />
-          {showAppName && (
-            <Text style={[styles.appName, { color: theme.colors.text }]}>OnTrack</Text>
-          )}
-        </View>
-
-        {/* Centered title */}
-        <Text style={[styles.headerTitle, { color: theme.colors.text }]}>
-          {t('habits.title')}
-        </Text>
-
-        {/* Empty right side for balance */}
-        <View style={styles.headerRight} />
-      </View>
-    </View>
-  );
-}
-
 export default function HomeStackLayout() {
+  const { isDark } = useTheme();
+  const { t } = useTranslation();
+
   return (
     <Stack
       screenOptions={{
         headerBackButtonDisplayMode: 'minimal',
-        ...(Platform.OS === 'web' && {
-          headerStyle: {
-            borderBottomLeftRadius: 16,
-            borderBottomRightRadius: 16,
-          },
-        }),
       }}>
       <Stack.Screen
         name="index"
         options={{
-          header: () => <CustomHomeHeader />,
+          title: t('habits.title'),
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <Image
+              source={isDark ? iconLight : iconDark}
+              style={styles.logoImage}
+            />
+          ),
         }}
       />
       <Stack.Screen name="goal" />
       <Stack.Screen name="edit" />
       <Stack.Screen name="history" />
+      <Stack.Screen name="name" />
+      <Stack.Screen name="target" />
     </Stack>
   );
 }
 
 const styles = StyleSheet.create({
-  header: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  headerContent: {
-    height: HEADER_CONTENT_HEIGHT,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-  },
-  logoContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    minWidth: 60,
-  },
   logoImage: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-  },
-  appName: {
-    fontSize: 19,
-    fontWeight: '600',
-    marginLeft: 8,
-  },
-  headerTitle: {
-    fontSize: 19,
-    fontWeight: '600',
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    textAlign: 'center',
-  },
-  headerRight: {
-    minWidth: 60,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
   },
 });

@@ -5,10 +5,15 @@ import { useTranslation } from 'react-i18next';
 import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import { useMemo, useEffect, useCallback } from 'react';
 import { useIsFocused, useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { TargetPeriod, Entry } from '../../../src/models/types';
 import { formatNumber, formatNumberWithSign } from '../../../src/utils/format';
+import { GlassCard } from '../../../components/ui/glass-card';
+import { isLiquidGlassAvailable } from 'expo-glass-effect';
+
+const liquidGlass = isLiquidGlassAvailable();
 
 const getStartOfPeriod = (period: TargetPeriod): Date => {
   const now = new Date();
@@ -49,6 +54,7 @@ export default function GoalScreen() {
   const router = useRouter();
   const isFocused = useIsFocused();
   const { width: windowWidth } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
 
   // Redirect to home if no habits exist (data was cleared) - only when screen is focused
   useEffect(() => {
@@ -131,42 +137,58 @@ export default function GoalScreen() {
         {/* Option Buttons */}
         <View style={styles.optionsContainer}>
           {activeHabitOptions.map((option) => (
-            <TouchableOpacity
+            <GlassCard
               key={option.id}
-              style={[
-                styles.optionButton,
-                {
-                  backgroundColor: theme.colors.card,
-                  borderColor: theme.colors.border,
-                }
-              ]}
-              onPress={() => logEntry(activeHabit.id, option.label, option.value)}
+              glassEffect="clear"
+              fallbackBackgroundColor={theme.colors.card}
+              fallbackBorderColor={theme.colors.border}
+              borderRadius={16}
+              style={styles.optionButtonOuter}
             >
-              <Text style={[styles.optionLabel, { color: theme.colors.text }]}>
-                {option.label}
-              </Text>
-              <Text style={[styles.optionValue, { color: theme.colors.text }]}>
-                {formatNumberWithSign(option.value)}
-              </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.optionButton}
+                onPress={() => logEntry(activeHabit.id, option.label, option.value)}
+              >
+                <Text style={[styles.optionLabel, { color: theme.colors.text }]}>
+                  {option.label}
+                </Text>
+                <Text style={[styles.optionValue, { color: theme.colors.text }]}>
+                  {formatNumberWithSign(option.value)}
+                </Text>
+              </TouchableOpacity>
+            </GlassCard>
           ))}
         </View>
       </ScrollView>
 
       {/* Toolbar */}
-      <View style={[styles.toolbar, { backgroundColor: 'transparent', pointerEvents: 'box-none' }]}>
-        <TouchableOpacity
-          onPress={() => router.push({ pathname: '/(tabs)/(home)/edit', params: { mode: 'edit' } })}
-          style={[styles.toolbarButton, { borderColor: theme.colors.border, backgroundColor: theme.colors.background }]}
+      <View style={[styles.toolbar, { bottom: liquidGlass ? Math.max(15, insets.bottom + 60) : 15, pointerEvents: 'box-none' }]}>
+        <GlassCard
+          glassEffect="regular"
+          fallbackBackgroundColor={theme.colors.card}
+          fallbackBorderColor={theme.colors.border}
+          borderRadius={27}
         >
-          <Ionicons name="build-outline" size={24} color={theme.colors.text} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => router.push('/(tabs)/(home)/history')}
-          style={[styles.toolbarButton, { borderColor: theme.colors.border, backgroundColor: theme.colors.background }]}
+          <TouchableOpacity
+            onPress={() => router.push({ pathname: '/(tabs)/(home)/edit', params: { mode: 'edit' } })}
+            style={styles.toolbarButton}
+          >
+            <Ionicons name="build-outline" size={29} color={theme.colors.text} />
+          </TouchableOpacity>
+        </GlassCard>
+        <GlassCard
+          glassEffect="regular"
+          fallbackBackgroundColor={theme.colors.card}
+          fallbackBorderColor={theme.colors.border}
+          borderRadius={27}
         >
-          <Ionicons name="calendar-number-outline" size={24} color={theme.colors.text} />
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => router.push('/(tabs)/(home)/history')}
+            style={styles.toolbarButton}
+          >
+            <Ionicons name="calendar-number-outline" size={29} color={theme.colors.text} />
+          </TouchableOpacity>
+        </GlassCard>
       </View>
     </View>
   );
@@ -178,19 +200,15 @@ const styles = StyleSheet.create({
   },
   toolbar: {
     position: 'absolute',
-    bottom: 0,
     left: 0,
     right: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    paddingVertical: 15,
   },
   toolbarButton: {
-    width: 44,
-    height: 44,
-    borderWidth: 1,
-    borderRadius: 22,
+    width: 53,
+    height: 53,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -226,13 +244,9 @@ const styles = StyleSheet.create({
     gap: 15,
     paddingHorizontal: 20,
   },
-  optionButton: {
+  optionButtonOuter: {
     width: 100,
     height: 80,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 16,
-    borderWidth: 1,
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -247,6 +261,11 @@ const styles = StyleSheet.create({
         boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1)',
       },
     }),
+  },
+  optionButton: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   optionLabel: {
     fontSize: 18,

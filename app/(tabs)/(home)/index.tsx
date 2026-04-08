@@ -2,18 +2,24 @@ import { useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Platform, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';
 import Head from 'expo-router/head';
 import { populateTestData } from '../../../src/services/storage';
+import { GlassCard } from '../../../components/ui/glass-card';
+import { isLiquidGlassAvailable } from 'expo-glass-effect';
+
+const liquidGlass = isLiquidGlassAvailable();
 
 export default function HomeScreen() {
   const { habits, selectHabit, loadHabits } = useHabit();
   const { theme } = useTheme();
   const { t } = useTranslation();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   // Update document title on focus for web (Head component doesn't update on tab switch)
   useFocusEffect(
@@ -72,28 +78,28 @@ export default function HomeScreen() {
           contentContainerStyle={styles.goalList}
           style={{ backgroundColor: theme.colors.background }}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              style={[
-                styles.goalItem,
-                {
-                  backgroundColor: theme.colors.card,
-                  borderColor: theme.colors.border,
-                  borderRadius: theme.borderRadius.m
-                }
-              ]}
-              onPress={() => handleGoalPress(item.id)}
+            <GlassCard
+              fallbackBackgroundColor={theme.colors.card}
+              fallbackBorderColor={theme.colors.border}
+              borderRadius={theme.borderRadius.m}
+              style={styles.goalItemOuter}
             >
-              <Text style={[styles.goalName, { color: theme.colors.text }]}>
-                {item.name}
-              </Text>
-              <Ionicons name="chevron-forward" size={20} color={theme.colors.textSecondary} />
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.goalItem}
+                onPress={() => handleGoalPress(item.id)}
+              >
+                <Text style={[styles.goalName, { color: theme.colors.text }]}>
+                  {item.name}
+                </Text>
+                <Ionicons name="chevron-forward" size={20} color={theme.colors.textSecondary} />
+              </TouchableOpacity>
+            </GlassCard>
           )}
         />
       )}
 
       {/* Fixed Add Button */}
-      <View style={[styles.footer, { backgroundColor: theme.colors.background }]}>
+      <View style={[styles.footer, { backgroundColor: theme.colors.background, paddingBottom: liquidGlass ? Math.max(25, insets.bottom + 60) : 25 }]}>
         {habits.length === 0 && (
           <TouchableOpacity
             style={[styles.demoButton, { borderColor: theme.colors.primary }]}
@@ -133,13 +139,14 @@ const styles = StyleSheet.create({
   goalList: {
     padding: 15,
   },
+  goalItemOuter: {
+    marginBottom: 10,
+  },
   goalItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 15,
-    marginBottom: 10,
-    borderWidth: 1,
   },
   goalName: {
     fontSize: 16,
@@ -148,7 +155,6 @@ const styles = StyleSheet.create({
   },
   footer: {
     padding: 15,
-    paddingBottom: 25,
   },
   addButton: {
     padding: 15,
