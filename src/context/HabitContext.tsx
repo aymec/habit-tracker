@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect, useCallback } from 'rea
 import type { FC, ReactNode } from 'react';
 import { Habit, Option, Entry, HabitTarget } from '../models/types';
 import * as Storage from '../services/storage';
+import i18n from '../i18n';
 
 interface HabitContextType {
   habits: Habit[];
@@ -80,7 +81,7 @@ export const HabitProvider: FC<{ children: ReactNode }> = ({ children }) => {
           const defaultOption: Option = {
             id: Date.now().toString(),
             habitId: activeHabitId,
-            label: 'One Unit',
+            label: i18n.t('habits.defaultOptionLabel'),
             value: 1
           };
           await Storage.addOption(defaultOption);
