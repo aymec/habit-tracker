@@ -37,7 +37,7 @@ export default function HomeScreen() {
 
   const handleStartDemo = async () => {
     try {
-      await populateTestData();
+      await populateTestData(t);
       await loadHabits();
       if (Platform.OS === 'web') {
         window.alert(`${t('data.demoDataSetTitle')}\n\n${t('data.demoDataSetMessage')}`);

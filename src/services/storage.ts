@@ -150,7 +150,7 @@ export const deleteEntriesForHabit = async (habitId: string): Promise<void> => {
   await saveEntries(entries.filter(e => e.habitId !== habitId));
 };
 
-export const populateTestData = async (): Promise<void> => {
+export const populateTestData = async (t: (key: string) => string): Promise<void> => {
   console.log('Populating test data...');
 
   const existingHabits = await getHabits();
@@ -163,9 +163,9 @@ export const populateTestData = async (): Promise<void> => {
 
   // Generate dynamic Drink Water entries for the last 7 days
   const drinkWaterOptions = [
-    { label: 'Glass S', value: 0.15 },
-    { label: 'Glass L', value: 0.25 },
-    { label: 'Bottle', value: 0.5 },
+    { label: t('data.demo.options.glassS'), value: 0.15 },
+    { label: t('data.demo.options.glassL'), value: 0.25 },
+    { label: t('data.demo.options.bottle'), value: 0.5 },
   ];
   const drinkWaterHabitId = '1768195720601';
   const drinkWaterEntries: Entry[] = [];
@@ -196,12 +196,22 @@ export const populateTestData = async (): Promise<void> => {
   }
 
   const habitsData: Habit[] = [
-    { createdAt: new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000).toISOString(), id: '1768198262233', name: 'Fruits & Vegetables 😋', totalCount: 42, target: { value: 5, period: 'day' } },
-    { createdAt: new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000).toISOString(), id: drinkWaterHabitId, name: 'Drink Water 💦', totalCount: Math.round(drinkWaterTotal * 100) / 100, target: { value: 2, period: 'day' } },
-    { createdAt: new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000).toISOString(), id: '1768196003754', name: 'Reading 📚', totalCount: 3, target: { value: 50, period: 'year' } },
+    { createdAt: new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000).toISOString(), id: '1768198262233', name: `${t('data.demo.fruitsVeg')} 😋`, totalCount: 42, target: { value: 5, period: 'day' } },
+    { createdAt: new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000).toISOString(), id: drinkWaterHabitId, name: `${t('data.demo.drinkWater')} 💦`, totalCount: Math.round(drinkWaterTotal * 100) / 100, target: { value: 2, period: 'day', unit: t('units.liters.name'), unitShort: t('units.liters.short') } },
+    { createdAt: new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000).toISOString(), id: '1768196003754', name: `${t('data.demo.reading')} 📚`, totalCount: 3, target: { value: 50, period: 'year' } },
   ];
 
-  const optionsData: Option[] = JSON.parse('[{"habitId": "1768195720601", "id": "1768195720829", "label": "Glass S", "value": 0.15}, {"habitId": "1768195720601", "id": "1768195744249", "label": "Glass L", "value": 0.25}, {"habitId": "1768195720601", "id": "1768195751749", "label": "Bottle", "value": 0.5}, {"habitId": "1768196003754", "id": "1768196003922", "label": "One book", "value": 1}, {"habitId": "1768198262233", "id": "1768198262453", "label": "🍏", "value": 1}, {"habitId": "1768198262233", "id": "1768198359819", "label": "🍌", "value": 1}, {"habitId": "1768198262233", "id": "1768198366820", "label": "🥑", "value": 1}, {"habitId": "1768198262233", "id": "1768198374136", "label": "🍅", "value": 1}, {"habitId": "1768198262233", "id": "1768198382019", "label": "🥝", "value": 1}]');
+  const optionsData: Option[] = [
+    { habitId: drinkWaterHabitId, id: '1768195720829', label: t('data.demo.options.glassS'), value: 0.15 },
+    { habitId: drinkWaterHabitId, id: '1768195744249', label: t('data.demo.options.glassL'), value: 0.25 },
+    { habitId: drinkWaterHabitId, id: '1768195751749', label: t('data.demo.options.bottle'), value: 0.5 },
+    { habitId: '1768196003754', id: '1768196003922', label: t('data.demo.options.oneBook'), value: 1 },
+    { habitId: '1768198262233', id: '1768198262453', label: '🍏', value: 1 },
+    { habitId: '1768198262233', id: '1768198359819', label: '🍌', value: 1 },
+    { habitId: '1768198262233', id: '1768198366820', label: '🥑', value: 1 },
+    { habitId: '1768198262233', id: '1768198374136', label: '🍅', value: 1 },
+    { habitId: '1768198262233', id: '1768198382019', label: '🥝', value: 1 },
+  ];
 
   // Static entries for Reading and Fruits & Vegetables (with dynamic dates)
   const staticEntries: Entry[] = [];
@@ -214,7 +224,7 @@ export const populateTestData = async (): Promise<void> => {
     staticEntries.push({
       habitId: '1768196003754',
       id: `reading-${i}-${Date.now()}`,
-      label: 'One book',
+      label: t('data.demo.options.oneBook'),
       timestamp: date.toISOString(),
       value: 1,
     });
