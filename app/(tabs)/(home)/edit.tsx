@@ -3,7 +3,7 @@ import { Platform, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, S
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTranslation } from 'react-i18next';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 import { useRouter, Stack } from 'expo-router';
 import Head from 'expo-router/head';
@@ -72,6 +72,7 @@ export default function ModalScreen() {
   const [editedTargetUnitShort, setEditedTargetUnitShort] = useState<string | null>(null);
   const [selectedUnitKey, setSelectedUnitKey] = useState<string | null>(null);
   const [isCustomUnit, setIsCustomUnit] = useState(false);
+  const customUnitNameRef = useRef<TextInput>(null);
   const [editingOptionId, setEditingOptionId] = useState<string | null>(null);
   const [optionLabel, setOptionLabel] = useState('');
   const [optionValue, setOptionValue] = useState('');
@@ -177,6 +178,9 @@ export default function ModalScreen() {
       setEditedTargetUnitShort(null);
     } else {
       setIsCustomUnit(true);
+      setEditedTargetUnit(null);
+      setEditedTargetUnitShort(null);
+      setTimeout(() => customUnitNameRef.current?.focus(), 50);
     }
   };
 
@@ -460,6 +464,7 @@ export default function ModalScreen() {
                           borderColor: theme.colors.border,
                         },
                       ]}
+                      ref={customUnitNameRef}
                       value={editedTargetUnit || ''}
                       onChangeText={isCustomUnit ? (text) => setEditedTargetUnit(text || null) : undefined}
                       editable={isCustomUnit}
