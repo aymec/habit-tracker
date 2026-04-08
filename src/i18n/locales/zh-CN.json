@@ -44,8 +44,9 @@
     "invalidTargetMessage": "请输入有效的数字，或不设置目标继续。您可以稍后添加。",
     "noTarget": "未设置",
     "per": "每",
-    "targetDisplay": "每{{period}}{{value}}",
-    "vsTarget": "vs. 每{{period}}{{value}}",
+    "defaultOptionLabel": "自定义",
+    "targetDisplay": "每{{period}}{{value}}{{unit}}",
+    "vsTarget": "vs. 每{{period}}{{value}}{{unit}}",
     "period": {
       "day": "天",
       "week": "周",
@@ -81,7 +82,23 @@
     "confirmClearAllDataMessage": "您确定要删除所有的目标、选项和条目吗？此操作无法撤消。",
     "failedToClearData": "清除数据失败。",
     "setDemoData": "设置演示数据",
-    "clearAllData": "清除所有数据"
+    "clearAllData": "清除所有数据",
+    "demo": {
+      "fruitsVeg": "水果和蔬菜",
+      "drinkWater": "喝水",
+      "reading": "阅读",
+      "options": {
+        "greenApple": "青苹果",
+        "banana": "香蕉",
+        "avocado": "牛油果",
+        "tomato": "番茄",
+        "kiwi": "猕猴桃",
+        "glassS": "小杯",
+        "glassL": "大杯",
+        "bottle": "水瓶",
+        "oneBook": "一本书"
+      }
+    }
   },
   "privacy": {
     "lastUpdated": "最后更新：2026年1月12日",
@@ -103,5 +120,36 @@
     "section6TextBefore": "如果您对本隐私政策有任何疑问，可以通过GitHub在项目仓库中",
     "section6Link": "提交问题",
     "section6TextAfter": "与我们联系。"
+  },
+  "units": {
+    "optional": "单位（可选）",
+    "custom": "自定义",
+    "customName": "单位名称",
+    "customShort": "缩写",
+    "categories": {
+      "volume": "体积",
+      "weight": "重量",
+      "distance": "距离",
+      "time": "时间",
+      "other": "其他"
+    },
+    "liters": { "name": "升", "short": "L" },
+    "milliliters": { "name": "毫升", "short": "mL" },
+    "cups": { "name": "杯", "short": "杯" },
+    "fluidOunces": { "name": "液盎司", "short": "fl oz" },
+    "gallons": { "name": "加仑", "short": "gal" },
+    "kilograms": { "name": "千克", "short": "kg" },
+    "grams": { "name": "克", "short": "g" },
+    "pounds": { "name": "磅", "short": "lbs" },
+    "ounces": { "name": "盎司", "short": "oz" },
+    "kilometers": { "name": "公里", "short": "km" },
+    "miles": { "name": "英里", "short": "mi" },
+    "meters": { "name": "米", "short": "m" },
+    "minutes": { "name": "分钟", "short": "分" },
+    "hours": { "name": "小时", "short": "时" },
+    "calories": { "name": "卡路里", "short": "cal" },
+    "steps": { "name": "步", "short": "步" },
+    "pages": { "name": "页", "short": "页" },
+    "reps": { "name": "次", "short": "次" }
   }
 }

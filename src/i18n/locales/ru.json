@@ -44,8 +44,9 @@
     "invalidTargetMessage": "Пожалуйста, введите корректное число или продолжите без установки цели. Вы сможете добавить её позже.",
     "noTarget": "Не установлено",
     "per": "в",
-    "targetDisplay": "{{value}} в {{period}}",
-    "vsTarget": "vs. {{value}} в {{period}}",
+    "defaultOptionLabel": "Настроить",
+    "targetDisplay": "{{value}}{{unit}} в {{period}}",
+    "vsTarget": "vs. {{value}}{{unit}} в {{period}}",
     "period": {
       "day": "день",
       "week": "неделю",
@@ -81,7 +82,23 @@
     "confirmClearAllDataMessage": "Вы уверены, что хотите удалить все свои цели, опции и записи? Это действие нельзя отменить.",
     "failedToClearData": "Не удалось очистить данные.",
     "setDemoData": "Установить демо-данные",
-    "clearAllData": "Очистить все данные"
+    "clearAllData": "Очистить все данные",
+    "demo": {
+      "fruitsVeg": "Фрукты и овощи",
+      "drinkWater": "Пить воду",
+      "reading": "Чтение",
+      "options": {
+        "greenApple": "Зелёное яблоко",
+        "banana": "Банан",
+        "avocado": "Авокадо",
+        "tomato": "Помидор",
+        "kiwi": "Киви",
+        "glassS": "Стакан М",
+        "glassL": "Стакан Б",
+        "bottle": "Бутылка",
+        "oneBook": "Одна книга"
+      }
+    }
   },
   "privacy": {
     "lastUpdated": "Последнее обновление: 12 января 2026 г.",
@@ -103,5 +120,36 @@
     "section6TextBefore": "Если у вас есть вопросы об этой Политике конфиденциальности, вы можете связаться с нами через GitHub, ",
     "section6Link": "создав обращение",
     "section6TextAfter": " в репозитории проекта."
+  },
+  "units": {
+    "optional": "Единица (необязательно)",
+    "custom": "Другое",
+    "customName": "Название единицы",
+    "customShort": "Сокращение",
+    "categories": {
+      "volume": "Объём",
+      "weight": "Вес",
+      "distance": "Расстояние",
+      "time": "Время",
+      "other": "Прочее"
+    },
+    "liters": { "name": "литры", "short": "л" },
+    "milliliters": { "name": "миллилитры", "short": "мл" },
+    "cups": { "name": "чашки", "short": "чаш" },
+    "fluidOunces": { "name": "жидкие унции", "short": "fl oz" },
+    "gallons": { "name": "галлоны", "short": "гал" },
+    "kilograms": { "name": "килограммы", "short": "кг" },
+    "grams": { "name": "граммы", "short": "г" },
+    "pounds": { "name": "фунты", "short": "фунт" },
+    "ounces": { "name": "унции", "short": "унц" },
+    "kilometers": { "name": "километры", "short": "км" },
+    "miles": { "name": "мили", "short": "миль" },
+    "meters": { "name": "метры", "short": "м" },
+    "minutes": { "name": "минуты", "short": "мин" },
+    "hours": { "name": "часы", "short": "ч" },
+    "calories": { "name": "калории", "short": "кал" },
+    "steps": { "name": "шаги", "short": "шаг" },
+    "pages": { "name": "страницы", "short": "стр" },
+    "reps": { "name": "повторения", "short": "повт" }
   }
 }

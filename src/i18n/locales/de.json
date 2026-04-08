@@ -44,8 +44,9 @@
     "invalidTargetMessage": "Bitte geben Sie eine gültige Zahl ein oder fahren Sie ohne Ziel fort. Sie können später jederzeit eines hinzufügen.",
     "noTarget": "Nicht festgelegt",
     "per": "pro",
-    "targetDisplay": "{{value}} pro {{period}}",
-    "vsTarget": "vs. {{value}} pro {{period}}",
+    "defaultOptionLabel": "Anpassen",
+    "targetDisplay": "{{value}}{{unit}} pro {{period}}",
+    "vsTarget": "vs. {{value}}{{unit}} pro {{period}}",
     "period": {
       "day": "Tag",
       "week": "Woche",
@@ -81,7 +82,23 @@
     "confirmClearAllDataMessage": "Sind Sie sicher, dass Sie alle Ihre Ziele, Optionen und Einträge löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
     "failedToClearData": "Fehler beim Löschen der Daten.",
     "setDemoData": "Demo-Daten einstellen",
-    "clearAllData": "Alle Daten löschen"
+    "clearAllData": "Alle Daten löschen",
+    "demo": {
+      "fruitsVeg": "Obst & Gemüse",
+      "drinkWater": "Wasser trinken",
+      "reading": "Lesen",
+      "options": {
+        "greenApple": "Grüner Apfel",
+        "banana": "Banane",
+        "avocado": "Avocado",
+        "tomato": "Tomate",
+        "kiwi": "Kiwi",
+        "glassS": "Glas S",
+        "glassL": "Glas L",
+        "bottle": "Flasche",
+        "oneBook": "Ein Buch"
+      }
+    }
   },
   "privacy": {
     "lastUpdated": "Zuletzt aktualisiert: 12. Januar 2026",
@@ -103,5 +120,36 @@
     "section6TextBefore": "Wenn Sie Fragen zu dieser Datenschutzrichtlinie haben, können Sie uns über GitHub kontaktieren, indem Sie ",
     "section6Link": "ein Ticket zu erstellen",
     "section6TextAfter": " im Projekt-Repository."
+  },
+  "units": {
+    "optional": "Einheit (optional)",
+    "custom": "Benutzerdefiniert",
+    "customName": "Einheitsname",
+    "customShort": "Abkürzung",
+    "categories": {
+      "volume": "Volumen",
+      "weight": "Gewicht",
+      "distance": "Entfernung",
+      "time": "Zeit",
+      "other": "Sonstiges"
+    },
+    "liters": { "name": "Liter", "short": "L" },
+    "milliliters": { "name": "Milliliter", "short": "mL" },
+    "cups": { "name": "Tassen", "short": "Tassen" },
+    "fluidOunces": { "name": "Flüssigunzen", "short": "fl oz" },
+    "gallons": { "name": "Gallonen", "short": "gal" },
+    "kilograms": { "name": "Kilogramm", "short": "kg" },
+    "grams": { "name": "Gramm", "short": "g" },
+    "pounds": { "name": "Pfund", "short": "lbs" },
+    "ounces": { "name": "Unzen", "short": "oz" },
+    "kilometers": { "name": "Kilometer", "short": "km" },
+    "miles": { "name": "Meilen", "short": "mi" },
+    "meters": { "name": "Meter", "short": "m" },
+    "minutes": { "name": "Minuten", "short": "Min" },
+    "hours": { "name": "Stunden", "short": "Std" },
+    "calories": { "name": "Kalorien", "short": "kcal" },
+    "steps": { "name": "Schritte", "short": "Schritte" },
+    "pages": { "name": "Seiten", "short": "Seiten" },
+    "reps": { "name": "Wiederholungen", "short": "Wdh" }
   }
 }

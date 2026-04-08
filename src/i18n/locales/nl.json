@@ -44,8 +44,9 @@
     "invalidTargetMessage": "Voer een geldig getal in of ga door zonder doel. Je kunt er later altijd een toevoegen.",
     "noTarget": "Niet ingesteld",
     "per": "per",
-    "targetDisplay": "{{value}} per {{period}}",
-    "vsTarget": "vs. {{value}} per {{period}}",
+    "defaultOptionLabel": "Aanpassen",
+    "targetDisplay": "{{value}}{{unit}} per {{period}}",
+    "vsTarget": "vs. {{value}}{{unit}} per {{period}}",
     "period": {
       "day": "dag",
       "week": "week",
@@ -81,7 +82,23 @@
     "confirmClearAllDataMessage": "Weet u zeker dat u al uw doelen, opties en vermeldingen wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
     "failedToClearData": "Het wissen van gegevens is mislukt.",
     "setDemoData": "Demogegevens instellen",
-    "clearAllData": "Alle gegevens wissen"
+    "clearAllData": "Alle gegevens wissen",
+    "demo": {
+      "fruitsVeg": "Groente & Fruit",
+      "drinkWater": "Water drinken",
+      "reading": "Lezen",
+      "options": {
+        "greenApple": "Groene appel",
+        "banana": "Banaan",
+        "avocado": "Avocado",
+        "tomato": "Tomaat",
+        "kiwi": "Kiwi",
+        "glassS": "Glas S",
+        "glassL": "Glas L",
+        "bottle": "Fles",
+        "oneBook": "Een boek"
+      }
+    }
   },
   "privacy": {
     "lastUpdated": "Laatst bijgewerkt: 12 januari 2026",
@@ -103,5 +120,36 @@
     "section6TextBefore": "Als u vragen heeft over dit privacybeleid, kunt u contact met ons opnemen via GitHub door ",
     "section6Link": "een melding te openen",
     "section6TextAfter": " in de projectrepository."
+  },
+  "units": {
+    "optional": "Eenheid (optioneel)",
+    "custom": "Aangepast",
+    "customName": "Eenheidsnaam",
+    "customShort": "Afkorting",
+    "categories": {
+      "volume": "Volume",
+      "weight": "Gewicht",
+      "distance": "Afstand",
+      "time": "Tijd",
+      "other": "Overig"
+    },
+    "liters": { "name": "liter", "short": "L" },
+    "milliliters": { "name": "milliliter", "short": "mL" },
+    "cups": { "name": "kopjes", "short": "kopjes" },
+    "fluidOunces": { "name": "vloeibare ounces", "short": "fl oz" },
+    "gallons": { "name": "gallons", "short": "gal" },
+    "kilograms": { "name": "kilogram", "short": "kg" },
+    "grams": { "name": "gram", "short": "g" },
+    "pounds": { "name": "pond", "short": "lbs" },
+    "ounces": { "name": "ounces", "short": "oz" },
+    "kilometers": { "name": "kilometer", "short": "km" },
+    "miles": { "name": "mijlen", "short": "mi" },
+    "meters": { "name": "meter", "short": "m" },
+    "minutes": { "name": "minuten", "short": "min" },
+    "hours": { "name": "uren", "short": "u" },
+    "calories": { "name": "calorieën", "short": "cal" },
+    "steps": { "name": "stappen", "short": "stappen" },
+    "pages": { "name": "pagina's", "short": "pag" },
+    "reps": { "name": "herhalingen", "short": "herh" }
   }
 }

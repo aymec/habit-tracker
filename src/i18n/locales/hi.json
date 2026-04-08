@@ -44,8 +44,9 @@
     "invalidTargetMessage": "कृपया एक मान्य संख्या दर्ज करें, या बिना लक्ष्य सेट किए जारी रखें। आप बाद में कभी भी जोड़ सकते हैं।",
     "noTarget": "सेट नहीं",
     "per": "प्रति",
-    "targetDisplay": "{{value}} प्रति {{period}}",
-    "vsTarget": "vs. {{value}} प्रति {{period}}",
+    "defaultOptionLabel": "अनुकूलित करें",
+    "targetDisplay": "{{value}}{{unit}} प्रति {{period}}",
+    "vsTarget": "vs. {{value}}{{unit}} प्रति {{period}}",
     "period": {
       "day": "दिन",
       "week": "सप्ताह",
@@ -81,7 +82,23 @@
     "confirmClearAllDataMessage": "क्या आप वाकई अपने सभी लक्ष्यों, विकल्पों और प्रविष्टियों को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।",
     "failedToClearData": "डेटा साफ़ करने में विफल।",
     "setDemoData": "डेमो डेटा सेट करें",
-    "clearAllData": "सभी डेटा साफ़ करें"
+    "clearAllData": "सभी डेटा साफ़ करें",
+    "demo": {
+      "fruitsVeg": "फल और सब्ज़ियाँ",
+      "drinkWater": "पानी पीना",
+      "reading": "पढ़ना",
+      "options": {
+        "greenApple": "हरा सेब",
+        "banana": "केला",
+        "avocado": "एवोकाडो",
+        "tomato": "टमाटर",
+        "kiwi": "कीवी",
+        "glassS": "गिलास S",
+        "glassL": "गिलास L",
+        "bottle": "बोतल",
+        "oneBook": "एक किताब"
+      }
+    }
   },
   "privacy": {
     "lastUpdated": "अंतिम अपडेट: 12 जनवरी, 2026",
@@ -103,5 +120,36 @@
     "section6TextBefore": "यदि आपके पास इस गोपनीयता नीति के बारे में कोई प्रश्न हैं, तो आप प्रोजेक्ट रिपॉजिटरी में ",
     "section6Link": "समस्या दर्ज करके",
     "section6TextAfter": " GitHub के माध्यम से हमसे संपर्क कर सकते हैं।"
+  },
+  "units": {
+    "optional": "इकाई (वैकल्पिक)",
+    "custom": "कस्टम",
+    "customName": "इकाई का नाम",
+    "customShort": "संक्षिप्त नाम",
+    "categories": {
+      "volume": "आयतन",
+      "weight": "वज़न",
+      "distance": "दूरी",
+      "time": "समय",
+      "other": "अन्य"
+    },
+    "liters": { "name": "लीटर", "short": "L" },
+    "milliliters": { "name": "मिलीलीटर", "short": "mL" },
+    "cups": { "name": "कप", "short": "कप" },
+    "fluidOunces": { "name": "फ्लूइड आउंस", "short": "fl oz" },
+    "gallons": { "name": "गैलन", "short": "gal" },
+    "kilograms": { "name": "किलोग्राम", "short": "kg" },
+    "grams": { "name": "ग्राम", "short": "g" },
+    "pounds": { "name": "पाउंड", "short": "lbs" },
+    "ounces": { "name": "आउंस", "short": "oz" },
+    "kilometers": { "name": "किलोमीटर", "short": "km" },
+    "miles": { "name": "मील", "short": "mi" },
+    "meters": { "name": "मीटर", "short": "m" },
+    "minutes": { "name": "मिनट", "short": "मिनट" },
+    "hours": { "name": "घंटे", "short": "घंटा" },
+    "calories": { "name": "कैलोरी", "short": "cal" },
+    "steps": { "name": "कदम", "short": "कदम" },
+    "pages": { "name": "पृष्ठ", "short": "पृष्ठ" },
+    "reps": { "name": "दोहराव", "short": "रेप्स" }
   }
 }

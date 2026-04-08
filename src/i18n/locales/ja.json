@@ -44,8 +44,9 @@
     "invalidTargetMessage": "有効な数値を入力するか、目標を設定せずに続けてください。後からいつでも追加できます。",
     "noTarget": "未設定",
     "per": "/",
-    "targetDisplay": "{{period}}{{value}}",
-    "vsTarget": "vs. {{period}}{{value}}",
+    "defaultOptionLabel": "カスタマイズ",
+    "targetDisplay": "{{period}}{{value}}{{unit}}",
+    "vsTarget": "vs. {{period}}{{value}}{{unit}}",
     "period": {
       "day": "日",
       "week": "週",
@@ -81,7 +82,23 @@
     "confirmClearAllDataMessage": "すべての目標、オプション、エントリを削除してもよろしいですか？この操作は元に戻せません。",
     "failedToClearData": "データのクリアに失敗しました。",
     "setDemoData": "デモデータを設定",
-    "clearAllData": "すべてのデータをクリア"
+    "clearAllData": "すべてのデータをクリア",
+    "demo": {
+      "fruitsVeg": "フルーツ＆野菜",
+      "drinkWater": "水を飲む",
+      "reading": "読書",
+      "options": {
+        "greenApple": "青りんご",
+        "banana": "バナナ",
+        "avocado": "アボカド",
+        "tomato": "トマト",
+        "kiwi": "キウイ",
+        "glassS": "グラスS",
+        "glassL": "グラスL",
+        "bottle": "ボトル",
+        "oneBook": "1冊"
+      }
+    }
   },
   "privacy": {
     "lastUpdated": "最終更新日：2026年1月12日",
@@ -103,5 +120,36 @@
     "section6TextBefore": "このプライバシーポリシーについてご質問がある場合は、GitHubのプロジェクトリポジトリで",
     "section6Link": "問題を報告",
     "section6TextAfter": "してお問い合わせください。"
+  },
+  "units": {
+    "optional": "単位（任意）",
+    "custom": "カスタム",
+    "customName": "単位名",
+    "customShort": "略称",
+    "categories": {
+      "volume": "体積",
+      "weight": "重量",
+      "distance": "距離",
+      "time": "時間",
+      "other": "その他"
+    },
+    "liters": { "name": "リットル", "short": "L" },
+    "milliliters": { "name": "ミリリットル", "short": "mL" },
+    "cups": { "name": "カップ", "short": "杯" },
+    "fluidOunces": { "name": "液量オンス", "short": "fl oz" },
+    "gallons": { "name": "ガロン", "short": "gal" },
+    "kilograms": { "name": "キログラム", "short": "kg" },
+    "grams": { "name": "グラム", "short": "g" },
+    "pounds": { "name": "ポンド", "short": "lbs" },
+    "ounces": { "name": "オンス", "short": "oz" },
+    "kilometers": { "name": "キロメートル", "short": "km" },
+    "miles": { "name": "マイル", "short": "mi" },
+    "meters": { "name": "メートル", "short": "m" },
+    "minutes": { "name": "分", "short": "分" },
+    "hours": { "name": "時間", "short": "時間" },
+    "calories": { "name": "カロリー", "short": "cal" },
+    "steps": { "name": "歩", "short": "歩" },
+    "pages": { "name": "ページ", "short": "頁" },
+    "reps": { "name": "回", "short": "回" }
   }
 }
