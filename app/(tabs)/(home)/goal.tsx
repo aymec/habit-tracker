@@ -128,6 +128,7 @@ export default function GoalScreen() {
             {activeHabit.target
               ? t('habits.vsTarget', {
                   value: formatNumber(activeHabit.target.value),
+                  unit: activeHabit.target.unitShort ? activeHabit.target.unitShort : '',
                   period: t(`habits.period.${activeHabit.target.period}`)
                 })
               : t('history.totalCount')}

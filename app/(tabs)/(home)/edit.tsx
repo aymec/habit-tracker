@@ -40,6 +40,8 @@ export default function ModalScreen() {
   const [isEditingTarget, setIsEditingTarget] = useState(false);
   const [editedTargetValue, setEditedTargetValue] = useState('');
   const [editedTargetPeriod, setEditedTargetPeriod] = useState<TargetPeriod>('day');
+  const [editedTargetUnit, setEditedTargetUnit] = useState<string | null>(null);
+  const [editedTargetUnitShort, setEditedTargetUnitShort] = useState<string | null>(null);
   const [editingOptionId, setEditingOptionId] = useState<string | null>(null);
   const [optionLabel, setOptionLabel] = useState('');
   const [optionValue, setOptionValue] = useState('');
@@ -92,6 +94,8 @@ export default function ModalScreen() {
     if (activeHabit) {
       setEditedTargetValue(activeHabit.target?.value?.toString() || '');
       setEditedTargetPeriod(activeHabit.target?.period || 'day');
+      setEditedTargetUnit(activeHabit.target?.unit || null);
+      setEditedTargetUnitShort(activeHabit.target?.unitShort || null);
       setIsEditingTarget(true);
     }
   };
@@ -100,6 +104,8 @@ export default function ModalScreen() {
     setIsEditingTarget(false);
     setEditedTargetValue('');
     setEditedTargetPeriod('day');
+    setEditedTargetUnit(null);
+    setEditedTargetUnitShort(null);
   };
 
   const saveTarget = async () => {
@@ -109,6 +115,10 @@ export default function ModalScreen() {
         const value = parseFloat(editedTargetValue);
         if (!isNaN(value) && value > 0) {
           newTarget = { value, period: editedTargetPeriod };
+          if (editedTargetUnit) {
+            newTarget.unit = editedTargetUnit;
+            newTarget.unitShort = editedTargetUnitShort || editedTargetUnit;
+          }
         }
         await updateHabitDetails({
           ...activeHabit,
@@ -131,6 +141,7 @@ export default function ModalScreen() {
     if (!target) return t('habits.noTarget');
     return t('habits.targetDisplay', {
       value: formatNumber(target.value),
+      unit: target.unitShort ? target.unitShort : '',
       period: t(`habits.period.${target.period}`)
     });
   };
@@ -385,6 +396,24 @@ export default function ModalScreen() {
                       </TouchableOpacity>
                     ))}
                   </View>
+                  <TextInput
+                    style={[
+                      styles.targetValueInput,
+                      {
+                        backgroundColor: theme.colors.card,
+                        color: theme.colors.text,
+                        borderColor: theme.colors.border,
+                        width: 80,
+                      },
+                    ]}
+                    value={editedTargetUnitShort || ''}
+                    onChangeText={(text) => {
+                      setEditedTargetUnitShort(text || null);
+                      setEditedTargetUnit(text || null);
+                    }}
+                    placeholder={t('units.customShort')}
+                    placeholderTextColor={theme.colors.textSecondary}
+                  />
                 </View>
                 <View style={styles.editActions}>
                   <TouchableOpacity onPress={cancelEditTarget} style={[styles.miniButton, { borderWidth: 1, borderColor: theme.colors.border }]}>
