@@ -11,6 +11,34 @@ import { Ionicons } from '@expo/vector-icons';
 import { Option, TargetPeriod, HabitTarget } from '../../../src/models/types';
 import { formatNumber, formatNumberWithSign } from '../../../src/utils/format';
 
+interface UnitDef {
+  key: string;
+  category: 'volume' | 'weight' | 'distance' | 'time' | 'other';
+}
+
+const UNIT_DEFS: UnitDef[] = [
+  { key: 'liters', category: 'volume' },
+  { key: 'milliliters', category: 'volume' },
+  { key: 'cups', category: 'volume' },
+  { key: 'fluidOunces', category: 'volume' },
+  { key: 'gallons', category: 'volume' },
+  { key: 'kilograms', category: 'weight' },
+  { key: 'grams', category: 'weight' },
+  { key: 'pounds', category: 'weight' },
+  { key: 'ounces', category: 'weight' },
+  { key: 'kilometers', category: 'distance' },
+  { key: 'miles', category: 'distance' },
+  { key: 'meters', category: 'distance' },
+  { key: 'minutes', category: 'time' },
+  { key: 'hours', category: 'time' },
+  { key: 'calories', category: 'other' },
+  { key: 'steps', category: 'other' },
+  { key: 'pages', category: 'other' },
+  { key: 'reps', category: 'other' },
+];
+
+const CATEGORIES = ['volume', 'weight', 'distance', 'time', 'other'] as const;
+
 export default function ModalScreen() {
   const { theme } = useTheme();
   const { updateHabitDetails, activeHabit, activeHabitOptions, addHabitOption, updateHabitOption, removeOption, removeHabit, habits, selectHabit } = useHabit();
@@ -42,6 +70,8 @@ export default function ModalScreen() {
   const [editedTargetPeriod, setEditedTargetPeriod] = useState<TargetPeriod>('day');
   const [editedTargetUnit, setEditedTargetUnit] = useState<string | null>(null);
   const [editedTargetUnitShort, setEditedTargetUnitShort] = useState<string | null>(null);
+  const [selectedUnitKey, setSelectedUnitKey] = useState<string | null>(null);
+  const [isCustomUnit, setIsCustomUnit] = useState(false);
   const [editingOptionId, setEditingOptionId] = useState<string | null>(null);
   const [optionLabel, setOptionLabel] = useState('');
   const [optionValue, setOptionValue] = useState('');
@@ -96,6 +126,22 @@ export default function ModalScreen() {
       setEditedTargetPeriod(activeHabit.target?.period || 'day');
       setEditedTargetUnit(activeHabit.target?.unit || null);
       setEditedTargetUnitShort(activeHabit.target?.unitShort || null);
+
+      // Detect if current unit matches a predefined one
+      const matchingUnit = activeHabit.target?.unitShort
+        ? UNIT_DEFS.find(u => t(`units.${u.key}.short`) === activeHabit.target!.unitShort)
+        : null;
+      if (matchingUnit) {
+        setSelectedUnitKey(matchingUnit.key);
+        setIsCustomUnit(false);
+      } else if (activeHabit.target?.unit) {
+        setSelectedUnitKey(null);
+        setIsCustomUnit(true);
+      } else {
+        setSelectedUnitKey(null);
+        setIsCustomUnit(false);
+      }
+
       setIsEditingTarget(true);
     }
   };
@@ -106,6 +152,32 @@ export default function ModalScreen() {
     setEditedTargetPeriod('day');
     setEditedTargetUnit(null);
     setEditedTargetUnitShort(null);
+    setSelectedUnitKey(null);
+    setIsCustomUnit(false);
+  };
+
+  const handleEditUnitPress = (unitKey: string) => {
+    setIsCustomUnit(false);
+    if (selectedUnitKey === unitKey) {
+      setSelectedUnitKey(null);
+      setEditedTargetUnit(null);
+      setEditedTargetUnitShort(null);
+    } else {
+      setSelectedUnitKey(unitKey);
+      setEditedTargetUnit(t(`units.${unitKey}.name`));
+      setEditedTargetUnitShort(t(`units.${unitKey}.short`));
+    }
+  };
+
+  const handleEditCustomPress = () => {
+    setSelectedUnitKey(null);
+    if (isCustomUnit) {
+      setIsCustomUnit(false);
+      setEditedTargetUnit(null);
+      setEditedTargetUnitShort(null);
+    } else {
+      setIsCustomUnit(true);
+    }
   };
 
   const saveTarget = async () => {
@@ -355,7 +427,9 @@ export default function ModalScreen() {
             {/* Target Row */}
             {isEditingTarget ? (
               <View style={[styles.editOptionContainer, { backgroundColor: theme.colors.card, borderColor: theme.colors.border, marginTop: 10 }]}>
-                <View style={styles.targetEditRow}>
+                {/* Value */}
+                <View style={styles.targetEditField}>
+                  <Text style={[styles.targetEditLabel, { color: theme.colors.textSecondary }]}>{t('habits.optionValue')}</Text>
                   <TextInput
                     style={[
                       styles.targetValueInput,
@@ -371,7 +445,110 @@ export default function ModalScreen() {
                     placeholder="0"
                     placeholderTextColor={theme.colors.textSecondary}
                   />
-                  <Text style={[styles.perText, { color: theme.colors.text }]}>{t('habits.per')}</Text>
+                </View>
+
+                {/* Unit */}
+                <View style={styles.targetEditField}>
+                  <Text style={[styles.targetEditLabel, { color: theme.colors.textSecondary }]}>{t('units.optional')}</Text>
+                  <View style={styles.unitDisplayRow}>
+                    <TextInput
+                      style={[
+                        styles.unitNameInput,
+                        {
+                          backgroundColor: theme.colors.background,
+                          color: theme.colors.text,
+                          borderColor: theme.colors.border,
+                        },
+                      ]}
+                      value={editedTargetUnit || ''}
+                      onChangeText={isCustomUnit ? (text) => setEditedTargetUnit(text || null) : undefined}
+                      editable={isCustomUnit}
+                      placeholder={t('units.customName')}
+                      placeholderTextColor={theme.colors.textSecondary}
+                    />
+                    <TextInput
+                      style={[
+                        styles.unitShortInput,
+                        {
+                          backgroundColor: theme.colors.background,
+                          color: theme.colors.text,
+                          borderColor: theme.colors.border,
+                        },
+                      ]}
+                      value={editedTargetUnitShort || ''}
+                      onChangeText={isCustomUnit ? (text) => setEditedTargetUnitShort(text || null) : undefined}
+                      editable={isCustomUnit}
+                      placeholder={t('units.customShort')}
+                      placeholderTextColor={theme.colors.textSecondary}
+                    />
+                  </View>
+                  <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.unitEditScroll}>
+                    <View style={styles.unitEditPillsRow}>
+                      {CATEGORIES.map((category) => {
+                        const categoryUnits = UNIT_DEFS.filter(u => u.category === category);
+                        return (
+                          <View key={category} style={styles.unitEditCategoryGroup}>
+                            <Text style={[styles.unitEditCategoryLabel, { color: theme.colors.textSecondary }]}>
+                              {t(`units.categories.${category}`)}
+                            </Text>
+                            <View style={styles.unitEditCategoryPills}>
+                              {categoryUnits.map((unitDef) => (
+                                <TouchableOpacity
+                                  key={unitDef.key}
+                                  style={[
+                                    styles.unitEditPill,
+                                    {
+                                      backgroundColor: selectedUnitKey === unitDef.key ? theme.colors.primary : theme.colors.card,
+                                      borderColor: selectedUnitKey === unitDef.key ? theme.colors.primary : theme.colors.border,
+                                    },
+                                  ]}
+                                  onPress={() => handleEditUnitPress(unitDef.key)}
+                                >
+                                  <Text
+                                    style={[
+                                      styles.unitEditPillText,
+                                      { color: selectedUnitKey === unitDef.key ? '#FFFFFF' : theme.colors.text },
+                                    ]}
+                                  >
+                                    {t(`units.${unitDef.key}.short`)}
+                                  </Text>
+                                </TouchableOpacity>
+                              ))}
+                            </View>
+                          </View>
+                        );
+                      })}
+                      <View style={styles.unitEditCategoryGroup}>
+                        <Text style={[styles.unitEditCategoryLabel, { color: theme.colors.textSecondary }]}>{' '}</Text>
+                        <View style={styles.unitEditCategoryPills}>
+                          <TouchableOpacity
+                            style={[
+                              styles.unitEditPill,
+                              {
+                                backgroundColor: isCustomUnit ? theme.colors.primary : theme.colors.card,
+                                borderColor: isCustomUnit ? theme.colors.primary : theme.colors.border,
+                              },
+                            ]}
+                            onPress={handleEditCustomPress}
+                          >
+                            <Text
+                              style={[
+                                styles.unitEditPillText,
+                                { color: isCustomUnit ? '#FFFFFF' : theme.colors.text },
+                              ]}
+                            >
+                              {t('units.custom')}
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </View>
+                  </ScrollView>
+                </View>
+
+                {/* Period */}
+                <View style={styles.targetEditField}>
+                  <Text style={[styles.targetEditLabel, { color: theme.colors.textSecondary }]}>{t('habits.per')}</Text>
                   <View style={styles.periodSelector}>
                     {PERIODS.map((period) => (
                       <TouchableOpacity
@@ -396,25 +573,8 @@ export default function ModalScreen() {
                       </TouchableOpacity>
                     ))}
                   </View>
-                  <TextInput
-                    style={[
-                      styles.targetValueInput,
-                      {
-                        backgroundColor: theme.colors.card,
-                        color: theme.colors.text,
-                        borderColor: theme.colors.border,
-                        width: 80,
-                      },
-                    ]}
-                    value={editedTargetUnitShort || ''}
-                    onChangeText={(text) => {
-                      setEditedTargetUnitShort(text || null);
-                      setEditedTargetUnit(text || null);
-                    }}
-                    placeholder={t('units.customShort')}
-                    placeholderTextColor={theme.colors.textSecondary}
-                  />
                 </View>
+
                 <View style={styles.editActions}>
                   <TouchableOpacity onPress={cancelEditTarget} style={[styles.miniButton, { borderWidth: 1, borderColor: theme.colors.border }]}>
                     <Text style={{ color: theme.colors.text }}>{t('common.cancel')}</Text>
@@ -609,21 +769,75 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     flex: 1,
   },
-  targetEditRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: 10,
-    marginBottom: 10,
+  targetEditField: {
+    marginBottom: 14,
+  },
+  targetEditLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    marginBottom: 6,
   },
   targetValueInput: {
     height: 40,
-    width: 70,
+    width: 100,
     borderWidth: 1,
     borderRadius: 6,
     paddingHorizontal: 10,
     fontSize: 16,
     textAlign: 'center',
+  },
+  unitDisplayRow: {
+    flexDirection: 'row',
+    gap: 10,
+    marginBottom: 10,
+  },
+  unitNameInput: {
+    flex: 2,
+    height: 40,
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingHorizontal: 10,
+    fontSize: 14,
+  },
+  unitShortInput: {
+    flex: 1,
+    height: 40,
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingHorizontal: 10,
+    fontSize: 14,
+  },
+  unitEditScroll: {
+    marginTop: 6,
+  },
+  unitEditPillsRow: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  unitEditCategoryGroup: {
+    gap: 4,
+  },
+  unitEditCategoryLabel: {
+    fontSize: 10,
+    fontWeight: '500',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  unitEditCategoryPills: {
+    flexDirection: 'row',
+    gap: 4,
+  },
+  unitEditPill: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 14,
+    borderWidth: 1,
+  },
+  unitEditPillText: {
+    fontSize: 12,
+    fontWeight: '500',
   },
   perText: {
     fontSize: 14,
