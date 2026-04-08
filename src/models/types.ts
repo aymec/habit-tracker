@@ -3,6 +3,8 @@ export type TargetPeriod = 'day' | 'week' | 'month' | 'year';
 export interface HabitTarget {
   value: number;
   period: TargetPeriod;
+  unit?: string;       // Full name, e.g., "liters"
+  unitShort?: string;  // Abbreviation, e.g., "L"
 }
 
 export interface Habit {
