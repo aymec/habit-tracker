@@ -1,14 +1,42 @@
 import { useCallback, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Platform, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Platform, Alert, ScrollView } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTranslation } from 'react-i18next';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
 import Head from 'expo-router/head';
-import { TargetPeriod } from '../../../src/models/types';
+import { TargetPeriod, HabitTarget } from '../../../src/models/types';
 
 const PERIODS: TargetPeriod[] = ['day', 'week', 'month', 'year'];
+
+interface UnitDef {
+  key: string;
+  category: 'volume' | 'weight' | 'distance' | 'time' | 'other';
+}
+
+const UNIT_DEFS: UnitDef[] = [
+  { key: 'liters', category: 'volume' },
+  { key: 'milliliters', category: 'volume' },
+  { key: 'cups', category: 'volume' },
+  { key: 'fluidOunces', category: 'volume' },
+  { key: 'gallons', category: 'volume' },
+  { key: 'kilograms', category: 'weight' },
+  { key: 'grams', category: 'weight' },
+  { key: 'pounds', category: 'weight' },
+  { key: 'ounces', category: 'weight' },
+  { key: 'kilometers', category: 'distance' },
+  { key: 'miles', category: 'distance' },
+  { key: 'meters', category: 'distance' },
+  { key: 'minutes', category: 'time' },
+  { key: 'hours', category: 'time' },
+  { key: 'calories', category: 'other' },
+  { key: 'steps', category: 'other' },
+  { key: 'pages', category: 'other' },
+  { key: 'reps', category: 'other' },
+];
+
+const CATEGORIES = ['volume', 'weight', 'distance', 'time', 'other'] as const;
 
 export default function TargetScreen() {
   const { theme } = useTheme();
@@ -20,6 +48,10 @@ export default function TargetScreen() {
 
   const [targetValue, setTargetValue] = useState('');
   const [selectedPeriod, setSelectedPeriod] = useState<TargetPeriod>('day');
+  const [selectedUnitKey, setSelectedUnitKey] = useState<string | null>(null);
+  const [isCustomUnit, setIsCustomUnit] = useState(false);
+  const [customUnitName, setCustomUnitName] = useState('');
+  const [customUnitShort, setCustomUnitShort] = useState('');
 
   // Update document title on focus for web (Head component doesn't update on tab switch)
   useFocusEffect(
@@ -29,6 +61,20 @@ export default function TargetScreen() {
       }
     }, [t])
   );
+
+  const handleUnitPress = (unitKey: string) => {
+    setIsCustomUnit(false);
+    if (selectedUnitKey === unitKey) {
+      setSelectedUnitKey(null);
+    } else {
+      setSelectedUnitKey(unitKey);
+    }
+  };
+
+  const handleCustomPress = () => {
+    setSelectedUnitKey(null);
+    setIsCustomUnit(!isCustomUnit);
+  };
 
   const navigateToEdit = () => {
     // Dismiss all creation screens (name, target), then push goal and edit
@@ -97,7 +143,15 @@ export default function TargetScreen() {
     }
 
     try {
-      await createNewHabit(habitName, undefined, { value, period: selectedPeriod });
+      const target: HabitTarget = { value, period: selectedPeriod };
+      if (isCustomUnit && customUnitName.trim()) {
+        target.unit = customUnitName.trim();
+        target.unitShort = customUnitShort.trim() || customUnitName.trim();
+      } else if (selectedUnitKey) {
+        target.unit = t(`units.${selectedUnitKey}.name`);
+        target.unitShort = t(`units.${selectedUnitKey}.short`);
+      }
+      await createNewHabit(habitName, undefined, target);
       navigateToEdit();
     } catch (error) {
       console.error(error);
@@ -177,6 +231,112 @@ export default function TargetScreen() {
                 </Text>
               </TouchableOpacity>
             ))}
+          </View>
+
+          {/* Unit Picker */}
+          <View style={styles.unitSection}>
+            <Text style={[styles.unitSectionLabel, { color: theme.colors.textSecondary }]}>
+              {t('units.optional')}
+            </Text>
+
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.unitScroll}>
+              <View style={styles.unitPillsRow}>
+                {CATEGORIES.map((category) => {
+                  const categoryUnits = UNIT_DEFS.filter(u => u.category === category);
+                  return (
+                    <View key={category} style={styles.unitCategoryGroup}>
+                      <Text style={[styles.unitCategoryLabel, { color: theme.colors.textSecondary }]}>
+                        {t(`units.categories.${category}`)}
+                      </Text>
+                      <View style={styles.unitCategoryPills}>
+                        {categoryUnits.map((unitDef) => (
+                          <TouchableOpacity
+                            key={unitDef.key}
+                            style={[
+                              styles.unitPill,
+                              {
+                                backgroundColor: selectedUnitKey === unitDef.key ? theme.colors.primary : theme.colors.card,
+                                borderColor: selectedUnitKey === unitDef.key ? theme.colors.primary : theme.colors.border,
+                              },
+                            ]}
+                            onPress={() => handleUnitPress(unitDef.key)}
+                          >
+                            <Text
+                              style={[
+                                styles.unitPillText,
+                                { color: selectedUnitKey === unitDef.key ? '#FFFFFF' : theme.colors.text },
+                              ]}
+                            >
+                              {t(`units.${unitDef.key}.short`)}
+                            </Text>
+                          </TouchableOpacity>
+                        ))}
+                      </View>
+                    </View>
+                  );
+                })}
+                {/* Custom pill */}
+                <View style={styles.unitCategoryGroup}>
+                  <Text style={[styles.unitCategoryLabel, { color: theme.colors.textSecondary }]}>{' '}</Text>
+                  <View style={styles.unitCategoryPills}>
+                    <TouchableOpacity
+                      style={[
+                        styles.unitPill,
+                        {
+                          backgroundColor: isCustomUnit ? theme.colors.primary : theme.colors.card,
+                          borderColor: isCustomUnit ? theme.colors.primary : theme.colors.border,
+                        },
+                      ]}
+                      onPress={handleCustomPress}
+                    >
+                      <Text
+                        style={[
+                          styles.unitPillText,
+                          { color: isCustomUnit ? '#FFFFFF' : theme.colors.text },
+                        ]}
+                      >
+                        {t('units.custom')}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </ScrollView>
+
+            {isCustomUnit && (
+              <View style={styles.customUnitInputs}>
+                <TextInput
+                  style={[
+                    styles.customUnitInput,
+                    {
+                      backgroundColor: theme.colors.card,
+                      color: theme.colors.text,
+                      borderColor: theme.colors.border,
+                      flex: 2,
+                    },
+                  ]}
+                  value={customUnitName}
+                  onChangeText={setCustomUnitName}
+                  placeholder={t('units.customName')}
+                  placeholderTextColor={theme.colors.textSecondary}
+                />
+                <TextInput
+                  style={[
+                    styles.customUnitInput,
+                    {
+                      backgroundColor: theme.colors.card,
+                      color: theme.colors.text,
+                      borderColor: theme.colors.border,
+                      flex: 1,
+                    },
+                  ]}
+                  value={customUnitShort}
+                  onChangeText={setCustomUnitShort}
+                  placeholder={t('units.customShort')}
+                  placeholderTextColor={theme.colors.textSecondary}
+                />
+              </View>
+            )}
           </View>
         </View>
 
@@ -281,5 +441,55 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  unitSection: {
+    marginTop: 20,
+  },
+  unitSectionLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    marginBottom: 10,
+  },
+  unitScroll: {
+    marginBottom: 10,
+  },
+  unitPillsRow: {
+    flexDirection: 'row',
+    gap: 15,
+  },
+  unitCategoryGroup: {
+    gap: 6,
+  },
+  unitCategoryLabel: {
+    fontSize: 11,
+    fontWeight: '500',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  unitCategoryPills: {
+    flexDirection: 'row',
+    gap: 6,
+  },
+  unitPill: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 16,
+    borderWidth: 1,
+  },
+  unitPillText: {
+    fontSize: 13,
+    fontWeight: '500',
+  },
+  customUnitInputs: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 10,
+  },
+  customUnitInput: {
+    height: 40,
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    fontSize: 14,
   },
 });
