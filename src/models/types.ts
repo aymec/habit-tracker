@@ -21,6 +21,7 @@ export interface Option {
   habitId: string;
   label: string;
   value: number;
+  isDefault?: boolean;
 }
 
 export interface Entry {

@@ -12,7 +12,9 @@
     "clearAll": "全部清除",
     "error": "錯誤",
     "next": "下一步",
-    "skip": "跳過"
+    "skip": "跳過",
+    "none": "無",
+    "clear": "清除"
   },
   "habits": {
     "title": "目標",
@@ -44,9 +46,11 @@
     "invalidTargetMessage": "請輸入有效的數字，或不設定目標繼續。您可以稍後新增。",
     "noTarget": "未設定",
     "per": "每",
-    "defaultOptionLabel": "一本書",
+    "defaultOptionLabel": "你好 👋",
+    "customizeTooltip": "點擊左下角的編輯按鈕來自訂選項",
     "targetDisplay": "每{{period}}{{value}}{{unit}}",
     "vsTarget": "vs. 每{{period}}{{value}}{{unit}}",
+    "clearTargetConfirm": "刪除此目標的指標？",
     "period": {
       "day": "天",
       "week": "週",
@@ -126,6 +130,7 @@
     "custom": "自訂",
     "customName": "單位名稱",
     "customShort": "縮寫",
+    "unitPlaceholder": "單位",
     "categories": {
       "volume": "體積",
       "weight": "重量",
@@ -147,6 +152,9 @@
     "meters": { "name": "公尺", "short": "m" },
     "minutes": { "name": "分鐘", "short": "分" },
     "hours": { "name": "小時", "short": "時" },
+    "days": { "name": "天", "short": "天" },
+    "weeks": { "name": "週", "short": "週" },
+    "months": { "name": "月", "short": "月" },
     "calories": { "name": "卡路里", "short": "cal" },
     "steps": { "name": "步", "short": "步" },
     "pages": { "name": "頁", "short": "頁" },

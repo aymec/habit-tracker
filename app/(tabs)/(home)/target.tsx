@@ -6,6 +6,7 @@ import { useHabit } from '../../../src/context/HabitContext';
 import { useTranslation } from 'react-i18next';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
 import Head from 'expo-router/head';
+import { Ionicons } from '@expo/vector-icons';
 import { TargetPeriod, HabitTarget } from '../../../src/models/types';
 
 const PERIODS: TargetPeriod[] = ['day', 'week', 'month', 'year'];
@@ -16,20 +17,23 @@ interface UnitDef {
 }
 
 const UNIT_DEFS: UnitDef[] = [
-  { key: 'liters', category: 'volume' },
   { key: 'milliliters', category: 'volume' },
-  { key: 'cups', category: 'volume' },
   { key: 'fluidOunces', category: 'volume' },
+  { key: 'cups', category: 'volume' },
+  { key: 'liters', category: 'volume' },
   { key: 'gallons', category: 'volume' },
-  { key: 'kilograms', category: 'weight' },
   { key: 'grams', category: 'weight' },
-  { key: 'pounds', category: 'weight' },
   { key: 'ounces', category: 'weight' },
+  { key: 'pounds', category: 'weight' },
+  { key: 'kilograms', category: 'weight' },
+  { key: 'meters', category: 'distance' },
   { key: 'kilometers', category: 'distance' },
   { key: 'miles', category: 'distance' },
-  { key: 'meters', category: 'distance' },
   { key: 'minutes', category: 'time' },
   { key: 'hours', category: 'time' },
+  { key: 'days', category: 'time' },
+  { key: 'weeks', category: 'time' },
+  { key: 'months', category: 'time' },
   { key: 'calories', category: 'other' },
   { key: 'steps', category: 'other' },
   { key: 'pages', category: 'other' },
@@ -37,6 +41,8 @@ const UNIT_DEFS: UnitDef[] = [
 ];
 
 const CATEGORIES = ['volume', 'weight', 'distance', 'time', 'other'] as const;
+
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 export default function TargetScreen() {
   const { theme } = useTheme();
@@ -47,11 +53,12 @@ export default function TargetScreen() {
   const habitName = params.name as string;
 
   const [targetValue, setTargetValue] = useState('');
-  const [selectedPeriod, setSelectedPeriod] = useState<TargetPeriod>('day');
+  const [selectedPeriod, setSelectedPeriod] = useState<TargetPeriod | null>(null);
   const [selectedUnitKey, setSelectedUnitKey] = useState<string | null>(null);
   const [isCustomUnit, setIsCustomUnit] = useState(false);
-  const [customUnitName, setCustomUnitName] = useState('');
   const [customUnitShort, setCustomUnitShort] = useState('');
+  const [showUnitPicker, setShowUnitPicker] = useState(false);
+  const [showPeriodPicker, setShowPeriodPicker] = useState(false);
 
   // Update document title on focus for web (Head component doesn't update on tab switch)
   useFocusEffect(
@@ -69,18 +76,26 @@ export default function TargetScreen() {
     } else {
       setSelectedUnitKey(unitKey);
     }
+    setShowUnitPicker(false);
+  };
+
+  const handleUnitNone = () => {
+    setSelectedUnitKey(null);
+    setIsCustomUnit(false);
+    setShowUnitPicker(false);
   };
 
   const handleCustomPress = () => {
     setSelectedUnitKey(null);
-    setIsCustomUnit(!isCustomUnit);
+    setIsCustomUnit(true);
+    setCustomUnitShort('');
+    setShowUnitPicker(false);
   };
 
   const navigateToEdit = () => {
-    // Dismiss all creation screens (name, target), then push goal and edit
-    // This way the stack becomes: Home → Goal → Edit
-    router.dismissAll();
-    router.push('/(tabs)/(home)/goal');
+    // Replace target with goal (name was already replaced by target),
+    // so the stack becomes: Home → Goal → Edit
+    router.replace('/(tabs)/(home)/goal');
     router.push({ pathname: '/(tabs)/(home)/edit', params: { mode: 'edit' } });
   };
 
@@ -142,11 +157,31 @@ export default function TargetScreen() {
       return;
     }
 
+    // If value is present but no period, show skip confirmation
+    if (!selectedPeriod) {
+      if (Platform.OS === 'web') {
+        const confirmed = confirm(t('habits.skipTargetConfirmMessage'));
+        if (confirmed) {
+          handleSkip();
+        }
+      } else {
+        Alert.alert(
+          t('habits.skipTargetConfirmTitle'),
+          t('habits.skipTargetConfirmMessage'),
+          [
+            { text: t('common.edit'), style: 'cancel' },
+            { text: t('common.skip'), onPress: handleSkip }
+          ]
+        );
+      }
+      return;
+    }
+
     try {
       const target: HabitTarget = { value, period: selectedPeriod };
-      if (isCustomUnit && customUnitName.trim()) {
-        target.unit = customUnitName.trim();
-        target.unitShort = customUnitShort.trim() || customUnitName.trim();
+      if (isCustomUnit && customUnitShort.trim()) {
+        target.unit = customUnitShort.trim();
+        target.unitShort = customUnitShort.trim();
       } else if (selectedUnitKey) {
         target.unit = t(`units.${selectedUnitKey}.name`);
         target.unitShort = t(`units.${selectedUnitKey}.short`);
@@ -187,157 +222,135 @@ export default function TargetScreen() {
             {t('habits.targetHint')}
           </Text>
 
-          <View style={styles.targetInputRow}>
+          {/* Inline target row */}
+          <View style={styles.targetInlineRow}>
             <TextInput
-              style={[
-                styles.valueInput,
-                {
-                  backgroundColor: theme.colors.card,
-                  color: theme.colors.text,
-                  borderColor: theme.colors.border,
-                },
-              ]}
+              style={[styles.valueInput, { backgroundColor: theme.colors.card, color: theme.colors.text, borderColor: theme.colors.border }]}
               value={targetValue}
               onChangeText={setTargetValue}
               keyboardType="numeric"
               placeholder="0"
               placeholderTextColor={theme.colors.textSecondary}
             />
-            <Text style={[styles.perText, { color: theme.colors.text }]}>
+            <TouchableOpacity
+              style={[styles.dropdownTrigger, { backgroundColor: theme.colors.card, borderColor: showUnitPicker ? theme.colors.primary : theme.colors.border }]}
+              onPress={() => { setShowUnitPicker(!showUnitPicker); setShowPeriodPicker(false); }}
+            >
+              <Text style={[styles.dropdownText, { color: selectedUnitKey || isCustomUnit ? theme.colors.text : theme.colors.textSecondary }]}>
+                {selectedUnitKey ? t(`units.${selectedUnitKey}.short`) : isCustomUnit ? (customUnitShort || '—') : '—'}
+              </Text>
+              <Ionicons name={showUnitPicker ? 'chevron-up' : 'chevron-down'} size={14} color={theme.colors.textSecondary} />
+            </TouchableOpacity>
+            <Text style={[styles.perInlineText, { color: theme.colors.text }]}>
               {t('habits.per')}
             </Text>
+            <TouchableOpacity
+              style={[styles.dropdownTrigger, { backgroundColor: theme.colors.card, borderColor: showPeriodPicker ? theme.colors.primary : theme.colors.border }]}
+              onPress={() => { setShowPeriodPicker(!showPeriodPicker); setShowUnitPicker(false); }}
+            >
+              <Text style={[styles.dropdownText, { color: selectedPeriod ? theme.colors.text : theme.colors.textSecondary }]}>
+                {selectedPeriod ? t(`habits.period.${selectedPeriod}`) : '—'}
+              </Text>
+              <Ionicons name={showPeriodPicker ? 'chevron-up' : 'chevron-down'} size={14} color={theme.colors.textSecondary} />
+            </TouchableOpacity>
           </View>
 
-          <View style={styles.periodSelector}>
+          {/* Unit dropdown */}
+          {showUnitPicker && (
+          <View style={[styles.dropdownList, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
+            <ScrollView style={styles.dropdownScroll} nestedScrollEnabled>
+              <TouchableOpacity
+                style={[styles.dropdownItem, !selectedUnitKey && !isCustomUnit && { backgroundColor: theme.colors.primary + '18' }]}
+                onPress={handleUnitNone}
+              >
+                <Text style={[styles.dropdownItemText, { color: theme.colors.text, fontStyle: 'italic' }]}>
+                  {t('common.none')}
+                </Text>
+                {!selectedUnitKey && !isCustomUnit && (
+                  <Ionicons name="checkmark" size={18} color={theme.colors.primary} />
+                )}
+              </TouchableOpacity>
+              {CATEGORIES.flatMap((category) => {
+                const categoryUnits = UNIT_DEFS.filter(u => u.category === category);
+                return [
+                  <View key={`cat-${category}`} style={[styles.dropdownCategoryHeader, { borderTopColor: theme.colors.border }]}>
+                    <Text style={[styles.dropdownCategoryText, { color: theme.colors.textSecondary }]}>
+                      {t(`units.categories.${category}`)}
+                    </Text>
+                  </View>,
+                  ...categoryUnits.map((unitDef) => (
+                    <TouchableOpacity
+                      key={unitDef.key}
+                      style={[styles.dropdownItem, selectedUnitKey === unitDef.key && { backgroundColor: theme.colors.primary + '18' }]}
+                      onPress={() => handleUnitPress(unitDef.key)}
+                    >
+                      <Text style={[styles.dropdownItemText, { color: theme.colors.text }]}>
+                        {capitalize(t(`units.${unitDef.key}.name`))} ({t(`units.${unitDef.key}.short`)})
+                      </Text>
+                      {selectedUnitKey === unitDef.key && (
+                        <Ionicons name="checkmark" size={18} color={theme.colors.primary} />
+                      )}
+                    </TouchableOpacity>
+                  ))
+                ];
+              })}
+              <TouchableOpacity
+                style={[styles.dropdownItem, { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: theme.colors.border }, isCustomUnit && { backgroundColor: theme.colors.primary + '18' }]}
+                onPress={handleCustomPress}
+              >
+                <Text style={[styles.dropdownItemText, { color: theme.colors.text }]}>
+                  {t('units.custom')}...
+                </Text>
+                {isCustomUnit && (
+                  <Ionicons name="checkmark" size={18} color={theme.colors.primary} />
+                )}
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
+          )}
+
+          {/* Custom unit input */}
+          {isCustomUnit && !showUnitPicker && (
+            <TextInput
+              style={[styles.customUnitInput, { backgroundColor: theme.colors.card, color: theme.colors.text, borderColor: theme.colors.border }]}
+              value={customUnitShort}
+              onChangeText={setCustomUnitShort}
+              placeholder={t('units.unitPlaceholder')}
+              placeholderTextColor={theme.colors.textSecondary}
+              autoFocus
+            />
+          )}
+
+          {/* Period dropdown */}
+          {showPeriodPicker && (
+          <View style={[styles.dropdownList, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
+            <TouchableOpacity
+              style={[styles.dropdownItem, !selectedPeriod && { backgroundColor: theme.colors.primary + '18' }]}
+              onPress={() => { setSelectedPeriod(null); setShowPeriodPicker(false); }}
+            >
+              <Text style={[styles.dropdownItemText, { color: theme.colors.text, fontStyle: 'italic' }]}>
+                {t('common.none')}
+              </Text>
+              {!selectedPeriod && (
+                <Ionicons name="checkmark" size={18} color={theme.colors.primary} />
+              )}
+            </TouchableOpacity>
             {PERIODS.map((period) => (
               <TouchableOpacity
                 key={period}
-                style={[
-                  styles.periodButton,
-                  {
-                    backgroundColor: selectedPeriod === period ? theme.colors.primary : theme.colors.card,
-                    borderColor: selectedPeriod === period ? theme.colors.primary : theme.colors.border,
-                  },
-                ]}
-                onPress={() => setSelectedPeriod(period)}
+                style={[styles.dropdownItem, selectedPeriod === period && { backgroundColor: theme.colors.primary + '18' }]}
+                onPress={() => { setSelectedPeriod(period); setShowPeriodPicker(false); }}
               >
-                <Text
-                  style={[
-                    styles.periodButtonText,
-                    { color: selectedPeriod === period ? '#FFFFFF' : theme.colors.text },
-                  ]}
-                >
-                  {t(`habits.period.${period}`)}
+                <Text style={[styles.dropdownItemText, { color: theme.colors.text }]}>
+                  {capitalize(t(`habits.period.${period}`))}
                 </Text>
+                {selectedPeriod === period && (
+                  <Ionicons name="checkmark" size={18} color={theme.colors.primary} />
+                )}
               </TouchableOpacity>
             ))}
           </View>
-
-          {/* Unit Picker */}
-          <View style={styles.unitSection}>
-            <Text style={[styles.unitSectionLabel, { color: theme.colors.textSecondary }]}>
-              {t('units.optional')}
-            </Text>
-
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.unitScroll}>
-              <View style={styles.unitPillsRow}>
-                {CATEGORIES.map((category) => {
-                  const categoryUnits = UNIT_DEFS.filter(u => u.category === category);
-                  return (
-                    <View key={category} style={styles.unitCategoryGroup}>
-                      <Text style={[styles.unitCategoryLabel, { color: theme.colors.textSecondary }]}>
-                        {t(`units.categories.${category}`)}
-                      </Text>
-                      <View style={styles.unitCategoryPills}>
-                        {categoryUnits.map((unitDef) => (
-                          <TouchableOpacity
-                            key={unitDef.key}
-                            style={[
-                              styles.unitPill,
-                              {
-                                backgroundColor: selectedUnitKey === unitDef.key ? theme.colors.primary : theme.colors.card,
-                                borderColor: selectedUnitKey === unitDef.key ? theme.colors.primary : theme.colors.border,
-                              },
-                            ]}
-                            onPress={() => handleUnitPress(unitDef.key)}
-                          >
-                            <Text
-                              style={[
-                                styles.unitPillText,
-                                { color: selectedUnitKey === unitDef.key ? '#FFFFFF' : theme.colors.text },
-                              ]}
-                            >
-                              {t(`units.${unitDef.key}.short`)}
-                            </Text>
-                          </TouchableOpacity>
-                        ))}
-                      </View>
-                    </View>
-                  );
-                })}
-                {/* Custom pill */}
-                <View style={styles.unitCategoryGroup}>
-                  <Text style={[styles.unitCategoryLabel, { color: theme.colors.textSecondary }]}>{' '}</Text>
-                  <View style={styles.unitCategoryPills}>
-                    <TouchableOpacity
-                      style={[
-                        styles.unitPill,
-                        {
-                          backgroundColor: isCustomUnit ? theme.colors.primary : theme.colors.card,
-                          borderColor: isCustomUnit ? theme.colors.primary : theme.colors.border,
-                        },
-                      ]}
-                      onPress={handleCustomPress}
-                    >
-                      <Text
-                        style={[
-                          styles.unitPillText,
-                          { color: isCustomUnit ? '#FFFFFF' : theme.colors.text },
-                        ]}
-                      >
-                        {t('units.custom')}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-            </ScrollView>
-
-            {isCustomUnit && (
-              <View style={styles.customUnitInputs}>
-                <TextInput
-                  style={[
-                    styles.customUnitInput,
-                    {
-                      backgroundColor: theme.colors.card,
-                      color: theme.colors.text,
-                      borderColor: theme.colors.border,
-                      flex: 2,
-                    },
-                  ]}
-                  value={customUnitName}
-                  onChangeText={setCustomUnitName}
-                  placeholder={t('units.customName')}
-                  placeholderTextColor={theme.colors.textSecondary}
-                />
-                <TextInput
-                  style={[
-                    styles.customUnitInput,
-                    {
-                      backgroundColor: theme.colors.card,
-                      color: theme.colors.text,
-                      borderColor: theme.colors.border,
-                      flex: 1,
-                    },
-                  ]}
-                  value={customUnitShort}
-                  onChangeText={setCustomUnitShort}
-                  placeholder={t('units.customShort')}
-                  placeholderTextColor={theme.colors.textSecondary}
-                />
-              </View>
-            )}
-          </View>
+          )}
         </View>
 
         <View style={styles.buttonRow}>
@@ -379,38 +392,75 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 20,
   },
-  targetInputRow: {
+  targetInlineRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    gap: 8,
+    marginBottom: 15,
   },
   valueInput: {
-    height: 50,
-    width: 100,
+    height: 40,
+    width: 80,
     borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    fontSize: 18,
-    textAlign: 'right',
-  },
-  perText: {
+    borderRadius: 6,
+    paddingHorizontal: 10,
     fontSize: 16,
-    marginLeft: 12,
+    textAlign: 'center',
   },
-  periodSelector: {
+  dropdownTrigger: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
-  periodButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 8,
+    alignItems: 'center',
+    height: 40,
+    paddingHorizontal: 10,
+    borderRadius: 6,
     borderWidth: 1,
+    gap: 4,
   },
-  periodButtonText: {
+  dropdownText: {
     fontSize: 14,
     fontWeight: '500',
+  },
+  perInlineText: {
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  dropdownList: {
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    overflow: 'hidden',
+  },
+  dropdownScroll: {
+    maxHeight: 220,
+  },
+  dropdownItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+  },
+  dropdownItemText: {
+    fontSize: 14,
+  },
+  dropdownCategoryHeader: {
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  dropdownCategoryText: {
+    fontSize: 11,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  customUnitInput: {
+    height: 40,
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingHorizontal: 10,
+    fontSize: 14,
+    marginBottom: 10,
   },
   buttonRow: {
     flexDirection: 'row',
@@ -441,55 +491,5 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  unitSection: {
-    marginTop: 20,
-  },
-  unitSectionLabel: {
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 10,
-  },
-  unitScroll: {
-    marginBottom: 10,
-  },
-  unitPillsRow: {
-    flexDirection: 'row',
-    gap: 15,
-  },
-  unitCategoryGroup: {
-    gap: 6,
-  },
-  unitCategoryLabel: {
-    fontSize: 11,
-    fontWeight: '500',
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-  },
-  unitCategoryPills: {
-    flexDirection: 'row',
-    gap: 6,
-  },
-  unitPill: {
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 16,
-    borderWidth: 1,
-  },
-  unitPillText: {
-    fontSize: 13,
-    fontWeight: '500',
-  },
-  customUnitInputs: {
-    flexDirection: 'row',
-    gap: 10,
-    marginTop: 10,
-  },
-  customUnitInput: {
-    height: 40,
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    fontSize: 14,
   },
 });

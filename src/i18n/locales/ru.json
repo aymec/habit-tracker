@@ -12,7 +12,9 @@
     "clearAll": "Очистить все",
     "error": "Ошибка",
     "next": "Далее",
-    "skip": "Пропустить"
+    "skip": "Пропустить",
+    "none": "Нет",
+    "clear": "Очистить"
   },
   "habits": {
     "title": "Цели",
@@ -44,9 +46,11 @@
     "invalidTargetMessage": "Пожалуйста, введите корректное число или продолжите без установки цели. Вы сможете добавить её позже.",
     "noTarget": "Не установлено",
     "per": "в",
-    "defaultOptionLabel": "Одна книга",
+    "defaultOptionLabel": "Привет 👋",
+    "customizeTooltip": "Нажмите кнопку редактирования внизу слева, чтобы настроить варианты",
     "targetDisplay": "{{value}}{{unit}} в {{period}}",
     "vsTarget": "vs. {{value}}{{unit}} в {{period}}",
+    "clearTargetConfirm": "Удалить цель для этой задачи?",
     "period": {
       "day": "день",
       "week": "неделю",
@@ -126,6 +130,7 @@
     "custom": "Другое",
     "customName": "Название единицы",
     "customShort": "Сокращение",
+    "unitPlaceholder": "Единица",
     "categories": {
       "volume": "Объём",
       "weight": "Вес",
@@ -147,6 +152,9 @@
     "meters": { "name": "метры", "short": "м" },
     "minutes": { "name": "минуты", "short": "мин" },
     "hours": { "name": "часы", "short": "ч" },
+    "days": { "name": "дни", "short": "д" },
+    "weeks": { "name": "недели", "short": "нед" },
+    "months": { "name": "месяцы", "short": "мес" },
     "calories": { "name": "калории", "short": "кал" },
     "steps": { "name": "шаги", "short": "шаг" },
     "pages": { "name": "страницы", "short": "стр" },

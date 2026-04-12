@@ -12,7 +12,9 @@
     "clearAll": "Tout effacer",
     "error": "Erreur",
     "next": "Suivant",
-    "skip": "Passer"
+    "skip": "Passer",
+    "none": "Aucun",
+    "clear": "Effacer"
   },
   "habits": {
     "title": "Objectifs",
@@ -44,9 +46,11 @@
     "invalidTargetMessage": "Veuillez entrer un nombre valide ou continuer sans définir d'objectif. Vous pourrez en ajouter un plus tard.",
     "noTarget": "Non défini",
     "per": "par",
-    "defaultOptionLabel": "Un livre",
+    "defaultOptionLabel": "Salut 👋",
+    "customizeTooltip": "Appuyez sur le bouton d'édition en bas à gauche pour personnaliser vos options",
     "targetDisplay": "{{value}}{{unit}} par {{period}}",
     "vsTarget": "vs. {{value}}{{unit}} par {{period}}",
+    "clearTargetConfirm": "Supprimer l'objectif pour ce but ?",
     "period": {
       "day": "jour",
       "week": "semaine",
@@ -126,6 +130,7 @@
     "custom": "Personnalisé",
     "customName": "Nom de l'unité",
     "customShort": "Abréviation",
+    "unitPlaceholder": "Unité",
     "categories": {
       "volume": "Volume",
       "weight": "Poids",
@@ -147,6 +152,9 @@
     "meters": { "name": "mètres", "short": "m" },
     "minutes": { "name": "minutes", "short": "min" },
     "hours": { "name": "heures", "short": "h" },
+    "days": { "name": "jours", "short": "j" },
+    "weeks": { "name": "semaines", "short": "sem" },
+    "months": { "name": "mois", "short": "mois" },
     "calories": { "name": "calories", "short": "cal" },
     "steps": { "name": "pas", "short": "pas" },
     "pages": { "name": "pages", "short": "pages" },

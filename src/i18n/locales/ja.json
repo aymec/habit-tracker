@@ -12,7 +12,9 @@
     "clearAll": "すべてクリア",
     "error": "エラー",
     "next": "次へ",
-    "skip": "スキップ"
+    "skip": "スキップ",
+    "none": "なし",
+    "clear": "クリア"
   },
   "habits": {
     "title": "目標",
@@ -44,9 +46,11 @@
     "invalidTargetMessage": "有効な数値を入力するか、目標を設定せずに続けてください。後からいつでも追加できます。",
     "noTarget": "未設定",
     "per": "/",
-    "defaultOptionLabel": "1冊",
+    "defaultOptionLabel": "やあ 👋",
+    "customizeTooltip": "左下の編集ボタンをタップしてオプションをカスタマイズ",
     "targetDisplay": "{{period}}{{value}}{{unit}}",
     "vsTarget": "vs. {{period}}{{value}}{{unit}}",
+    "clearTargetConfirm": "この目標のターゲットを削除しますか？",
     "period": {
       "day": "日",
       "week": "週",
@@ -126,6 +130,7 @@
     "custom": "カスタム",
     "customName": "単位名",
     "customShort": "略称",
+    "unitPlaceholder": "単位",
     "categories": {
       "volume": "体積",
       "weight": "重量",
@@ -147,6 +152,9 @@
     "meters": { "name": "メートル", "short": "m" },
     "minutes": { "name": "分", "short": "分" },
     "hours": { "name": "時間", "short": "時間" },
+    "days": { "name": "日", "short": "日" },
+    "weeks": { "name": "週", "short": "週" },
+    "months": { "name": "月", "short": "月" },
     "calories": { "name": "カロリー", "short": "cal" },
     "steps": { "name": "歩", "short": "歩" },
     "pages": { "name": "ページ", "short": "頁" },

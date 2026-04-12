@@ -3,7 +3,8 @@ import { useRouter, Stack } from 'expo-router';
 import Head from 'expo-router/head';
 import { useTranslation } from 'react-i18next';
 import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
-import { useMemo, useEffect, useCallback } from 'react';
+import { useMemo, useEffect, useCallback, useState, useRef } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useHabit } from '../../../src/context/HabitContext';
@@ -94,6 +95,39 @@ export default function GoalScreen() {
     return Math.max(scaledSize, 24); // Minimum font size of 24
   }, [displayCount, windowWidth]);
 
+  const [showTooltip, setShowTooltip] = useState(false);
+  const tooltipShownRef = useRef(false);
+
+  const handleOptionPress = (option: { label: string; value: number; isDefault?: boolean }) => {
+    if (!activeHabit) return;
+    if (option.isDefault && !tooltipShownRef.current) {
+      tooltipShownRef.current = true;
+      setShowTooltip(true);
+      // Persist so it never shows again for this habit
+      const key = `tooltip-seen-${activeHabit.id}`;
+      if (Platform.OS === 'web') {
+        if (typeof window !== 'undefined') window.localStorage.setItem(key, '1');
+      } else {
+        AsyncStorage.setItem(key, '1');
+      }
+    } else {
+      logEntry(activeHabit.id, option.label, option.value);
+    }
+  };
+
+  // Check if tooltip was already shown for this habit
+  useEffect(() => {
+    if (!activeHabit) return;
+    const key = `tooltip-seen-${activeHabit.id}`;
+    if (Platform.OS === 'web') {
+      tooltipShownRef.current = window.localStorage.getItem(key) === '1';
+    } else {
+      AsyncStorage.getItem(key).then(val => {
+        tooltipShownRef.current = val === '1';
+      });
+    }
+  }, [activeHabit?.id]);
+
   // If no habit is selected (shouldn't happen, but safe to handle)
   if (!activeHabit || habits.length === 0) {
     return null;
@@ -148,7 +182,7 @@ export default function GoalScreen() {
             >
               <TouchableOpacity
                 style={styles.optionButton}
-                onPress={() => logEntry(activeHabit.id, option.label, option.value)}
+                onPress={() => handleOptionPress(option)}
               >
                 <Text style={[styles.optionLabel, { color: theme.colors.text }]}>
                   {option.label}
@@ -160,21 +194,40 @@ export default function GoalScreen() {
             </GlassCard>
           ))}
         </View>
+
       </ScrollView>
+
+      {/* Tooltip overlay - positioned absolutely so it doesn't affect layout */}
+      {showTooltip && (
+        <View style={styles.tooltipOverlay} pointerEvents="box-none">
+          <View style={styles.tooltipBanner}>
+            <View style={[styles.tooltipBubble, { backgroundColor: theme.colors.primary }]}>
+              <Text style={styles.tooltipText}>{t('habits.customizeTooltip')}</Text>
+              <TouchableOpacity onPress={() => setShowTooltip(false)} style={styles.tooltipClose}>
+                <Ionicons name="close" size={18} color="#FFFFFF" />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      )}
 
       {/* Toolbar */}
       <View style={[styles.toolbar, { bottom: liquidGlass ? Math.max(15, insets.bottom + 60) : 15, pointerEvents: 'box-none' }]}>
         <GlassCard
           glassEffect="regular"
           fallbackBackgroundColor={theme.colors.card}
-          fallbackBorderColor={theme.colors.border}
+          fallbackBorderColor={showTooltip ? theme.colors.primary : theme.colors.border}
           borderRadius={27}
+          style={showTooltip ? [styles.editButtonHalo, { shadowColor: theme.colors.primary }] : undefined}
         >
           <TouchableOpacity
-            onPress={() => router.push({ pathname: '/(tabs)/(home)/edit', params: { mode: 'edit' } })}
+            onPress={() => {
+              setShowTooltip(false);
+              router.push({ pathname: '/(tabs)/(home)/edit', params: { mode: 'edit' } });
+            }}
             style={styles.toolbarButton}
           >
-            <Ionicons name="build-outline" size={29} color={theme.colors.text} />
+            <Ionicons name="build-outline" size={29} color={showTooltip ? theme.colors.primary : theme.colors.text} />
           </TouchableOpacity>
         </GlassCard>
         <GlassCard
@@ -272,8 +325,53 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 4,
+    textAlign: 'center',
   },
   optionValue: {
     fontSize: 12,
+  },
+  tooltipOverlay: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: '62%',
+    alignItems: 'center',
+  },
+  tooltipBanner: {
+    alignItems: 'center',
+  },
+  tooltipBubble: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 12,
+    paddingRight: 4,
+    paddingVertical: 8,
+    borderRadius: 10,
+    width: 150,
+  },
+  tooltipText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '500',
+    flex: 1,
+  },
+  tooltipClose: {
+    padding: 6,
+    marginLeft: 8,
+  },
+  editButtonHalo: {
+    ...Platform.select({
+      ios: {
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.8,
+        shadowRadius: 8,
+      },
+      android: {
+        elevation: 8,
+      },
+      web: {
+        boxShadow: '0 0 12px 3px currentColor',
+      },
+    }),
   },
 });

@@ -12,7 +12,9 @@
     "clearAll": "Clear All",
     "error": "Error",
     "next": "Next",
-    "skip": "Skip"
+    "skip": "Skip",
+    "none": "None",
+    "clear": "Clear"
   },
   "habits": {
     "title": "Goals",
@@ -44,9 +46,11 @@
     "invalidTargetMessage": "Please enter a valid number, or continue without setting a goal. You can always add one later.",
     "noTarget": "Not set",
     "per": "per",
-    "defaultOptionLabel": "One Book",
+    "defaultOptionLabel": "Hey 👋",
+    "customizeTooltip": "Tap the edit button at the bottom left to customize your options",
     "targetDisplay": "{{value}}{{unit}} per {{period}}",
     "vsTarget": "vs. {{value}}{{unit}} per {{period}}",
+    "clearTargetConfirm": "Remove the target for this goal?",
     "period": {
       "day": "day",
       "week": "week",
@@ -126,6 +130,7 @@
     "custom": "Custom",
     "customName": "Unit name",
     "customShort": "Abbreviation",
+    "unitPlaceholder": "Unit",
     "categories": {
       "volume": "Volume",
       "weight": "Weight",
@@ -147,6 +152,9 @@
     "meters": { "name": "meters", "short": "m" },
     "minutes": { "name": "minutes", "short": "min" },
     "hours": { "name": "hours", "short": "hr" },
+    "days": { "name": "days", "short": "d" },
+    "weeks": { "name": "weeks", "short": "wk" },
+    "months": { "name": "months", "short": "mo" },
     "calories": { "name": "calories", "short": "cal" },
     "steps": { "name": "steps", "short": "steps" },
     "pages": { "name": "pages", "short": "pages" },

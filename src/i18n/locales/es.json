@@ -12,7 +12,9 @@
     "clearAll": "Limpiar todo",
     "error": "Error",
     "next": "Siguiente",
-    "skip": "Omitir"
+    "skip": "Omitir",
+    "none": "Ninguno",
+    "clear": "Borrar"
   },
   "habits": {
     "title": "Metas",
@@ -44,9 +46,11 @@
     "invalidTargetMessage": "Por favor ingresa un número válido o continúa sin establecer una meta. Puedes agregar una más tarde.",
     "noTarget": "No establecido",
     "per": "por",
-    "defaultOptionLabel": "Un libro",
+    "defaultOptionLabel": "Hola 👋",
+    "customizeTooltip": "Toca el botón de edición abajo a la izquierda para personalizar tus opciones",
     "targetDisplay": "{{value}}{{unit}} por {{period}}",
     "vsTarget": "vs. {{value}}{{unit}} por {{period}}",
+    "clearTargetConfirm": "¿Eliminar el objetivo para esta meta?",
     "period": {
       "day": "día",
       "week": "semana",
@@ -126,6 +130,7 @@
     "custom": "Personalizado",
     "customName": "Nombre de unidad",
     "customShort": "Abreviatura",
+    "unitPlaceholder": "Unidad",
     "categories": {
       "volume": "Volumen",
       "weight": "Peso",
@@ -147,6 +152,9 @@
     "meters": { "name": "metros", "short": "m" },
     "minutes": { "name": "minutos", "short": "min" },
     "hours": { "name": "horas", "short": "h" },
+    "days": { "name": "días", "short": "d" },
+    "weeks": { "name": "semanas", "short": "sem" },
+    "months": { "name": "meses", "short": "mes" },
     "calories": { "name": "calorías", "short": "cal" },
     "steps": { "name": "pasos", "short": "pasos" },
     "pages": { "name": "páginas", "short": "págs" },

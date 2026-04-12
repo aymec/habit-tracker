@@ -12,7 +12,9 @@
     "clearAll": "全部清除",
     "error": "错误",
     "next": "下一步",
-    "skip": "跳过"
+    "skip": "跳过",
+    "none": "无",
+    "clear": "清除"
   },
   "habits": {
     "title": "目标",
@@ -44,9 +46,11 @@
     "invalidTargetMessage": "请输入有效的数字，或不设置目标继续。您可以稍后添加。",
     "noTarget": "未设置",
     "per": "每",
-    "defaultOptionLabel": "一本书",
+    "defaultOptionLabel": "你好 👋",
+    "customizeTooltip": "点击左下角的编辑按钮来自定义选项",
     "targetDisplay": "每{{period}}{{value}}{{unit}}",
     "vsTarget": "vs. 每{{period}}{{value}}{{unit}}",
+    "clearTargetConfirm": "删除此目标的指标？",
     "period": {
       "day": "天",
       "week": "周",
@@ -126,6 +130,7 @@
     "custom": "自定义",
     "customName": "单位名称",
     "customShort": "缩写",
+    "unitPlaceholder": "单位",
     "categories": {
       "volume": "体积",
       "weight": "重量",
@@ -147,6 +152,9 @@
     "meters": { "name": "米", "short": "m" },
     "minutes": { "name": "分钟", "short": "分" },
     "hours": { "name": "小时", "short": "时" },
+    "days": { "name": "天", "short": "天" },
+    "weeks": { "name": "周", "short": "周" },
+    "months": { "name": "月", "short": "月" },
     "calories": { "name": "卡路里", "short": "cal" },
     "steps": { "name": "步", "short": "步" },
     "pages": { "name": "页", "short": "页" },

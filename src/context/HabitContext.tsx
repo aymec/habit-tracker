@@ -82,7 +82,8 @@ export const HabitProvider: FC<{ children: ReactNode }> = ({ children }) => {
             id: Date.now().toString(),
             habitId: activeHabitId,
             label: i18n.t('habits.defaultOptionLabel'),
-            value: 1
+            value: 1,
+            isDefault: true
           };
           await Storage.addOption(defaultOption);
           setActiveHabitOptions([defaultOption]);
@@ -153,7 +154,9 @@ export const HabitProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const updateHabitOption = async (option: Option) => {
     const allOptions = await Storage.getOptions();
-    const newOptions = allOptions.map(p => p.id === option.id ? option : p);
+    // Clear isDefault when user edits an option
+    const { isDefault, ...cleanOption } = option;
+    const newOptions = allOptions.map(p => p.id === cleanOption.id ? cleanOption : p);
     await Storage.saveOptions(newOptions);
 
     if (activeHabitId === option.habitId) {

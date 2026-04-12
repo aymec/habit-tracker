@@ -12,7 +12,9 @@
     "clearAll": "सब साफ़ करें",
     "error": "त्रुटि",
     "next": "अगला",
-    "skip": "छोड़ें"
+    "skip": "छोड़ें",
+    "none": "कोई नहीं",
+    "clear": "साफ़ करें"
   },
   "habits": {
     "title": "लक्ष्य",
@@ -44,9 +46,11 @@
     "invalidTargetMessage": "कृपया एक मान्य संख्या दर्ज करें, या बिना लक्ष्य सेट किए जारी रखें। आप बाद में कभी भी जोड़ सकते हैं।",
     "noTarget": "सेट नहीं",
     "per": "प्रति",
-    "defaultOptionLabel": "एक किताब",
+    "defaultOptionLabel": "नमस्ते 👋",
+    "customizeTooltip": "अपने विकल्पों को अनुकूलित करने के लिए नीचे बाईं ओर संपादन बटन पर टैप करें",
     "targetDisplay": "{{value}}{{unit}} प्रति {{period}}",
     "vsTarget": "vs. {{value}}{{unit}} प्रति {{period}}",
+    "clearTargetConfirm": "इस लक्ष्य का टारगेट हटाएं?",
     "period": {
       "day": "दिन",
       "week": "सप्ताह",
@@ -126,6 +130,7 @@
     "custom": "कस्टम",
     "customName": "इकाई का नाम",
     "customShort": "संक्षिप्त नाम",
+    "unitPlaceholder": "इकाई",
     "categories": {
       "volume": "आयतन",
       "weight": "वज़न",
@@ -147,6 +152,9 @@
     "meters": { "name": "मीटर", "short": "m" },
     "minutes": { "name": "मिनट", "short": "मिनट" },
     "hours": { "name": "घंटे", "short": "घंटा" },
+    "days": { "name": "दिन", "short": "दिन" },
+    "weeks": { "name": "सप्ताह", "short": "सप्त" },
+    "months": { "name": "महीने", "short": "माह" },
     "calories": { "name": "कैलोरी", "short": "cal" },
     "steps": { "name": "कदम", "short": "कदम" },
     "pages": { "name": "पृष्ठ", "short": "पृष्ठ" },

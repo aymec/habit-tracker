@@ -12,7 +12,9 @@
     "clearAll": "Alles wissen",
     "error": "Fout",
     "next": "Volgende",
-    "skip": "Overslaan"
+    "skip": "Overslaan",
+    "none": "Geen",
+    "clear": "Wissen"
   },
   "habits": {
     "title": "Doelen",
@@ -44,9 +46,11 @@
     "invalidTargetMessage": "Voer een geldig getal in of ga door zonder doel. Je kunt er later altijd een toevoegen.",
     "noTarget": "Niet ingesteld",
     "per": "per",
-    "defaultOptionLabel": "Een boek",
+    "defaultOptionLabel": "Hoi 👋",
+    "customizeTooltip": "Tik op de bewerkknop linksonder om je opties aan te passen",
     "targetDisplay": "{{value}}{{unit}} per {{period}}",
     "vsTarget": "vs. {{value}}{{unit}} per {{period}}",
+    "clearTargetConfirm": "Doel voor dit streefdoel verwijderen?",
     "period": {
       "day": "dag",
       "week": "week",
@@ -126,6 +130,7 @@
     "custom": "Aangepast",
     "customName": "Eenheidsnaam",
     "customShort": "Afkorting",
+    "unitPlaceholder": "Eenheid",
     "categories": {
       "volume": "Volume",
       "weight": "Gewicht",
@@ -147,6 +152,9 @@
     "meters": { "name": "meter", "short": "m" },
     "minutes": { "name": "minuten", "short": "min" },
     "hours": { "name": "uren", "short": "u" },
+    "days": { "name": "dagen", "short": "d" },
+    "weeks": { "name": "weken", "short": "wk" },
+    "months": { "name": "maanden", "short": "mnd" },
     "calories": { "name": "calorieën", "short": "cal" },
     "steps": { "name": "stappen", "short": "stappen" },
     "pages": { "name": "pagina's", "short": "pag" },

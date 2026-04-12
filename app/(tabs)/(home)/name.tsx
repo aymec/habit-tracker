@@ -32,7 +32,7 @@ export default function NameScreen() {
       return;
     }
 
-    router.push({
+    router.replace({
       pathname: '/(tabs)/(home)/target',
       params: { name: habitName.trim() }
     });
