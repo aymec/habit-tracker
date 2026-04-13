@@ -9,35 +9,13 @@ import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
-import { TargetPeriod, Entry } from '../../../src/models/types';
+import { Entry } from '../../../src/models/types';
 import { formatNumber, formatNumberWithSign } from '../../../src/utils/format';
+import { calculatePeriodCount } from '../../../src/utils/period';
 import { GlassCard } from '../../../components/ui/glass-card';
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 
 const liquidGlass = isLiquidGlassAvailable();
-
-const getStartOfPeriod = (period: TargetPeriod): Date => {
-  const now = new Date();
-  switch (period) {
-    case 'day':
-      return new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    case 'week':
-      const dayOfWeek = now.getDay();
-      const diff = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Monday as start of week
-      return new Date(now.getFullYear(), now.getMonth(), now.getDate() - diff);
-    case 'month':
-      return new Date(now.getFullYear(), now.getMonth(), 1);
-    case 'year':
-      return new Date(now.getFullYear(), 0, 1);
-  }
-};
-
-const calculatePeriodCount = (entries: Entry[], period: TargetPeriod): number => {
-  const startOfPeriod = getStartOfPeriod(period);
-  return entries
-    .filter(entry => new Date(entry.timestamp) >= startOfPeriod)
-    .reduce((sum, entry) => sum + entry.value, 0);
-};
 
 const formatCount = (count: number): string => {
   return formatNumber(count);
