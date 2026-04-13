@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';
 import Head from 'expo-router/head';
 import { populateTestData } from '../../../src/services/storage';
-import { GlassCard } from '../../../components/ui/glass-card';
 import { CircularProgress } from '../../../components/ui/circular-progress';
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { calculatePeriodCount } from '../../../src/utils/period';
@@ -125,12 +124,17 @@ export default function HomeScreen() {
                   : undefined;
 
                 return (
-                  <GlassCard
+                  <View
                     key={habit.id}
-                    fallbackBackgroundColor={theme.colors.card}
-                    fallbackBorderColor={theme.colors.border}
-                    borderRadius={theme.borderRadius.l}
-                    style={styles.card}
+                    style={[
+                      styles.card,
+                      {
+                        backgroundColor: theme.colors.card,
+                        borderColor: theme.colors.border,
+                        borderWidth: 1,
+                        borderRadius: theme.borderRadius.l,
+                      },
+                    ]}
                   >
                     <TouchableOpacity
                       style={styles.cardContent}
@@ -156,7 +160,7 @@ export default function HomeScreen() {
                         </Text>
                       </CircularProgress>
                     </TouchableOpacity>
-                  </GlassCard>
+                  </View>
                 );
               })}
               {/* Fill remaining space in last row with empty views */}
