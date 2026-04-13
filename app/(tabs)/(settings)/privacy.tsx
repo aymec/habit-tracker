@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
 import { Linking, Platform, StyleSheet, View, Text, ScrollView } from 'react-native';
+import { HeaderBackButton } from '@react-navigation/elements';
 import { useFocusEffect } from '@react-navigation/native';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import Head from 'expo-router/head';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +12,8 @@ const ISSUES_URL = 'https://github.com/aymec/habit-tracker/issues';
 export default function PrivacyPolicyScreen() {
   const { theme } = useTheme();
   const { t } = useTranslation();
+  const router = useRouter();
+  const canGoBack = router.canGoBack();
 
   // Update document title on focus for web (Head component doesn't update on tab switch)
   useFocusEffect(
@@ -36,7 +39,21 @@ export default function PrivacyPolicyScreen() {
           <title>{t('settings.privacyPolicy')} | OnTrack</title>
         </Head>
       )}
-      <Stack.Screen options={{ title: t('settings.privacyPolicy'), headerTitleAlign: 'center' }} />
+      <Stack.Screen
+        options={{
+          title: t('settings.privacyPolicy'),
+          headerTitleAlign: 'center',
+          ...(!canGoBack && {
+            headerLeft: () => (
+              <HeaderBackButton
+                displayMode="minimal"
+                tintColor={theme.colors.text}
+                onPress={() => router.replace('/(tabs)/(settings)' as any)}
+              />
+            ),
+          }),
+        }}
+      />
 
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={[styles.lastUpdated, { color: theme.colors.textSecondary }]}>

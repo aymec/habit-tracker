@@ -40,6 +40,10 @@ function ClassicTabs() {
   const isAtHomeRoot = isInHomeTab && (segments.length === 2 || currentScreen === 'index');
   const isOnNestedHomeScreen = isInHomeTab && segments.length > 2 && currentScreen !== 'index';
 
+  const isInSettingsTab = segments[1] === '(settings)';
+  const settingsScreen = segments[2] as string | undefined;
+  const isOnNestedSettingsScreen = isInSettingsTab && segments.length > 2 && settingsScreen !== 'index';
+
   return (
     <Tabs
       screenOptions={{
@@ -80,6 +84,18 @@ function ClassicTabs() {
         options={{
           title: t('settings.title'),
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="gear" color={color} />,
+        }}
+        listeners={{
+          tabPress: (e) => {
+            if (isOnNestedSettingsScreen) {
+              e.preventDefault();
+              if (router.canGoBack()) {
+                router.dismissAll();
+              } else {
+                router.replace('/(tabs)/(settings)' as any);
+              }
+            }
+          },
         }}
       />
     </Tabs>
