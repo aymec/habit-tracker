@@ -35,7 +35,10 @@ export default function HomeScreen() {
   const { width: windowWidth } = useWindowDimensions();
   const [allEntries, setAllEntries] = useState<Entry[]>([]);
 
-  const numColumns = Math.max(2, Math.floor((windowWidth - GRID_PADDING * 2 + CARD_GAP) / (CARD_MIN_WIDTH + CARD_GAP)));
+  const numColumns = Math.min(
+    Math.max(habits.length, 1),
+    Math.max(2, Math.floor((windowWidth - GRID_PADDING * 2 + CARD_GAP) / (CARD_MIN_WIDTH + CARD_GAP)))
+  );
 
   // Load all entries on focus for period calculations
   useFocusEffect(
