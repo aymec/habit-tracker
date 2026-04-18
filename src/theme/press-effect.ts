@@ -47,6 +47,7 @@ const darkLifted: ViewStyle = {
     },
     android: {
       elevation: 4,
+      shadowColor: '#FFFFFF',
     },
     web: {
       boxShadow: '0px 3px 8px rgba(255, 255, 255, 0.15)',
@@ -65,6 +66,7 @@ const darkPressed: ViewStyle = {
     },
     android: {
       elevation: 1,
+      shadowColor: '#FFFFFF',
     },
     web: {
       boxShadow: '0px 1px 4px rgba(255, 255, 255, 0.08)',
