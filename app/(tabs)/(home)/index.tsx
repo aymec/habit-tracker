@@ -193,7 +193,7 @@ export default function HomeScreen() {
       <View style={[styles.footer, { backgroundColor: theme.colors.background, paddingBottom: liquidGlass ? Math.max(25, insets.bottom + 60) : 25 }]}>
         {habits.length === 0 && (
           <LiftedPressable
-            style={[styles.demoButton, { borderColor: theme.colors.primary }]}
+            style={[styles.demoButton, { borderColor: theme.colors.primary, backgroundColor: 'transparent' }]}
             onPress={handleStartDemo}
           >
             <Text style={[styles.demoButtonText, { color: theme.colors.primary }]}>
