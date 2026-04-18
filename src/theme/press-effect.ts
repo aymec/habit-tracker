@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Platform, ViewStyle } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 
@@ -73,7 +74,11 @@ const darkPressed: ViewStyle = {
 
 export function usePressEffect(): { liftedStyle: ViewStyle; pressedStyle: ViewStyle } {
   const { isDark } = useTheme();
-  return isDark
-    ? { liftedStyle: darkLifted, pressedStyle: darkPressed }
-    : { liftedStyle: lightLifted, pressedStyle: lightPressed };
+  return useMemo(
+    () =>
+      isDark
+        ? { liftedStyle: darkLifted, pressedStyle: darkPressed }
+        : { liftedStyle: lightLifted, pressedStyle: lightPressed },
+    [isDark]
+  );
 }
