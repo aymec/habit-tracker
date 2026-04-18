@@ -151,26 +151,33 @@ export default function GoalScreen() {
         {/* Option Buttons */}
         <View style={styles.optionsContainer}>
           {activeHabitOptions.map((option) => (
-            <GlassCard
+            <Pressable
               key={option.id}
-              glassEffect="clear"
-              fallbackBackgroundColor={theme.colors.card}
-              fallbackBorderColor={theme.colors.border}
-              borderRadius={16}
-              style={styles.optionButtonOuter}
+              onPress={() => handleOptionPress(option)}
             >
-              <TouchableOpacity
-                style={styles.optionButton}
-                onPress={() => handleOptionPress(option)}
-              >
-                <Text style={[styles.optionLabel, { color: theme.colors.text }]}>
-                  {option.label}
-                </Text>
-                <Text style={[styles.optionValue, { color: theme.colors.text }]}>
-                  {formatNumberWithSign(option.value)}
-                </Text>
-              </TouchableOpacity>
-            </GlassCard>
+              {({ pressed }) => (
+                <GlassCard
+                  glassEffect="clear"
+                  fallbackBackgroundColor={theme.colors.card}
+                  fallbackBorderColor={theme.colors.border}
+                  borderRadius={16}
+                  style={[
+                    styles.optionButtonOuter,
+                    liftedStyle,
+                    pressed && pressedStyle,
+                  ]}
+                >
+                  <View style={styles.optionButton}>
+                    <Text style={[styles.optionLabel, { color: theme.colors.text }]}>
+                      {option.label}
+                    </Text>
+                    <Text style={[styles.optionValue, { color: theme.colors.text }]}>
+                      {formatNumberWithSign(option.value)}
+                    </Text>
+                  </View>
+                </GlassCard>
+              )}
+            </Pressable>
           ))}
         </View>
 
@@ -292,20 +299,6 @@ const styles = StyleSheet.create({
   optionButtonOuter: {
     width: 100,
     height: 80,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.1,
-        shadowRadius: 2,
-      },
-      android: {
-        elevation: 2,
-      },
-      web: {
-        boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1)',
-      },
-    }),
   },
   optionButton: {
     flex: 1,
