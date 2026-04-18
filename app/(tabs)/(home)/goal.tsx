@@ -215,19 +215,24 @@ export default function GoalScreen() {
             </GlassCard>
           )}
         </Pressable>
-        <GlassCard
-          glassEffect="regular"
-          fallbackBackgroundColor={theme.colors.card}
-          fallbackBorderColor={theme.colors.border}
-          borderRadius={27}
-        >
-          <TouchableOpacity
-            onPress={() => router.push('/(tabs)/(home)/history')}
-            style={styles.toolbarButton}
-          >
-            <Ionicons name="calendar-number-outline" size={29} color={theme.colors.text} />
-          </TouchableOpacity>
-        </GlassCard>
+        <Pressable onPress={() => router.push('/(tabs)/(home)/history')}>
+          {({ pressed }) => (
+            <GlassCard
+              glassEffect="regular"
+              fallbackBackgroundColor={theme.colors.card}
+              fallbackBorderColor={theme.colors.border}
+              borderRadius={27}
+              style={[
+                styles.toolbarButtonLifted,
+                pressed && styles.toolbarButtonPressed,
+              ]}
+            >
+              <View style={styles.toolbarButton}>
+                <Ionicons name="calendar-number-outline" size={29} color={theme.colors.text} />
+              </View>
+            </GlassCard>
+          )}
+        </Pressable>
       </View>
     </View>
   );
