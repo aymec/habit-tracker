@@ -1,5 +1,5 @@
 import { useCallback, useState, useMemo } from 'react';
-import { View, Text, TouchableOpacity, Pressable, StyleSheet, ScrollView, Platform, Alert, useWindowDimensions } from 'react-native';
+import { View, Text, Pressable, StyleSheet, ScrollView, Platform, Alert, useWindowDimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -11,6 +11,7 @@ import Head from 'expo-router/head';
 import { populateTestData } from '../../../src/services/storage';
 import { CircularProgress } from '../../../components/ui/circular-progress';
 import { GlassCard } from '../../../components/ui/glass-card';
+import { LiftedPressable } from '../../../components/ui/lifted-pressable';
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { calculatePeriodCount } from '../../../src/utils/period';
 import { formatNumber } from '../../../src/utils/format';
@@ -191,21 +192,21 @@ export default function HomeScreen() {
       {/* Fixed Footer */}
       <View style={[styles.footer, { backgroundColor: theme.colors.background, paddingBottom: liquidGlass ? Math.max(25, insets.bottom + 60) : 25 }]}>
         {habits.length === 0 && (
-          <TouchableOpacity
+          <LiftedPressable
             style={[styles.demoButton, { borderColor: theme.colors.primary }]}
             onPress={handleStartDemo}
           >
             <Text style={[styles.demoButtonText, { color: theme.colors.primary }]}>
               {t('habits.startDemo')}
             </Text>
-          </TouchableOpacity>
+          </LiftedPressable>
         )}
-        <TouchableOpacity
+        <LiftedPressable
           style={[styles.addButton, { backgroundColor: theme.colors.primary }]}
           onPress={() => router.push('/(tabs)/(home)/name')}
         >
           <Text style={styles.addButtonText}>{t('habits.newHabit')}</Text>
-        </TouchableOpacity>
+        </LiftedPressable>
       </View>
     </View>
   );
