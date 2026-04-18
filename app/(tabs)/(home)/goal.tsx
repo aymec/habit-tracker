@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
     }),
   },
   toolbarButtonPressed: {
-    transform: [{ translateY: 2 }],
+    transform: [{ translateX: 2 }, { translateY: 2 }],
     ...Platform.select({
       ios: {
         shadowOffset: { width: 0, height: 1 },
