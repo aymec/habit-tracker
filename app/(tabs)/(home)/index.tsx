@@ -20,7 +20,7 @@ import { usePressEffect } from '../../../src/theme/press-effect';
 
 const liquidGlass = isLiquidGlassAvailable();
 
-const CARD_MIN_WIDTH = 200;
+const CARD_MIN_WIDTH = 160;
 const CARD_GAP = 12;
 const GRID_PADDING = 15;
 const RING_SIZE = 90;
@@ -236,7 +236,6 @@ const styles = StyleSheet.create({
   },
   card: {
     flex: 1,
-    minWidth: 200,
   },
   cardContent: {
     alignItems: 'center',
