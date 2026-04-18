@@ -356,7 +356,7 @@ export default function TargetScreen() {
 
         <View style={styles.buttonRow}>
           <LiftedPressable
-            style={[styles.skipButton, { borderColor: theme.colors.border }]}
+            style={[styles.skipButton, { borderColor: theme.colors.border, backgroundColor: 'transparent' }]}
             onPress={handleSkip}
           >
             <Text style={[styles.skipButtonText, { color: theme.colors.text }]}>{t('common.skip')}</Text>
