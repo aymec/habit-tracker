@@ -13,9 +13,9 @@ export function LiftedPressable({ onPress, disabled, style, children }: LiftedPr
   const { liftedStyle, pressedStyle } = usePressEffect();
 
   return (
-    <Pressable onPress={onPress} disabled={disabled}>
+    <Pressable onPress={onPress} disabled={disabled} accessibilityRole="button">
       {({ pressed }) => (
-        <View style={[style, liftedStyle, pressed && pressedStyle]}>
+        <View style={[style, liftedStyle, !disabled && pressed && pressedStyle]}>
           {children}
         </View>
       )}
