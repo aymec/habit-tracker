@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 import { Habit, Option, Entry } from '../models/types';
+import type { PeriodId } from '../utils/analytics';
 
 const STORAGE_KEYS = {
   HABITS: 'habits',
@@ -278,5 +279,37 @@ export const viewAllData = async (): Promise<void> => {
   console.log('Options:', await getOptions());
   console.log('Entries:', await getEntries());
   console.log('----------------------------');
+};
+
+// Analytics prefs
+export interface AnalyticsPrefs {
+  periodId: PeriodId;
+  chartKind: 'line' | 'bar';
+  showPoints: boolean;
+}
+
+const DEFAULT_ANALYTICS_PREFS: AnalyticsPrefs = {
+  periodId: 'past30d',
+  chartKind: 'line',
+  showPoints: true,
+};
+
+const ANALYTICS_PREFS_KEY = 'analytics-prefs-v1';
+
+export const getAnalyticsPrefs = async (): Promise<AnalyticsPrefs> => {
+  try {
+    const saved = await getData<Partial<AnalyticsPrefs>>(ANALYTICS_PREFS_KEY);
+    return { ...DEFAULT_ANALYTICS_PREFS, ...(saved ?? {}) };
+  } catch {
+    return DEFAULT_ANALYTICS_PREFS;
+  }
+};
+
+export const setAnalyticsPrefs = async (prefs: AnalyticsPrefs): Promise<void> => {
+  try {
+    await saveData(ANALYTICS_PREFS_KEY, prefs);
+  } catch {
+    // Best-effort; don't crash UI on persistence failure.
+  }
 };
 
