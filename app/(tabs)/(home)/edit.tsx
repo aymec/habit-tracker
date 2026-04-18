@@ -8,6 +8,7 @@ import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 import { useRouter, Stack } from 'expo-router';
 import Head from 'expo-router/head';
 import { Ionicons } from '@expo/vector-icons';
+import { LiftedPressable } from '../../../components/ui/lifted-pressable';
 import { Option, TargetPeriod, HabitTarget } from '../../../src/models/types';
 import { formatNumber, formatNumberWithSign } from '../../../src/utils/format';
 
@@ -704,13 +705,13 @@ export default function ModalScreen() {
                 </View>
               </View>
             ) : (
-              <TouchableOpacity
-                style={[styles.addOptionButton, { borderColor: theme.colors.border, marginBottom: 15 }]}
+              <LiftedPressable
+                style={[styles.addOptionButton, { borderColor: theme.colors.border, marginBottom: 15, backgroundColor: 'transparent' }]}
                 onPress={startAddOption}
               >
                 <Ionicons name="add" size={20} color={theme.colors.primary} />
                 <Text style={{ color: theme.colors.primary, fontWeight: '600' }}>{t('habits.addOption')}</Text>
-              </TouchableOpacity>
+              </LiftedPressable>
             )}
 
             {/* Options List */}
@@ -771,25 +772,25 @@ export default function ModalScreen() {
         {/* Save Button */}
         {activeHabit && (
           <View style={styles.saveSection}>
-            <TouchableOpacity
+            <LiftedPressable
               style={[styles.saveButton, { backgroundColor: theme.colors.primary }]}
               onPress={() => router.back()}
             >
               <Text style={styles.saveButtonText}>{t('common.save')}</Text>
-            </TouchableOpacity>
+            </LiftedPressable>
           </View>
         )}
 
         {/* Delete Habit Section */}
         {activeHabit && (
           <View style={styles.deleteSection}>
-            <TouchableOpacity
+            <LiftedPressable
               style={[styles.deleteHabitButton, { backgroundColor: theme.colors.danger }]}
               onPress={handleDeleteHabit}
             >
               <Ionicons name="trash-outline" size={20} color="#FFFFFF" />
               <Text style={styles.deleteHabitButtonText}>{t('habits.deleteHabit')}</Text>
-            </TouchableOpacity>
+            </LiftedPressable>
           </View>
         )}
       </ScrollView>
