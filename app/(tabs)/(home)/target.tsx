@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
 import Head from 'expo-router/head';
 import { Ionicons } from '@expo/vector-icons';
+import { LiftedPressable } from '../../../components/ui/lifted-pressable';
 import { TargetPeriod, HabitTarget } from '../../../src/models/types';
 
 const PERIODS: TargetPeriod[] = ['day', 'week', 'month', 'year'];
@@ -354,18 +355,18 @@ export default function TargetScreen() {
         </View>
 
         <View style={styles.buttonRow}>
-          <TouchableOpacity
+          <LiftedPressable
             style={[styles.skipButton, { borderColor: theme.colors.border }]}
             onPress={handleSkip}
           >
             <Text style={[styles.skipButtonText, { color: theme.colors.text }]}>{t('common.skip')}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </LiftedPressable>
+          <LiftedPressable
             style={[styles.nextButton, { backgroundColor: theme.colors.primary }]}
             onPress={handleNext}
           >
             <Text style={styles.nextButtonText}>{t('common.next')}</Text>
-          </TouchableOpacity>
+          </LiftedPressable>
         </View>
       </View>
     </View>

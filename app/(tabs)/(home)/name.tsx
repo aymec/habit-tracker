@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Platform, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Platform, Alert } from 'react-native';
+import { LiftedPressable } from '../../../components/ui/lifted-pressable';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useTranslation } from 'react-i18next';
@@ -76,12 +77,12 @@ export default function NameScreen() {
           />
         </View>
 
-        <TouchableOpacity
+        <LiftedPressable
           style={[styles.nextButton, { backgroundColor: theme.colors.primary }]}
           onPress={handleNext}
         >
           <Text style={styles.nextButtonText}>{t('common.next')}</Text>
-        </TouchableOpacity>
+        </LiftedPressable>
       </View>
     </View>
   );
