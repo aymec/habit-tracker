@@ -211,33 +211,49 @@ export default function GoalScreen() {
               glassEffect="regular"
               fallbackBackgroundColor={theme.colors.card}
               fallbackBorderColor={showTooltip ? theme.colors.primary : theme.colors.border}
-              borderRadius={27}
+              borderRadius={21}
               style={[
                 liftedStyle,
                 pressed && pressedStyle,
                 showTooltip && [styles.editButtonHalo, { shadowColor: theme.colors.primary }],
               ]}
             >
-              <View style={styles.toolbarButton}>
-                <Ionicons name="build-outline" size={29} color={showTooltip ? theme.colors.primary : theme.colors.text} />
+              <View style={styles.toolbarSideButton}>
+                <Ionicons name="build-outline" size={22} color={showTooltip ? theme.colors.primary : theme.colors.text} />
               </View>
             </GlassCard>
           )}
         </Pressable>
+
+        <Pressable onPress={() => router.push('/(tabs)/(home)/analytics')}>
+          {({ pressed }) => (
+            <View
+              style={[
+                styles.analyticsButton,
+                { backgroundColor: theme.colors.primary },
+                styles.analyticsShadow,
+                pressed && pressedStyle,
+              ]}
+            >
+              <Ionicons name="analytics" size={26} color="#FFFFFF" />
+            </View>
+          )}
+        </Pressable>
+
         <Pressable onPress={() => router.push('/(tabs)/(home)/history')}>
           {({ pressed }) => (
             <GlassCard
               glassEffect="regular"
               fallbackBackgroundColor={theme.colors.card}
               fallbackBorderColor={theme.colors.border}
-              borderRadius={27}
+              borderRadius={21}
               style={[
                 liftedStyle,
                 pressed && pressedStyle,
               ]}
             >
-              <View style={styles.toolbarButton}>
-                <Ionicons name="calendar-number-outline" size={29} color={theme.colors.text} />
+              <View style={styles.toolbarSideButton}>
+                <Ionicons name="calendar-number-outline" size={22} color={theme.colors.text} />
               </View>
             </GlassCard>
           )}
@@ -257,13 +273,38 @@ const styles = StyleSheet.create({
     right: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
+    alignItems: 'center',
+    paddingHorizontal: 16,
   },
-  toolbarButton: {
-    width: 53,
-    height: 53,
+  toolbarSideButton: {
+    width: 42,
+    height: 42,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  analyticsButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  analyticsShadow: {
+    ...Platform.select({
+      ios: {
+        shadowColor: '#0A84FF',
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.45,
+        shadowRadius: 18,
+      },
+      android: {
+        elevation: 6,
+        boxShadow: '0px 6px 18px rgba(10,132,255,0.45)',
+      },
+      web: {
+        boxShadow: '0px 6px 18px rgba(10,132,255,0.45)',
+      },
+    }),
   },
   content: {
     flexGrow: 1,

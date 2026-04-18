@@ -159,5 +159,38 @@
     "steps": { "name": "Schritte", "short": "Schritte" },
     "pages": { "name": "Seiten", "short": "Seiten" },
     "reps": { "name": "Wiederholungen", "short": "Wdh" }
+  },
+  "analytics": {
+    "title": "Analyse",
+    "modeTime": "Zeitverlauf",
+    "modeOptions": "Nach Option",
+    "groupBy": "Gruppieren nach",
+    "chart": "Diagramm",
+    "periods": {
+      "thisWeek": "Diese Woche",
+      "past7d": "Letzte 7 T.",
+      "thisMonth": "Dieser Monat",
+      "past30d": "Letzte 30 T.",
+      "thisYear": "Dieses Jahr",
+      "past365d": "Letzte 365 T."
+    },
+    "agg": { "day": "Tag", "week": "Woche", "month": "Monat" },
+    "pointsOn": "Punkte an",
+    "pointsOff": "Punkte aus",
+    "totalSuffix": "gesamt",
+    "avgPerBucket": "{{value}} Ø pro {{bucket}}",
+    "optionsCount": "{{count}} Option",
+    "optionsCount_plural": "{{count}} Optionen",
+    "averages": "Mittelwerte",
+    "perDay": "Pro Tag",
+    "perWeek": "Pro Woche",
+    "perMonth": "Pro Monat",
+    "perYear": "Pro Jahr",
+    "perActiveDay": "Pro aktivem Tag",
+    "activeDaysDetail": "{{active}} von {{span}} Tagen",
+    "targetLabel": "Ziel {{value}} {{unit}}",
+    "empty": "Keine Daten in diesem Bereich",
+    "tipTime": "Berühre das Diagramm für exakte Werte.",
+    "tipOptions": "Zeigt Summen pro Option im gewählten Zeitraum."
   }
 }

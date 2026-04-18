@@ -159,5 +159,38 @@
     "steps": { "name": "pas", "short": "pas" },
     "pages": { "name": "pages", "short": "pages" },
     "reps": { "name": "répétitions", "short": "reps" }
+  },
+  "analytics": {
+    "title": "Analytique",
+    "modeTime": "Dans le temps",
+    "modeOptions": "Par option",
+    "groupBy": "Grouper par",
+    "chart": "Graphique",
+    "periods": {
+      "thisWeek": "Cette semaine",
+      "past7d": "7 derniers j.",
+      "thisMonth": "Ce mois",
+      "past30d": "30 derniers j.",
+      "thisYear": "Cette année",
+      "past365d": "365 derniers j."
+    },
+    "agg": { "day": "Jour", "week": "Semaine", "month": "Mois" },
+    "pointsOn": "Points activés",
+    "pointsOff": "Points désactivés",
+    "totalSuffix": "total",
+    "avgPerBucket": "{{value}} moy. par {{bucket}}",
+    "optionsCount": "{{count}} option",
+    "optionsCount_plural": "{{count}} options",
+    "averages": "Moyennes",
+    "perDay": "Par jour",
+    "perWeek": "Par semaine",
+    "perMonth": "Par mois",
+    "perYear": "Par an",
+    "perActiveDay": "Par jour actif",
+    "activeDaysDetail": "{{active}} sur {{span}} jours",
+    "targetLabel": "objectif {{value}} {{unit}}",
+    "empty": "Aucune donnée dans cette plage",
+    "tipTime": "Touchez le graphique pour voir les valeurs exactes.",
+    "tipOptions": "Totaux de chaque option dans la plage sélectionnée."
   }
 }

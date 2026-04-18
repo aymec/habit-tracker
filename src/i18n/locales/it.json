@@ -159,5 +159,38 @@
     "steps": { "name": "passi", "short": "passi" },
     "pages": { "name": "pagine", "short": "pagine" },
     "reps": { "name": "ripetizioni", "short": "reps" }
+  },
+  "analytics": {
+    "title": "Analisi",
+    "modeTime": "Nel tempo",
+    "modeOptions": "Per opzione",
+    "groupBy": "Raggruppa per",
+    "chart": "Grafico",
+    "periods": {
+      "thisWeek": "Questa settimana",
+      "past7d": "Ultimi 7g",
+      "thisMonth": "Questo mese",
+      "past30d": "Ultimi 30g",
+      "thisYear": "Quest'anno",
+      "past365d": "Ultimi 365g"
+    },
+    "agg": { "day": "Giorno", "week": "Settimana", "month": "Mese" },
+    "pointsOn": "Punti sì",
+    "pointsOff": "Punti no",
+    "totalSuffix": "totale",
+    "avgPerBucket": "{{value}} media per {{bucket}}",
+    "optionsCount": "{{count}} opzione",
+    "optionsCount_plural": "{{count}} opzioni",
+    "averages": "Medie",
+    "perDay": "Al giorno",
+    "perWeek": "Alla settimana",
+    "perMonth": "Al mese",
+    "perYear": "All'anno",
+    "perActiveDay": "Per giorno attivo",
+    "activeDaysDetail": "{{active}} di {{span}} giorni",
+    "targetLabel": "obiettivo {{value}} {{unit}}",
+    "empty": "Nessun dato in questo intervallo",
+    "tipTime": "Tocca il grafico per i valori esatti.",
+    "tipOptions": "Totali per ogni opzione nell'intervallo."
   }
 }

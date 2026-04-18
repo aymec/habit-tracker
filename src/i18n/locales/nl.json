@@ -159,5 +159,38 @@
     "steps": { "name": "stappen", "short": "stappen" },
     "pages": { "name": "pagina's", "short": "pag" },
     "reps": { "name": "herhalingen", "short": "herh" }
+  },
+  "analytics": {
+    "title": "Analyse",
+    "modeTime": "Over tijd",
+    "modeOptions": "Per optie",
+    "groupBy": "Groeperen op",
+    "chart": "Grafiek",
+    "periods": {
+      "thisWeek": "Deze week",
+      "past7d": "Laatste 7 d",
+      "thisMonth": "Deze maand",
+      "past30d": "Laatste 30 d",
+      "thisYear": "Dit jaar",
+      "past365d": "Laatste 365 d"
+    },
+    "agg": { "day": "Dag", "week": "Week", "month": "Maand" },
+    "pointsOn": "Punten aan",
+    "pointsOff": "Punten uit",
+    "totalSuffix": "totaal",
+    "avgPerBucket": "{{value}} gem. per {{bucket}}",
+    "optionsCount": "{{count}} optie",
+    "optionsCount_plural": "{{count}} opties",
+    "averages": "Gemiddelden",
+    "perDay": "Per dag",
+    "perWeek": "Per week",
+    "perMonth": "Per maand",
+    "perYear": "Per jaar",
+    "perActiveDay": "Per actieve dag",
+    "activeDaysDetail": "{{active}} van {{span}} dagen",
+    "targetLabel": "doel {{value}} {{unit}}",
+    "empty": "Geen data in dit bereik",
+    "tipTime": "Raak de grafiek aan voor exacte waarden.",
+    "tipOptions": "Totalen per optie in het gekozen bereik."
   }
 }

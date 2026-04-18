@@ -159,5 +159,38 @@
     "steps": { "name": "passos", "short": "passos" },
     "pages": { "name": "páginas", "short": "págs" },
     "reps": { "name": "repetições", "short": "reps" }
+  },
+  "analytics": {
+    "title": "Análise",
+    "modeTime": "Ao longo do tempo",
+    "modeOptions": "Por opção",
+    "groupBy": "Agrupar por",
+    "chart": "Gráfico",
+    "periods": {
+      "thisWeek": "Esta semana",
+      "past7d": "Últ. 7 d",
+      "thisMonth": "Este mês",
+      "past30d": "Últ. 30 d",
+      "thisYear": "Este ano",
+      "past365d": "Últ. 365 d"
+    },
+    "agg": { "day": "Dia", "week": "Semana", "month": "Mês" },
+    "pointsOn": "Pontos ligados",
+    "pointsOff": "Pontos desligados",
+    "totalSuffix": "total",
+    "avgPerBucket": "{{value}} média por {{bucket}}",
+    "optionsCount": "{{count}} opção",
+    "optionsCount_plural": "{{count}} opções",
+    "averages": "Médias",
+    "perDay": "Por dia",
+    "perWeek": "Por semana",
+    "perMonth": "Por mês",
+    "perYear": "Por ano",
+    "perActiveDay": "Por dia ativo",
+    "activeDaysDetail": "{{active}} de {{span}} dias",
+    "targetLabel": "meta {{value}} {{unit}}",
+    "empty": "Sem dados neste intervalo",
+    "tipTime": "Toque no gráfico para ver valores exatos.",
+    "tipOptions": "Totais por opção no intervalo selecionado."
   }
 }
