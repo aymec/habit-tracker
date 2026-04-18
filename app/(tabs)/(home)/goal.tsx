@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter, Stack } from 'expo-router';
 import Head from 'expo-router/head';
 import { useTranslation } from 'react-i18next';
-import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { Platform, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import { useMemo, useEffect, useCallback, useState, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused, useFocusEffect } from '@react-navigation/native';
@@ -191,23 +191,30 @@ export default function GoalScreen() {
 
       {/* Toolbar */}
       <View style={[styles.toolbar, { bottom: liquidGlass ? Math.max(15, insets.bottom + 60) : 15, pointerEvents: 'box-none' }]}>
-        <GlassCard
-          glassEffect="regular"
-          fallbackBackgroundColor={theme.colors.card}
-          fallbackBorderColor={showTooltip ? theme.colors.primary : theme.colors.border}
-          borderRadius={27}
-          style={showTooltip ? [styles.editButtonHalo, { shadowColor: theme.colors.primary }] : undefined}
+        <Pressable
+          onPress={() => {
+            setShowTooltip(false);
+            router.push({ pathname: '/(tabs)/(home)/edit', params: { mode: 'edit' } });
+          }}
         >
-          <TouchableOpacity
-            onPress={() => {
-              setShowTooltip(false);
-              router.push({ pathname: '/(tabs)/(home)/edit', params: { mode: 'edit' } });
-            }}
-            style={styles.toolbarButton}
-          >
-            <Ionicons name="build-outline" size={29} color={showTooltip ? theme.colors.primary : theme.colors.text} />
-          </TouchableOpacity>
-        </GlassCard>
+          {({ pressed }) => (
+            <GlassCard
+              glassEffect="regular"
+              fallbackBackgroundColor={theme.colors.card}
+              fallbackBorderColor={showTooltip ? theme.colors.primary : theme.colors.border}
+              borderRadius={27}
+              style={[
+                styles.toolbarButtonLifted,
+                pressed && styles.toolbarButtonPressed,
+                showTooltip && [styles.editButtonHalo, { shadowColor: theme.colors.primary }],
+              ]}
+            >
+              <View style={styles.toolbarButton}>
+                <Ionicons name="build-outline" size={29} color={showTooltip ? theme.colors.primary : theme.colors.text} />
+              </View>
+            </GlassCard>
+          )}
+        </Pressable>
         <GlassCard
           glassEffect="regular"
           fallbackBackgroundColor={theme.colors.card}
@@ -243,6 +250,38 @@ const styles = StyleSheet.create({
     height: 53,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  toolbarButtonLifted: {
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.3,
+        shadowRadius: 6,
+      },
+      android: {
+        elevation: 4,
+      },
+      web: {
+        boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.3)',
+      },
+    }),
+  },
+  toolbarButtonPressed: {
+    transform: [{ translateY: 2 }],
+    ...Platform.select({
+      ios: {
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.15,
+        shadowRadius: 3,
+      },
+      android: {
+        elevation: 1,
+      },
+      web: {
+        boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.15)',
+      },
+    }),
   },
   content: {
     flexGrow: 1,
