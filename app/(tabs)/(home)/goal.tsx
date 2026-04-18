@@ -9,6 +9,7 @@ import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
+import { liftedStyle, pressedStyle } from '../../../src/theme/press-effect';
 import { Entry } from '../../../src/models/types';
 import { formatNumber, formatNumberWithSign } from '../../../src/utils/format';
 import { calculatePeriodCount } from '../../../src/utils/period';
@@ -204,8 +205,8 @@ export default function GoalScreen() {
               fallbackBorderColor={showTooltip ? theme.colors.primary : theme.colors.border}
               borderRadius={27}
               style={[
-                styles.toolbarButtonLifted,
-                pressed && styles.toolbarButtonPressed,
+                liftedStyle,
+                pressed && pressedStyle,
                 showTooltip && [styles.editButtonHalo, { shadowColor: theme.colors.primary }],
               ]}
             >
@@ -223,8 +224,8 @@ export default function GoalScreen() {
               fallbackBorderColor={theme.colors.border}
               borderRadius={27}
               style={[
-                styles.toolbarButtonLifted,
-                pressed && styles.toolbarButtonPressed,
+                liftedStyle,
+                pressed && pressedStyle,
               ]}
             >
               <View style={styles.toolbarButton}>
@@ -255,38 +256,6 @@ const styles = StyleSheet.create({
     height: 53,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  toolbarButtonLifted: {
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.3,
-        shadowRadius: 6,
-      },
-      android: {
-        elevation: 4,
-      },
-      web: {
-        boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.3)',
-      },
-    }),
-  },
-  toolbarButtonPressed: {
-    transform: [{ translateX: 2 }, { translateY: 2 }],
-    ...Platform.select({
-      ios: {
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.15,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 1,
-      },
-      web: {
-        boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.15)',
-      },
-    }),
   },
   content: {
     flexGrow: 1,
