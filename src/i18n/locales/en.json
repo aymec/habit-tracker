@@ -159,5 +159,38 @@
     "steps": { "name": "steps", "short": "steps" },
     "pages": { "name": "pages", "short": "pages" },
     "reps": { "name": "reps", "short": "reps" }
+  },
+  "analytics": {
+    "title": "Analytics",
+    "modeTime": "Over time",
+    "modeOptions": "By option",
+    "groupBy": "Group by",
+    "chart": "Chart",
+    "periods": {
+      "thisWeek": "This week",
+      "past7d": "Past 7d",
+      "thisMonth": "This month",
+      "past30d": "Past 30d",
+      "thisYear": "This year",
+      "past365d": "Past 365d"
+    },
+    "agg": { "day": "Day", "week": "Week", "month": "Month" },
+    "pointsOn": "Points on",
+    "pointsOff": "Points off",
+    "totalSuffix": "total",
+    "avgPerBucket": "{{value}} avg per {{bucket}}",
+    "optionsCount": "{{count}} option",
+    "optionsCount_plural": "{{count}} options",
+    "averages": "Averages",
+    "perDay": "Per day",
+    "perWeek": "Per week",
+    "perMonth": "Per month",
+    "perYear": "Per year",
+    "perActiveDay": "Per active day",
+    "activeDaysDetail": "{{active}} of {{span}} days",
+    "targetLabel": "target {{value}} {{unit}}",
+    "empty": "No data in this range",
+    "tipTime": "Touch the chart to see exact values.",
+    "tipOptions": "Shows totals for each option in the selected range."
   }
 }

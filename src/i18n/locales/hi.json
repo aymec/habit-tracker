@@ -159,5 +159,38 @@
     "steps": { "name": "कदम", "short": "कदम" },
     "pages": { "name": "पृष्ठ", "short": "पृष्ठ" },
     "reps": { "name": "दोहराव", "short": "रेप्स" }
+  },
+  "analytics": {
+    "title": "विश्लेषण",
+    "modeTime": "समय के साथ",
+    "modeOptions": "विकल्प से",
+    "groupBy": "समूह",
+    "chart": "चार्ट",
+    "periods": {
+      "thisWeek": "इस सप्ताह",
+      "past7d": "पिछले 7 दिन",
+      "thisMonth": "इस माह",
+      "past30d": "पिछले 30 दिन",
+      "thisYear": "इस वर्ष",
+      "past365d": "पिछले 365 दिन"
+    },
+    "agg": { "day": "दिन", "week": "सप्ताह", "month": "माह" },
+    "pointsOn": "बिंदु चालू",
+    "pointsOff": "बिंदु बंद",
+    "totalSuffix": "कुल",
+    "avgPerBucket": "{{bucket}} औसत {{value}}",
+    "optionsCount": "{{count}} विकल्प",
+    "optionsCount_plural": "{{count}} विकल्प",
+    "averages": "औसत",
+    "perDay": "प्रतिदिन",
+    "perWeek": "प्रति सप्ताह",
+    "perMonth": "प्रति माह",
+    "perYear": "प्रति वर्ष",
+    "perActiveDay": "प्रति सक्रिय दिन",
+    "activeDaysDetail": "{{span}} में से {{active}} दिन",
+    "targetLabel": "लक्ष्य {{value}} {{unit}}",
+    "empty": "इस सीमा में डेटा नहीं है",
+    "tipTime": "सटीक मान के लिए चार्ट स्पर्श करें।",
+    "tipOptions": "चुनी सीमा में प्रत्येक विकल्प के कुल।"
   }
 }

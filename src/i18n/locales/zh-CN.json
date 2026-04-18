@@ -159,5 +159,38 @@
     "steps": { "name": "步", "short": "步" },
     "pages": { "name": "页", "short": "页" },
     "reps": { "name": "次", "short": "次" }
+  },
+  "analytics": {
+    "title": "分析",
+    "modeTime": "时间趋势",
+    "modeOptions": "按选项",
+    "groupBy": "分组依据",
+    "chart": "图表",
+    "periods": {
+      "thisWeek": "本周",
+      "past7d": "过去 7 天",
+      "thisMonth": "本月",
+      "past30d": "过去 30 天",
+      "thisYear": "今年",
+      "past365d": "过去 365 天"
+    },
+    "agg": { "day": "日", "week": "周", "month": "月" },
+    "pointsOn": "显示点",
+    "pointsOff": "隐藏点",
+    "totalSuffix": "合计",
+    "avgPerBucket": "每{{bucket}}平均 {{value}}",
+    "optionsCount": "{{count}} 个选项",
+    "optionsCount_plural": "{{count}} 个选项",
+    "averages": "平均值",
+    "perDay": "每日",
+    "perWeek": "每周",
+    "perMonth": "每月",
+    "perYear": "每年",
+    "perActiveDay": "每个活跃日",
+    "activeDaysDetail": "{{span}} 天中 {{active}} 天",
+    "targetLabel": "目标 {{value}} {{unit}}",
+    "empty": "此范围内无数据",
+    "tipTime": "触摸图表查看精确值",
+    "tipOptions": "所选范围内每个选项的合计"
   }
 }

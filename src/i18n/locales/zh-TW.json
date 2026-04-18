@@ -159,5 +159,38 @@
     "steps": { "name": "步", "short": "步" },
     "pages": { "name": "頁", "short": "頁" },
     "reps": { "name": "次", "short": "次" }
+  },
+  "analytics": {
+    "title": "分析",
+    "modeTime": "時間趨勢",
+    "modeOptions": "依選項",
+    "groupBy": "分組依據",
+    "chart": "圖表",
+    "periods": {
+      "thisWeek": "本週",
+      "past7d": "過去 7 天",
+      "thisMonth": "本月",
+      "past30d": "過去 30 天",
+      "thisYear": "今年",
+      "past365d": "過去 365 天"
+    },
+    "agg": { "day": "日", "week": "週", "month": "月" },
+    "pointsOn": "顯示點",
+    "pointsOff": "隱藏點",
+    "totalSuffix": "合計",
+    "avgPerBucket": "每{{bucket}}平均 {{value}}",
+    "optionsCount": "{{count}} 個選項",
+    "optionsCount_plural": "{{count}} 個選項",
+    "averages": "平均值",
+    "perDay": "每日",
+    "perWeek": "每週",
+    "perMonth": "每月",
+    "perYear": "每年",
+    "perActiveDay": "每個活躍日",
+    "activeDaysDetail": "{{span}} 天中 {{active}} 天",
+    "targetLabel": "目標 {{value}} {{unit}}",
+    "empty": "此範圍內無資料",
+    "tipTime": "觸控圖表以查看精確值",
+    "tipOptions": "所選範圍內每個選項的合計"
   }
 }

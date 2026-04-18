@@ -159,5 +159,38 @@
     "steps": { "name": "歩", "short": "歩" },
     "pages": { "name": "ページ", "short": "頁" },
     "reps": { "name": "回", "short": "回" }
+  },
+  "analytics": {
+    "title": "分析",
+    "modeTime": "時系列",
+    "modeOptions": "オプション別",
+    "groupBy": "グループ化",
+    "chart": "グラフ",
+    "periods": {
+      "thisWeek": "今週",
+      "past7d": "過去7日",
+      "thisMonth": "今月",
+      "past30d": "過去30日",
+      "thisYear": "今年",
+      "past365d": "過去365日"
+    },
+    "agg": { "day": "日", "week": "週", "month": "月" },
+    "pointsOn": "点表示オン",
+    "pointsOff": "点表示オフ",
+    "totalSuffix": "合計",
+    "avgPerBucket": "{{bucket}}あたり平均 {{value}}",
+    "optionsCount": "{{count}} オプション",
+    "optionsCount_plural": "{{count}} オプション",
+    "averages": "平均",
+    "perDay": "1日あたり",
+    "perWeek": "1週あたり",
+    "perMonth": "1ヶ月あたり",
+    "perYear": "1年あたり",
+    "perActiveDay": "アクティブ日あたり",
+    "activeDaysDetail": "{{span}}日中{{active}}日",
+    "targetLabel": "目標 {{value}} {{unit}}",
+    "empty": "この範囲のデータがありません",
+    "tipTime": "グラフをタッチして正確な値を表示",
+    "tipOptions": "選択範囲での各オプションの合計"
   }
 }

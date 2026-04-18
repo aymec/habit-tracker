@@ -159,5 +159,38 @@
     "steps": { "name": "шаги", "short": "шаг" },
     "pages": { "name": "страницы", "short": "стр" },
     "reps": { "name": "повторения", "short": "повт" }
+  },
+  "analytics": {
+    "title": "Аналитика",
+    "modeTime": "По времени",
+    "modeOptions": "По опции",
+    "groupBy": "Группировать",
+    "chart": "График",
+    "periods": {
+      "thisWeek": "Эта неделя",
+      "past7d": "За 7 д",
+      "thisMonth": "Этот месяц",
+      "past30d": "За 30 д",
+      "thisYear": "Этот год",
+      "past365d": "За 365 д"
+    },
+    "agg": { "day": "День", "week": "Неделя", "month": "Месяц" },
+    "pointsOn": "Точки вкл",
+    "pointsOff": "Точки выкл",
+    "totalSuffix": "всего",
+    "avgPerBucket": "{{value}} сред. за {{bucket}}",
+    "optionsCount": "{{count}} опция",
+    "optionsCount_plural": "{{count}} опций",
+    "averages": "Средние",
+    "perDay": "В день",
+    "perWeek": "В неделю",
+    "perMonth": "В месяц",
+    "perYear": "В год",
+    "perActiveDay": "За активный день",
+    "activeDaysDetail": "{{active}} из {{span}} дн.",
+    "targetLabel": "цель {{value}} {{unit}}",
+    "empty": "Нет данных в этом диапазоне",
+    "tipTime": "Коснитесь графика для точных значений.",
+    "tipOptions": "Итоги по каждой опции в выбранном диапазоне."
   }
 }
