@@ -10,6 +10,7 @@ import { useRouter } from 'expo-router';
 import Head from 'expo-router/head';
 import { populateTestData } from '../../../src/services/storage';
 import { CircularProgress } from '../../../components/ui/circular-progress';
+import { GlassCard } from '../../../components/ui/glass-card';
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { calculatePeriodCount } from '../../../src/utils/period';
 import { formatNumber } from '../../../src/utils/format';
@@ -134,37 +135,40 @@ export default function HomeScreen() {
                       <View
                         style={[
                           styles.card,
-                          {
-                            backgroundColor: theme.colors.card,
-                            borderColor: theme.colors.border,
-                            borderWidth: 1,
-                            borderRadius: theme.borderRadius.l,
-                          },
+                          { borderRadius: theme.borderRadius.l },
                           liftedStyle,
                           pressed && pressedStyle,
                         ]}
                       >
-                        <View style={styles.cardContent}>
-                          <Text
-                            style={[styles.cardName, { color: theme.colors.text }]}
-                            numberOfLines={2}
-                          >
-                            {habit.name}
-                          </Text>
-                          <CircularProgress
-                            size={RING_SIZE}
-                            strokeWidth={RING_STROKE}
-                            progress={progress}
-                            color={theme.colors.primary}
-                            trackColor={theme.colors.border}
-                          >
-                            <Text style={[styles.ringText, { color: theme.colors.text }]}>
-                              {hasTarget
-                                ? `${formatNumber(periodCount)} / ${formatNumber(habit.target!.value)}`
-                                : formatNumber(periodCount)}
+                        <GlassCard
+                          glassEffect="clear"
+                          fallbackBackgroundColor={theme.colors.card}
+                          fallbackBorderColor={theme.colors.border}
+                          borderRadius={theme.borderRadius.l}
+                          style={styles.card}
+                        >
+                          <View style={styles.cardContent}>
+                            <Text
+                              style={[styles.cardName, { color: theme.colors.text }]}
+                              numberOfLines={2}
+                            >
+                              {habit.name}
                             </Text>
-                          </CircularProgress>
-                        </View>
+                            <CircularProgress
+                              size={RING_SIZE}
+                              strokeWidth={RING_STROKE}
+                              progress={progress}
+                              color={theme.colors.primary}
+                              trackColor={theme.colors.border}
+                            >
+                              <Text style={[styles.ringText, { color: theme.colors.text }]}>
+                                {hasTarget
+                                  ? `${formatNumber(periodCount)} / ${formatNumber(habit.target!.value)}`
+                                  : formatNumber(periodCount)}
+                              </Text>
+                            </CircularProgress>
+                          </View>
+                        </GlassCard>
                       </View>
                     )}
                   </Pressable>
