@@ -31,14 +31,14 @@ export const darkTheme = {
   colors: {
     primary: '#0A84FF',
     background: '#000000',
-    card: '#1C1C1E',
+    card: '#0E0E10',
     text: '#FFFFFF',
     border: '#38383A',
     notification: '#FF453A',
     textSecondary: '#8E8E93',
     success: '#32D74B',
     danger: '#FF453A',
-    tabBar: '#1C1C1E', // Same as card in dark mode
+    tabBar: '#1C1C1E',
     header: '#121212', // Matches React Navigation DarkTheme card
   },
   spacing: {
