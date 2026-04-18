@@ -135,7 +135,7 @@ export default function HomeScreen() {
                       <View
                         style={[
                           styles.card,
-                          { borderRadius: theme.borderRadius.l },
+                          { borderRadius: theme.borderRadius.l, backgroundColor: 'transparent' },
                           liftedStyle,
                           pressed && pressedStyle,
                         ]}
