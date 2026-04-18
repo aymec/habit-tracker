@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Pressable, StyleProp, View, ViewStyle } from 'react-native';
+import { Pressable, StyleProp, ViewStyle } from 'react-native';
 import { usePressEffect } from '../../src/theme/press-effect';
 
 interface LiftedPressableProps {
@@ -13,12 +13,13 @@ export function LiftedPressable({ onPress, disabled, style, children }: LiftedPr
   const { liftedStyle, pressedStyle } = usePressEffect();
 
   return (
-    <Pressable onPress={onPress} disabled={disabled} accessibilityRole="button">
-      {({ pressed }) => (
-        <View style={[style, liftedStyle, !disabled && pressed && pressedStyle]}>
-          {children}
-        </View>
-      )}
+    <Pressable
+      onPress={onPress}
+      disabled={disabled}
+      accessibilityRole="button"
+      style={({ pressed }) => [style, liftedStyle, !disabled && pressed && pressedStyle]}
+    >
+      {children}
     </Pressable>
   );
 }
