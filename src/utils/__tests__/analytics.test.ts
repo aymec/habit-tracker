@@ -133,4 +133,8 @@ describe('fmt', () => {
   it('fixes to 1 digit below 100', () => {
     expect(fmt(12.345)).toBe('12.3');
   });
+
+  it('rounds up to 100 without a fractional digit', () => {
+    expect(fmt(99.95)).toBe('100');
+  });
 });

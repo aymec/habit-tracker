@@ -211,7 +211,7 @@ export function computeAverages(entries: Entry[]): Averages {
   const first = new Date(dates[0]);
   const last = new Date(dates[dates.length - 1]);
   const total = entries.reduce((a, e) => a + e.value, 0);
-  const spanDays = Math.max(1, (atStartOfDay(last).getTime() - atStartOfDay(first).getTime()) / DAY_MS + 1);
+  const spanDays = Math.max(1, Math.round((atStartOfDay(last).getTime() - atStartOfDay(first).getTime()) / DAY_MS) + 1);
   const daySet = new Set(entries.map((e) => atStartOfDay(new Date(e.timestamp)).toISOString()));
   return {
     day: total / spanDays,
@@ -228,5 +228,7 @@ export function computeAverages(entries: Entry[]): Averages {
 export function fmt(n: number, digits: number = 1): string {
   if (!isFinite(n)) return '—';
   if (n >= 100) return n.toFixed(0);
-  return n.toFixed(digits);
+  const formatted = n.toFixed(digits);
+  if (formatted.startsWith('100')) return n.toFixed(0);
+  return formatted;
 }
