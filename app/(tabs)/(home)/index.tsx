@@ -16,7 +16,7 @@ import { calculatePeriodCount } from '../../../src/utils/period';
 import { formatNumber } from '../../../src/utils/format';
 import { Entry } from '../../../src/models/types';
 import * as Storage from '../../../src/services/storage';
-import { liftedStyle, pressedStyle } from '../../../src/theme/press-effect';
+import { usePressEffect } from '../../../src/theme/press-effect';
 
 const liquidGlass = isLiquidGlassAvailable();
 
@@ -29,6 +29,7 @@ const RING_STROKE = 7;
 export default function HomeScreen() {
   const { habits, selectHabit, loadHabits } = useHabit();
   const { theme } = useTheme();
+  const { liftedStyle, pressedStyle } = usePressEffect();
   const { t } = useTranslation();
   const router = useRouter();
   const insets = useSafeAreaInsets();

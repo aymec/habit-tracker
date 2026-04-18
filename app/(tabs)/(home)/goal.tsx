@@ -9,7 +9,7 @@ import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
-import { liftedStyle, pressedStyle } from '../../../src/theme/press-effect';
+import { usePressEffect } from '../../../src/theme/press-effect';
 import { Entry } from '../../../src/models/types';
 import { formatNumber, formatNumberWithSign } from '../../../src/utils/format';
 import { calculatePeriodCount } from '../../../src/utils/period';
@@ -30,6 +30,7 @@ const CHAR_WIDTH_RATIO = 0.6;
 export default function GoalScreen() {
   const { activeHabit, activeHabitOptions, activeHabitEntries, logEntry, habits } = useHabit();
   const { theme } = useTheme();
+  const { liftedStyle, pressedStyle } = usePressEffect();
   const { t } = useTranslation();
   const router = useRouter();
   const isFocused = useIsFocused();
