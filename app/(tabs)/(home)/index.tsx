@@ -133,7 +133,7 @@ export default function HomeScreen() {
                     {({ pressed }) => (
                       <View
                         style={[
-                          styles.cardInner,
+                          styles.card,
                           {
                             backgroundColor: theme.colors.card,
                             borderColor: theme.colors.border,
@@ -227,9 +227,6 @@ const styles = StyleSheet.create({
     marginBottom: CARD_GAP,
   },
   card: {
-    flex: 1,
-  },
-  cardInner: {
     flex: 1,
   },
   cardContent: {
