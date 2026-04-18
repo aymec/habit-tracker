@@ -1,6 +1,6 @@
-import { Platform } from 'react-native';
+import { Platform, ViewStyle } from 'react-native';
 
-export const liftedStyle = {
+export const liftedStyle: ViewStyle = {
   ...Platform.select({
     ios: {
       shadowColor: '#000',
@@ -17,10 +17,11 @@ export const liftedStyle = {
   }),
 };
 
-export const pressedStyle = {
+export const pressedStyle: ViewStyle = {
   transform: [{ translateX: 2 }, { translateY: 2 }],
   ...Platform.select({
     ios: {
+      shadowColor: '#000',
       shadowOffset: { width: 0, height: 1 },
       shadowOpacity: 0.15,
       shadowRadius: 3,
