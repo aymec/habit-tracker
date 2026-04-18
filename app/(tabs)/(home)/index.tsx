@@ -1,5 +1,5 @@
 import { useCallback, useState, useMemo } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Platform, Alert, useWindowDimensions } from 'react-native';
+import { View, Text, TouchableOpacity, Pressable, StyleSheet, ScrollView, Platform, Alert, useWindowDimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -15,6 +15,7 @@ import { calculatePeriodCount } from '../../../src/utils/period';
 import { formatNumber } from '../../../src/utils/format';
 import { Entry } from '../../../src/models/types';
 import * as Storage from '../../../src/services/storage';
+import { liftedStyle, pressedStyle } from '../../../src/theme/press-effect';
 
 const liquidGlass = isLiquidGlassAvailable();
 
@@ -124,43 +125,49 @@ export default function HomeScreen() {
                   : undefined;
 
                 return (
-                  <View
+                  <Pressable
                     key={habit.id}
-                    style={[
-                      styles.card,
-                      {
-                        backgroundColor: theme.colors.card,
-                        borderColor: theme.colors.border,
-                        borderWidth: 1,
-                        borderRadius: theme.borderRadius.l,
-                      },
-                    ]}
+                    style={styles.card}
+                    onPress={() => handleGoalPress(habit.id)}
                   >
-                    <TouchableOpacity
-                      style={styles.cardContent}
-                      onPress={() => handleGoalPress(habit.id)}
-                    >
-                      <Text
-                        style={[styles.cardName, { color: theme.colors.text }]}
-                        numberOfLines={2}
+                    {({ pressed }) => (
+                      <View
+                        style={[
+                          styles.cardInner,
+                          {
+                            backgroundColor: theme.colors.card,
+                            borderColor: theme.colors.border,
+                            borderWidth: 1,
+                            borderRadius: theme.borderRadius.l,
+                          },
+                          liftedStyle,
+                          pressed && pressedStyle,
+                        ]}
                       >
-                        {habit.name}
-                      </Text>
-                      <CircularProgress
-                        size={RING_SIZE}
-                        strokeWidth={RING_STROKE}
-                        progress={progress}
-                        color={theme.colors.primary}
-                        trackColor={theme.colors.border}
-                      >
-                        <Text style={[styles.ringText, { color: theme.colors.text }]}>
-                          {hasTarget
-                            ? `${formatNumber(periodCount)} / ${formatNumber(habit.target!.value)}`
-                            : formatNumber(periodCount)}
-                        </Text>
-                      </CircularProgress>
-                    </TouchableOpacity>
-                  </View>
+                        <View style={styles.cardContent}>
+                          <Text
+                            style={[styles.cardName, { color: theme.colors.text }]}
+                            numberOfLines={2}
+                          >
+                            {habit.name}
+                          </Text>
+                          <CircularProgress
+                            size={RING_SIZE}
+                            strokeWidth={RING_STROKE}
+                            progress={progress}
+                            color={theme.colors.primary}
+                            trackColor={theme.colors.border}
+                          >
+                            <Text style={[styles.ringText, { color: theme.colors.text }]}>
+                              {hasTarget
+                                ? `${formatNumber(periodCount)} / ${formatNumber(habit.target!.value)}`
+                                : formatNumber(periodCount)}
+                            </Text>
+                          </CircularProgress>
+                        </View>
+                      </View>
+                    )}
+                  </Pressable>
                 );
               })}
               {/* Fill remaining space in last row with empty views */}
@@ -220,6 +227,9 @@ const styles = StyleSheet.create({
     marginBottom: CARD_GAP,
   },
   card: {
+    flex: 1,
+  },
+  cardInner: {
     flex: 1,
   },
   cardContent: {
