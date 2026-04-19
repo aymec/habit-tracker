@@ -125,15 +125,22 @@ export function Chart({
     }
   };
 
+  // PanResponder is created once via useRef, so its handlers close over the
+  // first-render handleMoveToX (which in turn closes over the first-render n).
+  // Route every call through this ref so the handler always sees the latest n
+  // after the user changes period or group-by.
+  const handleMoveToXRef = useRef(handleMoveToX);
+  handleMoveToXRef.current = handleMoveToX;
+
   const responder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
       onPanResponderGrant: (e) => {
         const { pageX } = e.nativeEvent;
-        measureChart(() => handleMoveToX(pageX));
+        measureChart(() => handleMoveToXRef.current(pageX));
       },
-      onPanResponderMove: (e) => handleMoveToX(e.nativeEvent.pageX),
+      onPanResponderMove: (e) => handleMoveToXRef.current(e.nativeEvent.pageX),
       onPanResponderRelease: () => {
         hoverRef.current = null;
         setHover(null);
