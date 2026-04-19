@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import type { OptionBucket } from '../../src/utils/analytics';
+import { useTheme } from '../../src/context/ThemeContext';
 
 interface OptionBarsProps {
   data: OptionBucket[];
@@ -14,6 +15,10 @@ const LEFT_GUTTER = 36;
 const BAR_RADIUS = 8;
 
 export function OptionBars({ data, color = '#0A84FF', yUnit = '' }: OptionBarsProps) {
+  const { isDark } = useTheme();
+  const trackBg = isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.05)';
+  const labelColor = '#FFFFFF';
+
   const max = Math.max(1, ...data.map((d) => d.value));
   const sorted = [...data].sort((a, b) => b.value - a.value);
 
@@ -27,7 +32,7 @@ export function OptionBars({ data, color = '#0A84FF', yUnit = '' }: OptionBarsPr
               <Text style={styles.emoji}>{d.label}</Text>
             </View>
             <View style={styles.trackWrap}>
-              <View style={styles.track}>
+              <View style={[styles.track, { backgroundColor: trackBg }]}>
                 <View style={[styles.barWrap, { width: `${pct}%` }]}>
                   <Svg width="100%" height={ROW_HEIGHT}>
                     <Defs>
@@ -40,8 +45,12 @@ export function OptionBars({ data, color = '#0A84FF', yUnit = '' }: OptionBarsPr
                   </Svg>
                 </View>
                 <View style={styles.labelsOverlay} pointerEvents="none">
-                  <Text style={styles.count}>{d.count > 0 ? `${d.count}×` : ''}</Text>
-                  <Text style={styles.value}>{d.value}{yUnit ? ` ${yUnit}` : ''}</Text>
+                  <Text style={[styles.count, { color: labelColor }]}>
+                    {d.count > 0 ? `${d.count}×` : ''}
+                  </Text>
+                  <Text style={[styles.value, { color: labelColor }]}>
+                    {d.value}{yUnit ? ` ${yUnit}` : ''}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -77,7 +86,6 @@ const styles = StyleSheet.create({
   track: {
     height: ROW_HEIGHT,
     borderRadius: BAR_RADIUS,
-    backgroundColor: 'rgba(255,255,255,0.04)',
     overflow: 'hidden',
     position: 'relative',
   },
@@ -101,13 +109,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   count: {
-    color: '#fff',
     fontSize: 13,
     fontWeight: '600',
     opacity: 0.9,
   },
   value: {
-    color: '#fff',
     fontSize: 13,
     fontWeight: '600',
   },

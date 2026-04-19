@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { fmt } from '../../src/utils/analytics';
+import { useTheme } from '../../src/context/ThemeContext';
 
 export interface AveragesRowData {
   label: string;
@@ -13,17 +14,26 @@ interface AveragesCardProps {
 }
 
 export function AveragesCard({ rows, unit }: AveragesCardProps) {
+  const { isDark, theme } = useTheme();
+  const cardBg = isDark ? '#1C1C1E' : '#FFFFFF';
+  const labelColor = theme.colors.text;
+  const subColor = isDark ? 'rgba(235,235,245,0.6)' : 'rgba(60,60,67,0.6)';
+  const dividerColor = isDark ? 'rgba(84,84,88,0.35)' : 'rgba(60,60,67,0.18)';
+
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, { backgroundColor: cardBg }]}>
       {rows.map((r, i) => (
-        <View key={r.label} style={[styles.row, i > 0 && styles.rowDivider]}>
+        <View
+          key={r.label}
+          style={[styles.row, i > 0 && { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: dividerColor }]}
+        >
           <View style={styles.left}>
-            <Text style={styles.label}>{r.label}</Text>
-            {r.sub ? <Text style={styles.sub}>{r.sub}</Text> : null}
+            <Text style={[styles.label, { color: labelColor }]}>{r.label}</Text>
+            {r.sub ? <Text style={[styles.sub, { color: subColor }]}>{r.sub}</Text> : null}
           </View>
           <View style={styles.right}>
-            <Text style={styles.value}>{fmt(r.value)}</Text>
-            {unit ? <Text style={styles.unit}>{unit}</Text> : null}
+            <Text style={[styles.value, { color: labelColor }]}>{fmt(r.value)}</Text>
+            {unit ? <Text style={[styles.unit, { color: subColor }]}>{unit}</Text> : null}
           </View>
         </View>
       ))}
@@ -33,7 +43,6 @@ export function AveragesCard({ rows, unit }: AveragesCardProps) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#1C1C1E',
     borderRadius: 16,
   },
   row: {
@@ -43,20 +52,14 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 16,
   },
-  rowDivider: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: 'rgba(84,84,88,0.35)',
-  },
   left: {
     flex: 1,
   },
   label: {
-    color: '#fff',
     fontSize: 15,
     fontWeight: '500',
   },
   sub: {
-    color: 'rgba(235,235,245,0.6)',
     fontSize: 11,
     marginTop: 1,
   },
@@ -65,13 +68,11 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
   },
   value: {
-    color: '#fff',
     fontSize: 17,
     fontWeight: '600',
     fontVariant: ['tabular-nums'],
   },
   unit: {
-    color: 'rgba(235,235,245,0.6)',
     fontSize: 15,
     fontWeight: '500',
     marginLeft: 3,

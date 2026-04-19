@@ -1,5 +1,6 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { PeriodId } from '../../src/utils/analytics';
+import { useTheme } from '../../src/context/ThemeContext';
 
 export interface PeriodChipItem {
   id: PeriodId;
@@ -13,6 +14,10 @@ interface PeriodChipsProps {
 }
 
 export function PeriodChips({ items, activeId, onSelect }: PeriodChipsProps) {
+  const { isDark, theme } = useTheme();
+  const inactiveBg = isDark ? 'rgba(118,118,128,0.24)' : 'rgba(120,120,128,0.16)';
+  const inactiveText = isDark ? '#FFFFFF' : '#000000';
+
   return (
     <ScrollView
       horizontal
@@ -26,9 +31,19 @@ export function PeriodChips({ items, activeId, onSelect }: PeriodChipsProps) {
             key={it.id}
             accessibilityRole="button"
             onPress={() => onSelect(it.id)}
-            style={[styles.chip, active && styles.chipActive]}
+            style={[
+              styles.chip,
+              { backgroundColor: active ? theme.colors.primary : inactiveBg },
+            ]}
           >
-            <Text style={[styles.text, active && styles.textActive]} numberOfLines={1}>
+            <Text
+              style={[
+                styles.text,
+                { color: active ? '#FFFFFF' : inactiveText },
+                active && styles.textActive,
+              ]}
+              numberOfLines={1}
+            >
               {it.label}
             </Text>
           </Pressable>
@@ -49,13 +64,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 7,
     borderRadius: 999,
-    backgroundColor: 'rgba(118,118,128,0.24)',
-  },
-  chipActive: {
-    backgroundColor: '#0A84FF',
   },
   text: {
-    color: '#fff',
     fontSize: 13,
     fontWeight: '500',
     letterSpacing: -0.08,

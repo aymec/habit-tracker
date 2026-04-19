@@ -3,6 +3,7 @@ import { PanResponder, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, Defs, G, Line, LinearGradient, Path, Rect, Stop, Text as SvgText } from 'react-native-svg';
 import * as Haptics from 'expo-haptics';
 import type { TimeBucket } from '../../src/utils/analytics';
+import { useTheme } from '../../src/context/ThemeContext';
 
 export type ChartKind = 'line' | 'bar';
 
@@ -46,6 +47,18 @@ export function Chart({
   yUnit = '',
   emptyLabel = 'No data in this range',
 }: ChartProps) {
+  const { isDark } = useTheme();
+  const gridColor = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)';
+  const axisLabelColor = isDark ? 'rgba(235,235,245,0.4)' : 'rgba(60,60,67,0.5)';
+  const xLabelColor = isDark ? 'rgba(235,235,245,0.55)' : 'rgba(60,60,67,0.6)';
+  const hoverLineColor = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
+  const pointStroke = isDark ? '#000' : '#FFF';
+  const emptyTextColor = isDark ? '#8E8E93' : '#6C6C70';
+  const tooltipBg = isDark ? 'rgba(40,40,42,0.96)' : 'rgba(255,255,255,0.98)';
+  const tooltipBorder = isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)';
+  const tooltipEyebrowColor = isDark ? 'rgba(235,235,245,0.6)' : 'rgba(60,60,67,0.6)';
+  const tooltipValueColor = isDark ? '#FFFFFF' : '#000000';
+
   const [hover, setHover] = useState<number | null>(null);
   const hoverRef = useRef<number | null>(null);
   const layoutRef = useRef<{ x: number; width: number }>({ x: 0, width: 0 });
@@ -124,7 +137,7 @@ export function Chart({
   if (!n) {
     return (
       <View style={[styles.empty, { height }]}>
-        <Text style={styles.emptyText}>{emptyLabel}</Text>
+        <Text style={[styles.emptyText, { color: emptyTextColor }]}>{emptyLabel}</Text>
       </View>
     );
   }
@@ -157,14 +170,14 @@ export function Chart({
               x2={VIEWBOX_WIDTH - PAD_RIGHT}
               y1={yFor(t)}
               y2={yFor(t)}
-              stroke="rgba(255,255,255,0.07)"
+              stroke={gridColor}
               strokeWidth="1"
               strokeDasharray={i === 0 ? undefined : '2 3'}
             />
             <SvgText
               x={PAD_LEFT - 6}
               y={yFor(t) + 3}
-              fill="rgba(235,235,245,0.4)"
+              fill={axisLabelColor}
               fontSize="10"
               textAnchor="end"
             >
@@ -210,7 +223,7 @@ export function Chart({
                     cy={yFor(d.value)}
                     r={hover === i ? 4.5 : 2.8}
                     fill={color}
-                    stroke="#000"
+                    stroke={pointStroke}
                     strokeWidth={hover === i ? 2 : 0}
                   />
                 ))
@@ -244,7 +257,7 @@ export function Chart({
               key={`xl-${i}`}
               x={xFor(i)}
               y={height - 10}
-              fill="rgba(235,235,245,0.55)"
+              fill={xLabelColor}
               fontSize="10"
               textAnchor="middle"
             >
@@ -259,7 +272,7 @@ export function Chart({
             x2={hoverX}
             y1={PAD_TOP}
             y2={PAD_TOP + h}
-            stroke="rgba(255,255,255,0.2)"
+            stroke={hoverLineColor}
             strokeWidth="1"
           />
         ) : null}
@@ -268,10 +281,15 @@ export function Chart({
       {hoverD ? (
         <View
           pointerEvents="none"
-          style={[styles.tooltip, { left: `${tooltipPct}%` }]}
+          style={[
+            styles.tooltip,
+            { left: `${tooltipPct}%`, backgroundColor: tooltipBg, borderColor: tooltipBorder },
+          ]}
         >
-          <Text style={styles.tooltipEyebrow}>{hoverD.fullLabel || hoverD.label}</Text>
-          <Text style={styles.tooltipValue}>
+          <Text style={[styles.tooltipEyebrow, { color: tooltipEyebrowColor }]}>
+            {hoverD.fullLabel || hoverD.label}
+          </Text>
+          <Text style={[styles.tooltipValue, { color: tooltipValueColor }]}>
             {hoverD.value}{yUnit ? ` ${yUnit}` : ''}
           </Text>
         </View>
@@ -286,29 +304,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   emptyText: {
-    color: '#8E8E93',
     fontSize: 14,
   },
   tooltip: {
     position: 'absolute',
     top: 4,
-    backgroundColor: 'rgba(40,40,42,0.96)',
     borderRadius: 10,
     paddingVertical: 6,
     paddingHorizontal: 10,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(255,255,255,0.12)',
     minWidth: 78,
   },
   tooltipEyebrow: {
-    color: 'rgba(235,235,245,0.6)',
     fontSize: 10,
     letterSpacing: 0.3,
     textTransform: 'uppercase',
     fontWeight: '600',
   },
   tooltipValue: {
-    color: '#fff',
     fontSize: 16,
     fontWeight: '600',
     marginTop: 1,

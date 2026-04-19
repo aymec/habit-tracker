@@ -28,7 +28,7 @@ import {
 type Mode = 'time' | 'options';
 type ChartKind = 'line' | 'bar';
 
-function LineIcon({ size = 16, color = '#fff' }: { size?: number; color?: string }) {
+function LineIcon({ size = 16, color }: { size?: number; color: string }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <Path d="M3 17l5-6 4 3 7-9" stroke={color} strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
@@ -36,7 +36,7 @@ function LineIcon({ size = 16, color = '#fff' }: { size?: number; color?: string
   );
 }
 
-function BarIcon({ size = 16, color = '#fff' }: { size?: number; color?: string }) {
+function BarIcon({ size = 16, color }: { size?: number; color: string }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <Path d="M4 21V12M11 21V7M18 21V3" stroke={color} strokeWidth={2.2} strokeLinecap="round" />
@@ -47,8 +47,17 @@ function BarIcon({ size = 16, color = '#fff' }: { size?: number; color?: string 
 export default function AnalyticsScreen() {
   const router = useRouter();
   const { t } = useTranslation();
-  const { theme } = useTheme();
+  const { theme, isDark } = useTheme();
   const { activeHabit, activeHabitEntries, activeHabitOptions, habits } = useHabit();
+
+  const cardBg = isDark ? '#1C1C1E' : '#FFFFFF';
+  const eyebrowColor = isDark ? 'rgba(235,235,245,0.6)' : 'rgba(60,60,67,0.6)';
+  const subtleTextColor = isDark ? 'rgba(235,235,245,0.6)' : 'rgba(60,60,67,0.6)';
+  const tipColor = isDark ? 'rgba(235,235,245,0.3)' : 'rgba(60,60,67,0.45)';
+  const pointsActiveBg = isDark ? 'rgba(10,132,255,0.18)' : 'rgba(0,122,255,0.12)';
+  const pointsInactiveBg = isDark ? 'rgba(118,118,128,0.18)' : 'rgba(120,120,128,0.16)';
+  const pointsInactiveColor = isDark ? 'rgba(235,235,245,0.6)' : 'rgba(60,60,67,0.6)';
+  const iconColor = isDark ? '#FFFFFF' : '#000000';
 
   const [mode, setMode] = useState<Mode>('time');
   const [periodId, setPeriodIdState] = useState<PeriodId>('past30d');
@@ -169,7 +178,7 @@ export default function AnalyticsScreen() {
           {mode === 'time' && (
             <View style={styles.aggRow}>
               <View style={{ flex: 1 }}>
-                <Text style={styles.eyebrow}>{t('analytics.groupBy')}</Text>
+                <Text style={[styles.eyebrow, { color: eyebrowColor }]}>{t('analytics.groupBy')}</Text>
                 <Segmented
                   options={[
                     { value: 'day', label: t('analytics.agg.day') },
@@ -181,11 +190,11 @@ export default function AnalyticsScreen() {
                 />
               </View>
               <View style={{ width: 108 }}>
-                <Text style={styles.eyebrow}>{t('analytics.chart')}</Text>
+                <Text style={[styles.eyebrow, { color: eyebrowColor }]}>{t('analytics.chart')}</Text>
                 <Segmented
                   options={[
-                    { value: 'line', label: <LineIcon /> },
-                    { value: 'bar', label: <BarIcon /> },
+                    { value: 'line', label: <LineIcon color={iconColor} /> },
+                    { value: 'bar', label: <BarIcon color={iconColor} /> },
                   ]}
                   value={chartKind}
                   onChange={(v) => setChartKind(v as ChartKind)}
@@ -195,15 +204,17 @@ export default function AnalyticsScreen() {
           )}
         </View>
 
-        <View style={styles.card}>
+        <View style={[styles.card, { backgroundColor: cardBg }]}>
           <View style={styles.cardHeader}>
             <View style={{ flex: 1 }}>
-              <Text style={styles.cardEyebrow}>{`${periodLabel.toUpperCase()} ${t('analytics.totalSuffix').toUpperCase()}`}</Text>
+              <Text style={[styles.cardEyebrow, { color: eyebrowColor }]}>
+                {`${periodLabel.toUpperCase()} ${t('analytics.totalSuffix').toUpperCase()}`}
+              </Text>
               <View style={styles.bigRow}>
-                <Text style={styles.bigNumber}>{total}</Text>
-                {yUnit ? <Text style={styles.bigUnit}>{yUnit}</Text> : null}
+                <Text style={[styles.bigNumber, { color: theme.colors.text }]}>{total}</Text>
+                {yUnit ? <Text style={[styles.bigUnit, { color: subtleTextColor }]}>{yUnit}</Text> : null}
               </View>
-              <Text style={styles.cardSubtitle}>
+              <Text style={[styles.cardSubtitle, { color: subtleTextColor }]}>
                 {mode === 'time'
                   ? t('analytics.avgPerBucket', { value: fmt(avgPerBucket), bucket: t(`analytics.agg.${agg}`).toLowerCase() })
                   : t('analytics.optionsCount', { count: activeData.length })}
@@ -212,14 +223,22 @@ export default function AnalyticsScreen() {
             {mode === 'time' && chartKind === 'line' ? (
               <LiftedPressable
                 onPress={() => setShowPoints(!showPoints)}
-                style={[styles.pointsPill, showPoints ? styles.pointsPillActive : styles.pointsPillInactive]}
+                style={[
+                  styles.pointsPill,
+                  { backgroundColor: showPoints ? pointsActiveBg : pointsInactiveBg },
+                ]}
               >
                 <Ionicons
                   name="ellipsis-horizontal"
                   size={13}
-                  color={showPoints ? theme.colors.primary : 'rgba(235,235,245,0.6)'}
+                  color={showPoints ? theme.colors.primary : pointsInactiveColor}
                 />
-                <Text style={[styles.pointsPillText, { color: showPoints ? theme.colors.primary : 'rgba(235,235,245,0.6)' }]}>
+                <Text
+                  style={[
+                    styles.pointsPillText,
+                    { color: showPoints ? theme.colors.primary : pointsInactiveColor },
+                  ]}
+                >
                   {showPoints ? t('analytics.pointsOn') : t('analytics.pointsOff')}
                 </Text>
               </LiftedPressable>
@@ -240,7 +259,9 @@ export default function AnalyticsScreen() {
           )}
         </View>
 
-        <Text style={styles.sectionHeader}>{t('analytics.averages').toUpperCase()}</Text>
+        <Text style={[styles.sectionHeader, { color: eyebrowColor }]}>
+          {t('analytics.averages').toUpperCase()}
+        </Text>
         <AveragesCard
           rows={[
             { label: t('analytics.perDay'), value: avgs.day },
@@ -252,7 +273,7 @@ export default function AnalyticsScreen() {
           unit={yUnit}
         />
 
-        <Text style={styles.tip}>
+        <Text style={[styles.tip, { color: tipColor }]}>
           {mode === 'time' ? t('analytics.tipTime') : t('analytics.tipOptions')}
         </Text>
       </ScrollView>
@@ -266,7 +287,6 @@ const styles = StyleSheet.create({
   controlsBlock: { marginBottom: 12 },
   aggRow: { flexDirection: 'row', gap: 8, marginTop: 12 },
   eyebrow: {
-    color: 'rgba(235,235,245,0.6)',
     fontSize: 11,
     fontWeight: '600',
     letterSpacing: 0.6,
@@ -275,7 +295,6 @@ const styles = StyleSheet.create({
     paddingLeft: 4,
   },
   card: {
-    backgroundColor: '#1C1C1E',
     borderRadius: 16,
     paddingTop: 16,
     paddingBottom: 8,
@@ -290,27 +309,23 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
   },
   cardEyebrow: {
-    color: 'rgba(235,235,245,0.6)',
     fontSize: 11,
     fontWeight: '600',
     letterSpacing: 0.6,
   },
   bigRow: { flexDirection: 'row', alignItems: 'baseline', marginTop: 2 },
   bigNumber: {
-    color: '#fff',
     fontSize: 32,
     fontWeight: '700',
     letterSpacing: -1,
     lineHeight: 36,
   },
   bigUnit: {
-    color: 'rgba(235,235,245,0.6)',
     fontSize: 18,
     fontWeight: '600',
     marginLeft: 4,
   },
   cardSubtitle: {
-    color: 'rgba(235,235,245,0.6)',
     fontSize: 12,
     marginTop: 2,
   },
@@ -322,11 +337,8 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderRadius: 999,
   },
-  pointsPillActive: { backgroundColor: 'rgba(10,132,255,0.18)' },
-  pointsPillInactive: { backgroundColor: 'rgba(118,118,128,0.18)' },
   pointsPillText: { fontSize: 11, fontWeight: '600', letterSpacing: -0.1 },
   sectionHeader: {
-    color: 'rgba(235,235,245,0.6)',
     fontSize: 11,
     fontWeight: '600',
     letterSpacing: 0.6,
@@ -334,7 +346,6 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   tip: {
-    color: 'rgba(235,235,245,0.3)',
     fontSize: 11,
     textAlign: 'center',
     paddingVertical: 14,
