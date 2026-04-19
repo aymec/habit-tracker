@@ -41,15 +41,15 @@ const darkLifted: ViewStyle = {
   ...Platform.select({
     ios: {
       shadowColor: '#FFFFFF',
-      shadowOffset: { width: 0, height: 3 },
-      shadowOpacity: 0.15,
-      shadowRadius: 8,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 5,
     },
     android: {
-      boxShadow: '0px 3px 8px rgba(255, 255, 255, 0.15)',
+      boxShadow: '0px 3px 10px rgba(255, 255, 255, 0.2)',
     },
     web: {
-      boxShadow: '0px 3px 8px rgba(255, 255, 255, 0.15)',
+      boxShadow: '0px 3px 10px rgba(255, 255, 255, 0.2)',
     },
   }),
 };
@@ -60,14 +60,14 @@ const darkPressed: ViewStyle = {
     ios: {
       shadowColor: '#FFFFFF',
       shadowOffset: { width: 0, height: 1 },
-      shadowOpacity: 0.08,
-      shadowRadius: 4,
+      shadowOpacity: 0.1,
+      shadowRadius: 3,
     },
     android: {
-      boxShadow: '0px 1px 4px rgba(255, 255, 255, 0.08)',
+      boxShadow: '0px 1px 5px rgba(255, 255, 255, 0.1)',
     },
     web: {
-      boxShadow: '0px 1px 4px rgba(255, 255, 255, 0.08)',
+      boxShadow: '0px 1px 5px rgba(255, 255, 255, 0.1)',
     },
   }),
 };
