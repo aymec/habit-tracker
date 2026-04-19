@@ -83,7 +83,7 @@ export function Chart({
     return data
       .map((d, i) => `${i === 0 ? 'M' : 'L'}${xFor(i).toFixed(1)} ${yFor(d.value).toFixed(1)}`)
       .join(' ');
-  }, [data, niceMax, n]);
+  }, [data, niceMax, n, w, h]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const areaPath = useMemo(() => {
     if (!n) return '';
@@ -91,7 +91,7 @@ export function Chart({
     const last = xFor(n - 1).toFixed(1);
     const mid = data.map((d, i) => `L${xFor(i).toFixed(1)} ${yFor(d.value).toFixed(1)}`).join(' ');
     return `M${first} ${PAD_TOP + h} ${mid} L${last} ${PAD_TOP + h} Z`;
-  }, [data, niceMax, n]);
+  }, [data, niceMax, n, w, h]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const ticks = useMemo(() => {
     const out: number[] = [];
