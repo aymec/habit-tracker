@@ -3,6 +3,7 @@ import { PanResponder, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, Defs, G, Line, LinearGradient, Path, Rect, Stop, Text as SvgText } from 'react-native-svg';
 import * as Haptics from 'expo-haptics';
 import type { TimeBucket } from '../../src/utils/analytics';
+import { formatNumber } from '../../src/utils/format';
 import { useTheme } from '../../src/context/ThemeContext';
 
 export type ChartKind = 'line' | 'bar';
@@ -310,7 +311,7 @@ export function Chart({
             {hoverD.fullLabel || hoverD.label}
           </Text>
           <Text style={[styles.tooltipValue, { color: tooltipValueColor }]}>
-            {hoverD.value}{yUnit ? ` ${yUnit}` : ''}
+            {formatNumber(hoverD.value)}{yUnit ? ` ${yUnit}` : ''}
           </Text>
         </View>
       ) : null}

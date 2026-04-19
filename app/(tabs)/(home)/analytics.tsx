@@ -14,6 +14,7 @@ import { PeriodChips } from '../../../components/analytics/period-chips';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { getAnalyticsPrefs, setAnalyticsPrefs } from '../../../src/services/storage';
+import { formatNumber } from '../../../src/utils/format';
 import {
   PERIODS,
   type Agg,
@@ -255,7 +256,7 @@ export default function AnalyticsScreen() {
                 {`${periodLabel.toUpperCase()} ${t('analytics.totalSuffix').toUpperCase()}`}
               </Text>
               <View style={styles.bigRow}>
-                <Text style={[styles.bigNumber, { color: theme.colors.text }]}>{total}</Text>
+                <Text style={[styles.bigNumber, { color: theme.colors.text }]}>{formatNumber(total)}</Text>
                 {yUnit ? <Text style={[styles.bigUnit, { color: subtleTextColor }]}>{yUnit}</Text> : null}
               </View>
               <Text style={[styles.cardSubtitle, { color: subtleTextColor }]}>

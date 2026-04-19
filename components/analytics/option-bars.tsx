@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import type { OptionBucket } from '../../src/utils/analytics';
+import { formatNumber } from '../../src/utils/format';
 import { useTheme } from '../../src/context/ThemeContext';
 
 interface OptionBarsProps {
@@ -49,7 +50,7 @@ export function OptionBars({ data, color = '#0A84FF', yUnit = '' }: OptionBarsPr
                     {d.count > 0 ? `${d.count}×` : ''}
                   </Text>
                   <Text style={[styles.value, { color: labelColor }]}>
-                    {d.value}{yUnit ? ` ${yUnit}` : ''}
+                    {formatNumber(d.value)}{yUnit ? ` ${yUnit}` : ''}
                   </Text>
                 </View>
               </View>
