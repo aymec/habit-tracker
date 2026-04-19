@@ -49,8 +49,8 @@ export function Chart({
 }: ChartProps) {
   const { theme, isDark } = useTheme();
   const gridColor = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)';
-  const axisLabelColor = theme.colors.primary;
-  const xLabelColor = theme.colors.primary;
+  const axisLabelColor = theme.colors.text;
+  const xLabelColor = theme.colors.text;
   const hoverLineColor = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
   const pointStroke = isDark ? '#000' : '#FFF';
   const emptyTextColor = isDark ? '#8E8E93' : '#6C6C70';

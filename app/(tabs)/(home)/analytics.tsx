@@ -304,7 +304,7 @@ export default function AnalyticsScreen() {
           ) : (
             <OptionBars data={optionData} color={theme.colors.primary} yUnit={yUnit} />
           )}
-          <Text style={[styles.tip, { color: theme.colors.primary }]}>
+          <Text style={[styles.tip, { color: theme.colors.text }]}>
             {mode === 'time' ? t('analytics.tipTime') : t('analytics.tipOptions')}
           </Text>
         </View>
