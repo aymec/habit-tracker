@@ -47,3 +47,4 @@ app-example
 .vscode/
 .idea/
 docs/superpowers
+.worktrees/

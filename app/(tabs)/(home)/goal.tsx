@@ -14,6 +14,7 @@ import { Entry } from '../../../src/models/types';
 import { formatNumber, formatNumberWithSign } from '../../../src/utils/format';
 import { calculatePeriodCount } from '../../../src/utils/period';
 import { GlassCard } from '../../../components/ui/glass-card';
+import { CircularProgress } from '../../../components/ui/circular-progress';
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 
 const liquidGlass = isLiquidGlassAvailable();
@@ -26,6 +27,9 @@ const BASE_FONT_SIZE = 80;
 const CONTAINER_PADDING = 40; // 20px on each side
 // Approximate character width as a ratio of font size (for tabular-nums bold font)
 const CHAR_WIDTH_RATIO = 0.6;
+const RING_SIZE = 260;
+const RING_STROKE = 8;
+const RING_INNER_WIDTH = 220;
 
 export default function GoalScreen() {
   const { activeHabit, activeHabitOptions, activeHabitEntries, logEntry, habits } = useHabit();
@@ -60,12 +64,19 @@ export default function GoalScreen() {
     return calculatePeriodCount(activeHabitEntries, activeHabit.target.period);
   }, [activeHabit, activeHabitEntries]);
 
+  const progress = useMemo(() => {
+    if (!activeHabit?.target) return undefined;
+    return displayCount / activeHabit.target.value;
+  }, [activeHabit, displayCount]);
+
   // Calculate dynamic font size for web (adjustsFontSizeToFit doesn't work on web)
   const counterFontSize = useMemo(() => {
     if (Platform.OS !== 'web') return BASE_FONT_SIZE;
 
     const formattedText = formatCount(displayCount);
-    const availableWidth = windowWidth - CONTAINER_PADDING;
+    const availableWidth = activeHabit?.target
+      ? RING_INNER_WIDTH
+      : windowWidth - CONTAINER_PADDING;
     const textWidth = formattedText.length * BASE_FONT_SIZE * CHAR_WIDTH_RATIO;
 
     if (textWidth <= availableWidth) return BASE_FONT_SIZE;
@@ -73,7 +84,7 @@ export default function GoalScreen() {
     // Scale down the font to fit
     const scaledSize = Math.floor((availableWidth / formattedText.length) / CHAR_WIDTH_RATIO);
     return Math.max(scaledSize, 24); // Minimum font size of 24
-  }, [displayCount, windowWidth]);
+  }, [displayCount, windowWidth, activeHabit]);
 
   const [showTooltip, setShowTooltip] = useState(false);
   const tooltipShownRef = useRef(false);
@@ -129,15 +140,36 @@ export default function GoalScreen() {
       />
 
       <ScrollView contentContainerStyle={styles.content}>
+        <View style={styles.flexibleTop} />
         {/* Counter Display */}
         <View style={styles.counterContainer}>
-          <Text
-            style={[styles.counterValue, { color: theme.colors.primary, fontSize: counterFontSize }]}
-            numberOfLines={1}
-            adjustsFontSizeToFit
-          >
-            {formatCount(displayCount)}
-          </Text>
+          {activeHabit.target ? (
+            <CircularProgress
+              size={RING_SIZE}
+              strokeWidth={RING_STROKE}
+              progress={progress}
+              color={theme.colors.primary}
+              trackColor={theme.colors.border}
+            >
+              <View style={styles.ringInner}>
+                <Text
+                  style={[styles.counterValue, { color: theme.colors.primary, fontSize: counterFontSize }]}
+                  numberOfLines={1}
+                  adjustsFontSizeToFit
+                >
+                  {formatCount(displayCount)}
+                </Text>
+              </View>
+            </CircularProgress>
+          ) : (
+            <Text
+              style={[styles.counterValue, { color: theme.colors.primary, fontSize: counterFontSize }]}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+            >
+              {formatCount(displayCount)}
+            </Text>
+          )}
           <Text style={[styles.counterLabel, { color: theme.colors.text }]}>
             {activeHabit.target
               ? t('habits.vsTarget', {
@@ -149,6 +181,7 @@ export default function GoalScreen() {
           </Text>
         </View>
 
+        <View style={styles.flexibleMiddle} />
         {/* Option Buttons */}
         <View style={styles.optionsContainer}>
           {activeHabitOptions.map((option) => (
@@ -181,6 +214,7 @@ export default function GoalScreen() {
             </Pressable>
           ))}
         </View>
+        <View style={styles.flexibleBottom} />
 
       </ScrollView>
 
@@ -324,13 +358,26 @@ const styles = StyleSheet.create({
   content: {
     flexGrow: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 20,
     paddingBottom: 80,
+  },
+  flexibleTop: {
+    flex: 1,
+    minHeight: 24,
+    maxHeight: 80,
+    width: '100%',
+  },
+  flexibleMiddle: {
+    flex: 1,
+    minHeight: 24,
+    maxHeight: 100,
+    width: '100%',
+  },
+  flexibleBottom: {
+    flex: 2,
+    width: '100%',
   },
   counterContainer: {
     alignItems: 'center',
-    marginBottom: 50,
     width: '100%',
     paddingHorizontal: 20,
   },
@@ -343,7 +390,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textTransform: 'uppercase',
     letterSpacing: 1,
-    marginTop: 5,
+    marginTop: 24,
+  },
+  ringInner: {
+    width: RING_INNER_WIDTH,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   optionsContainer: {
     flexDirection: 'row',
