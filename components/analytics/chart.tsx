@@ -226,7 +226,7 @@ export function Chart({
               fontWeight="600"
               textAnchor="end"
             >
-              target {targetLine}{yUnit ? ` ${yUnit}` : ''}
+              target
             </SvgText>
           </G>
         ) : null}
