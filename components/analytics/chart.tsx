@@ -102,9 +102,10 @@ export function Chart({
   const barGap = 2;
   const barW = kind === 'bar' ? Math.max(4, w / n - barGap) : 0;
 
-  const measureChart = () => {
+  const measureChart = (after?: () => void) => {
     chartRef.current?.measure((_x, _y, width, _h, pageX) => {
       layoutRef.current = { pageX, width };
+      after?.();
     });
   };
 
@@ -129,8 +130,8 @@ export function Chart({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
       onPanResponderGrant: (e) => {
-        measureChart();
-        handleMoveToX(e.nativeEvent.pageX);
+        const { pageX } = e.nativeEvent;
+        measureChart(() => handleMoveToX(pageX));
       },
       onPanResponderMove: (e) => handleMoveToX(e.nativeEvent.pageX),
       onPanResponderRelease: () => {
