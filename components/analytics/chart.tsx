@@ -47,10 +47,10 @@ export function Chart({
   yUnit = '',
   emptyLabel = 'No data in this range',
 }: ChartProps) {
-  const { isDark } = useTheme();
+  const { theme, isDark } = useTheme();
   const gridColor = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)';
-  const axisLabelColor = isDark ? 'rgba(235,235,245,0.4)' : 'rgba(60,60,67,0.5)';
-  const xLabelColor = isDark ? 'rgba(235,235,245,0.55)' : 'rgba(60,60,67,0.6)';
+  const axisLabelColor = theme.colors.primary;
+  const xLabelColor = theme.colors.primary;
   const hoverLineColor = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
   const pointStroke = isDark ? '#000' : '#FFF';
   const emptyTextColor = isDark ? '#8E8E93' : '#6C6C70';

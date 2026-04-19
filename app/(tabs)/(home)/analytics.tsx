@@ -53,7 +53,6 @@ export default function AnalyticsScreen() {
   const cardBg = isDark ? '#1C1C1E' : '#FFFFFF';
   const eyebrowColor = isDark ? 'rgba(235,235,245,0.6)' : 'rgba(60,60,67,0.6)';
   const subtleTextColor = isDark ? 'rgba(235,235,245,0.6)' : 'rgba(60,60,67,0.6)';
-  const tipColor = isDark ? 'rgba(235,235,245,0.3)' : 'rgba(60,60,67,0.45)';
   const pointsActiveBg = isDark ? 'rgba(10,132,255,0.18)' : 'rgba(0,122,255,0.12)';
   const pointsInactiveBg = isDark ? 'rgba(118,118,128,0.18)' : 'rgba(120,120,128,0.16)';
   const pointsInactiveColor = isDark ? 'rgba(235,235,245,0.6)' : 'rgba(60,60,67,0.6)';
@@ -305,6 +304,9 @@ export default function AnalyticsScreen() {
           ) : (
             <OptionBars data={optionData} color={theme.colors.primary} yUnit={yUnit} />
           )}
+          <Text style={[styles.tip, { color: theme.colors.primary }]}>
+            {mode === 'time' ? t('analytics.tipTime') : t('analytics.tipOptions')}
+          </Text>
         </View>
 
         <Text style={[styles.sectionHeader, { color: eyebrowColor }]}>
@@ -320,10 +322,6 @@ export default function AnalyticsScreen() {
           ]}
           unit={yUnit}
         />
-
-        <Text style={[styles.tip, { color: tipColor }]}>
-          {mode === 'time' ? t('analytics.tipTime') : t('analytics.tipOptions')}
-        </Text>
       </ScrollView>
     </View>
   );
