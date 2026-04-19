@@ -474,7 +474,12 @@ export default function ModalScreen() {
                 <Text style={[styles.habitNameText, { color: theme.colors.text }]}>
                   {activeHabit?.name}
                 </Text>
-                <TouchableOpacity onPress={startEditHabitName} style={styles.actionIcon}>
+                <TouchableOpacity
+                  accessibilityRole="button"
+                  accessibilityLabel={t('habits.a11y.editName')}
+                  onPress={startEditHabitName}
+                  style={styles.actionIcon}
+                >
                   <Ionicons name="create-outline" size={20} color={theme.colors.text} />
                 </TouchableOpacity>
               </View>
@@ -499,6 +504,7 @@ export default function ModalScreen() {
                     keyboardType="numeric"
                     placeholder="0"
                     placeholderTextColor={theme.colors.textSecondary}
+                    accessibilityLabel={t('habits.a11y.targetValue')}
                   />
                   <TouchableOpacity
                     style={[
@@ -509,6 +515,8 @@ export default function ModalScreen() {
                       },
                     ]}
                     onPress={() => { setShowUnitPicker(!showUnitPicker); setShowPeriodPicker(false); }}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${t('habits.a11y.targetUnit')}, ${editedTargetUnitShort || t('habits.noTarget')}`}
                   >
                     <Text style={[styles.dropdownText, { color: editedTargetUnitShort ? theme.colors.text : theme.colors.textSecondary }]}>
                       {editedTargetUnitShort || '—'}
@@ -527,6 +535,10 @@ export default function ModalScreen() {
                       },
                     ]}
                     onPress={() => { setShowPeriodPicker(!showPeriodPicker); setShowUnitPicker(false); }}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${t('habits.a11y.targetPeriod')}, ${
+                      editedTargetPeriod ? t(`habits.period.${editedTargetPeriod}`) : t('habits.noTarget')
+                    }`}
                   >
                     <Text style={[styles.dropdownText, { color: editedTargetPeriod ? theme.colors.text : theme.colors.textSecondary }]}>
                       {editedTargetPeriod ? t(`habits.period.${editedTargetPeriod}`) : '—'}
@@ -660,7 +672,12 @@ export default function ModalScreen() {
                 <Text style={[styles.targetText, { color: theme.colors.text }]}>
                   {t('habits.target')}: {formatTarget(activeHabit?.target)}
                 </Text>
-                <TouchableOpacity onPress={startEditTarget} style={styles.actionIcon}>
+                <TouchableOpacity
+                  accessibilityRole="button"
+                  accessibilityLabel={t('habits.a11y.editTarget')}
+                  onPress={startEditTarget}
+                  style={styles.actionIcon}
+                >
                   <Ionicons name="create-outline" size={20} color={theme.colors.text} />
                 </TouchableOpacity>
               </View>
@@ -757,10 +774,20 @@ export default function ModalScreen() {
                     </Text>
                   </View>
                   <View style={styles.optionActions}>
-                    <TouchableOpacity onPress={() => startEditOption(option)} style={styles.actionIcon}>
+                    <TouchableOpacity
+                      accessibilityRole="button"
+                      accessibilityLabel={t('habits.a11y.editOption')}
+                      onPress={() => startEditOption(option)}
+                      style={styles.actionIcon}
+                    >
                       <Ionicons name="create-outline" size={20} color={theme.colors.text} />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => deleteOption(option.id)} style={styles.actionIcon}>
+                    <TouchableOpacity
+                      accessibilityRole="button"
+                      accessibilityLabel={t('habits.a11y.deleteOption')}
+                      onPress={() => deleteOption(option.id)}
+                      style={styles.actionIcon}
+                    >
                       <Ionicons name="trash-outline" size={20} color={theme.colors.danger} />
                     </TouchableOpacity>
                   </View>

@@ -89,6 +89,8 @@ export default function EntryHistoryScreen() {
               </Text>
             </View>
             <TouchableOpacity
+              accessibilityRole="button"
+              accessibilityLabel={t('history.a11y.deleteEntry')}
               onPress={() => handleDeleteEntry(item)}
               style={styles.deleteButton}
             >

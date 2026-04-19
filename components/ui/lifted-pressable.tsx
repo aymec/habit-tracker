@@ -7,9 +7,10 @@ interface LiftedPressableProps {
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
   children: ReactNode;
+  accessibilityLabel?: string;
 }
 
-export function LiftedPressable({ onPress, disabled, style, children }: LiftedPressableProps) {
+export function LiftedPressable({ onPress, disabled, style, children, accessibilityLabel }: LiftedPressableProps) {
   const { liftedStyle, pressedStyle } = usePressEffect();
 
   return (
@@ -17,6 +18,7 @@ export function LiftedPressable({ onPress, disabled, style, children }: LiftedPr
       onPress={onPress}
       disabled={disabled}
       accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
       style={({ pressed }) => [style, liftedStyle, !disabled && pressed && pressedStyle]}
     >
       {children}

@@ -56,13 +56,29 @@
       "week": "неделю",
       "month": "месяц",
       "year": "год"
+    },
+    "a11y": {
+      "settings": "Настройки и параметры цели",
+      "analytics": "Аналитика цели",
+      "history": "История цели",
+      "dismissTip": "Закрыть подсказку",
+      "editName": "Изменить название цели",
+      "editTarget": "Изменить цель",
+      "editOption": "Изменить опцию",
+      "deleteOption": "Удалить опцию",
+      "targetValue": "Значение цели",
+      "targetUnit": "Единица цели",
+      "targetPeriod": "Период цели"
     }
   },
   "history": {
     "title": "История",
     "totalCount": "Всего",
     "deleteEntryConfirmation": "Вы уверены, что хотите удалить эту запись?",
-    "noEntries": "Записей пока нет."
+    "noEntries": "Записей пока нет.",
+    "a11y": {
+      "deleteEntry": "Удалить запись"
+    }
   },
   "settings": {
     "title": "Настройки",
@@ -164,8 +180,20 @@
     "title": "Аналитика",
     "modeTime": "По времени",
     "modeOptions": "По опции",
+    "xAxis": "Ось X",
+    "period": "Период",
     "groupBy": "Группировать",
     "chart": "График",
+    "a11y": {
+      "modeTime": "Показать данные по времени",
+      "modeOptions": "Показать итоги по опциям",
+      "period": "Показать данные за {{period}}",
+      "groupBy": "Группировать по {{bucket}}",
+      "chartLine": "Линейный график",
+      "chartBar": "Столбчатая диаграмма",
+      "pointsOn": "Точки данных видны",
+      "pointsOff": "Точки данных скрыты"
+    },
     "periods": {
       "thisWeek": "Эта неделя",
       "past7d": "За 7 д",

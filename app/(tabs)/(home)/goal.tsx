@@ -190,7 +190,12 @@ export default function GoalScreen() {
           <View style={styles.tooltipBanner}>
             <View style={[styles.tooltipBubble, { backgroundColor: theme.colors.primary }]}>
               <Text style={styles.tooltipText}>{t('habits.customizeTooltip')}</Text>
-              <TouchableOpacity onPress={() => setShowTooltip(false)} style={styles.tooltipClose}>
+              <TouchableOpacity
+                accessibilityRole="button"
+                accessibilityLabel={t('habits.a11y.dismissTip')}
+                onPress={() => setShowTooltip(false)}
+                style={styles.tooltipClose}
+              >
                 <Ionicons name="close" size={18} color="#FFFFFF" />
               </TouchableOpacity>
             </View>
@@ -201,6 +206,8 @@ export default function GoalScreen() {
       {/* Toolbar */}
       <View style={[styles.toolbar, { bottom: liquidGlass ? Math.max(15, insets.bottom + 60) : 15, pointerEvents: 'box-none' }]}>
         <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={t('habits.a11y.settings')}
           onPress={() => {
             setShowTooltip(false);
             router.push({ pathname: '/(tabs)/(home)/edit', params: { mode: 'edit' } });
@@ -225,7 +232,11 @@ export default function GoalScreen() {
           )}
         </Pressable>
 
-        <Pressable onPress={() => router.push('/(tabs)/(home)/analytics')}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={t('habits.a11y.analytics')}
+          onPress={() => router.push('/(tabs)/(home)/analytics')}
+        >
           {({ pressed }) => (
             <View
               style={[
@@ -240,7 +251,11 @@ export default function GoalScreen() {
           )}
         </Pressable>
 
-        <Pressable onPress={() => router.push('/(tabs)/(home)/history')}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={t('habits.a11y.history')}
+          onPress={() => router.push('/(tabs)/(home)/history')}
+        >
           {({ pressed }) => (
             <GlassCard
               glassEffect="regular"

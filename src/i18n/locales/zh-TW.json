@@ -56,13 +56,29 @@
       "week": "週",
       "month": "月",
       "year": "年"
+    },
+    "a11y": {
+      "settings": "目標設定和選項",
+      "analytics": "目標分析",
+      "history": "目標歷史",
+      "dismissTip": "關閉提示",
+      "editName": "編輯目標名稱",
+      "editTarget": "編輯目標",
+      "editOption": "編輯選項",
+      "deleteOption": "刪除選項",
+      "targetValue": "目標值",
+      "targetUnit": "目標單位",
+      "targetPeriod": "目標週期"
     }
   },
   "history": {
     "title": "歷史",
     "totalCount": "總計",
     "deleteEntryConfirmation": "確定要刪除此項目嗎？",
-    "noEntries": "尚無記錄。"
+    "noEntries": "尚無記錄。",
+    "a11y": {
+      "deleteEntry": "刪除條目"
+    }
   },
   "settings": {
     "title": "設定",
@@ -164,8 +180,20 @@
     "title": "分析",
     "modeTime": "時間趨勢",
     "modeOptions": "依選項",
+    "xAxis": "X軸",
+    "period": "時間段",
     "groupBy": "分組依據",
     "chart": "圖表",
+    "a11y": {
+      "modeTime": "按時間顯示數據",
+      "modeOptions": "按選項顯示總計",
+      "period": "顯示{{period}}的數據",
+      "groupBy": "按{{bucket}}分組",
+      "chartLine": "折線圖",
+      "chartBar": "長條圖",
+      "pointsOn": "數據點已顯示",
+      "pointsOff": "數據點已隱藏"
+    },
     "periods": {
       "thisWeek": "本週",
       "past7d": "過去 7 天",

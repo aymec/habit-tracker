@@ -5,6 +5,7 @@ import { useTheme } from '../../src/context/ThemeContext';
 export interface SegmentedOption<T extends string> {
   value: T;
   label: ReactNode;
+  accessibilityLabel?: string;
 }
 
 interface SegmentedProps<T extends string> {
@@ -35,6 +36,8 @@ export function Segmented<T extends string>({ options, value, onChange, style }:
           <Pressable
             key={opt.value}
             accessibilityRole="button"
+            accessibilityLabel={opt.accessibilityLabel}
+            accessibilityState={{ selected: active }}
             onPress={() => onChange(opt.value)}
             style={[
               styles.thumb,

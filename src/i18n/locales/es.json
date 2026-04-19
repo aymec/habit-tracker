@@ -56,13 +56,29 @@
       "week": "semana",
       "month": "mes",
       "year": "año"
+    },
+    "a11y": {
+      "settings": "Ajustes y opciones del objetivo",
+      "analytics": "Análisis del objetivo",
+      "history": "Historial del objetivo",
+      "dismissTip": "Descartar consejo",
+      "editName": "Editar nombre del objetivo",
+      "editTarget": "Editar objetivo",
+      "editOption": "Editar opción",
+      "deleteOption": "Eliminar opción",
+      "targetValue": "Valor objetivo",
+      "targetUnit": "Unidad objetivo",
+      "targetPeriod": "Período objetivo"
     }
   },
   "history": {
     "title": "Historial",
     "totalCount": "Total",
     "deleteEntryConfirmation": "¿Estás seguro de que quieres eliminar esta entrada?",
-    "noEntries": "Sin entradas aún."
+    "noEntries": "Sin entradas aún.",
+    "a11y": {
+      "deleteEntry": "Eliminar entrada"
+    }
   },
   "settings": {
     "title": "Ajustes",
@@ -164,8 +180,20 @@
     "title": "Analíticas",
     "modeTime": "En el tiempo",
     "modeOptions": "Por opción",
+    "xAxis": "Eje X",
+    "period": "Período",
     "groupBy": "Agrupar por",
     "chart": "Gráfico",
+    "a11y": {
+      "modeTime": "Mostrar datos a lo largo del tiempo",
+      "modeOptions": "Mostrar totales por opción",
+      "period": "Mostrar datos de {{period}}",
+      "groupBy": "Agrupar por {{bucket}}",
+      "chartLine": "Gráfico de líneas",
+      "chartBar": "Gráfico de barras",
+      "pointsOn": "Puntos de datos visibles",
+      "pointsOff": "Puntos de datos ocultos"
+    },
     "periods": {
       "thisWeek": "Esta semana",
       "past7d": "Últimos 7d",

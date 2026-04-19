@@ -56,13 +56,29 @@
       "week": "semana",
       "month": "mês",
       "year": "ano"
+    },
+    "a11y": {
+      "settings": "Configurações e opções do objetivo",
+      "analytics": "Análise do objetivo",
+      "history": "Histórico do objetivo",
+      "dismissTip": "Dispensar dica",
+      "editName": "Editar nome do objetivo",
+      "editTarget": "Editar objetivo",
+      "editOption": "Editar opção",
+      "deleteOption": "Excluir opção",
+      "targetValue": "Valor do objetivo",
+      "targetUnit": "Unidade do objetivo",
+      "targetPeriod": "Período do objetivo"
     }
   },
   "history": {
     "title": "Histórico",
     "totalCount": "Contagem Total",
     "deleteEntryConfirmation": "Tem certeza que deseja excluir este registro?",
-    "noEntries": "Nenhum registro ainda."
+    "noEntries": "Nenhum registro ainda.",
+    "a11y": {
+      "deleteEntry": "Excluir registro"
+    }
   },
   "settings": {
     "title": "Configurações",
@@ -164,8 +180,20 @@
     "title": "Análise",
     "modeTime": "Ao longo do tempo",
     "modeOptions": "Por opção",
+    "xAxis": "Eixo X",
+    "period": "Período",
     "groupBy": "Agrupar por",
     "chart": "Gráfico",
+    "a11y": {
+      "modeTime": "Mostrar dados ao longo do tempo",
+      "modeOptions": "Mostrar totais por opção",
+      "period": "Mostrar dados de {{period}}",
+      "groupBy": "Agrupar por {{bucket}}",
+      "chartLine": "Gráfico de linhas",
+      "chartBar": "Gráfico de barras",
+      "pointsOn": "Pontos de dados visíveis",
+      "pointsOff": "Pontos de dados ocultos"
+    },
     "periods": {
       "thisWeek": "Esta semana",
       "past7d": "Últ. 7 d",

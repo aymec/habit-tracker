@@ -56,13 +56,29 @@
       "week": "week",
       "month": "maand",
       "year": "jaar"
+    },
+    "a11y": {
+      "settings": "Doelinstellingen en opties",
+      "analytics": "Doelanalyse",
+      "history": "Doelgeschiedenis",
+      "dismissTip": "Tip sluiten",
+      "editName": "Doelnaam bewerken",
+      "editTarget": "Doel bewerken",
+      "editOption": "Optie bewerken",
+      "deleteOption": "Optie verwijderen",
+      "targetValue": "Doelwaarde",
+      "targetUnit": "Doeleenheid",
+      "targetPeriod": "Doelperiode"
     }
   },
   "history": {
     "title": "Geschiedenis",
     "totalCount": "Totaal Aantal",
     "deleteEntryConfirmation": "Weet je zeker dat je deze invoer wilt verwijderen?",
-    "noEntries": "Nog geen invoeren."
+    "noEntries": "Nog geen invoeren.",
+    "a11y": {
+      "deleteEntry": "Invoer verwijderen"
+    }
   },
   "settings": {
     "title": "Instellingen",
@@ -164,8 +180,20 @@
     "title": "Analyse",
     "modeTime": "Over tijd",
     "modeOptions": "Per optie",
+    "xAxis": "X-as",
+    "period": "Periode",
     "groupBy": "Groeperen op",
     "chart": "Grafiek",
+    "a11y": {
+      "modeTime": "Gegevens over tijd tonen",
+      "modeOptions": "Totalen per optie tonen",
+      "period": "Gegevens tonen voor {{period}}",
+      "groupBy": "Groeperen op {{bucket}}",
+      "chartLine": "Lijngrafiek",
+      "chartBar": "Staafdiagram",
+      "pointsOn": "Gegevenspunten zichtbaar",
+      "pointsOff": "Gegevenspunten verborgen"
+    },
     "periods": {
       "thisWeek": "Deze week",
       "past7d": "Laatste 7 d",

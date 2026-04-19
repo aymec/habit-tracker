@@ -5,6 +5,7 @@ import { useTheme } from '../../src/context/ThemeContext';
 export interface PeriodChipItem {
   id: PeriodId;
   label: string;
+  accessibilityLabel?: string;
 }
 
 interface PeriodChipsProps {
@@ -30,6 +31,8 @@ export function PeriodChips({ items, activeId, onSelect }: PeriodChipsProps) {
           <Pressable
             key={it.id}
             accessibilityRole="button"
+            accessibilityLabel={it.accessibilityLabel}
+            accessibilityState={{ selected: active }}
             onPress={() => onSelect(it.id)}
             style={[
               styles.chip,

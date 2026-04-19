@@ -56,13 +56,29 @@
       "week": "周",
       "month": "月",
       "year": "年"
+    },
+    "a11y": {
+      "settings": "目标设置和选项",
+      "analytics": "目标分析",
+      "history": "目标历史",
+      "dismissTip": "关闭提示",
+      "editName": "编辑目标名称",
+      "editTarget": "编辑目标",
+      "editOption": "编辑选项",
+      "deleteOption": "删除选项",
+      "targetValue": "目标值",
+      "targetUnit": "目标单位",
+      "targetPeriod": "目标周期"
     }
   },
   "history": {
     "title": "历史",
     "totalCount": "总计",
     "deleteEntryConfirmation": "确定要删除此条目吗？",
-    "noEntries": "暂无记录。"
+    "noEntries": "暂无记录。",
+    "a11y": {
+      "deleteEntry": "删除条目"
+    }
   },
   "settings": {
     "title": "设置",
@@ -164,8 +180,20 @@
     "title": "分析",
     "modeTime": "时间趋势",
     "modeOptions": "按选项",
+    "xAxis": "X轴",
+    "period": "时间段",
     "groupBy": "分组依据",
     "chart": "图表",
+    "a11y": {
+      "modeTime": "按时间显示数据",
+      "modeOptions": "按选项显示总计",
+      "period": "显示{{period}}的数据",
+      "groupBy": "按{{bucket}}分组",
+      "chartLine": "折线图",
+      "chartBar": "柱状图",
+      "pointsOn": "数据点已显示",
+      "pointsOff": "数据点已隐藏"
+    },
     "periods": {
       "thisWeek": "本周",
       "past7d": "过去 7 天",

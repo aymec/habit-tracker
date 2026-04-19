@@ -23,13 +23,14 @@ export function GlassCard({
 }: GlassCardProps) {
   if (glassAvailable) {
     return (
-      <GlassView
-        glassEffectStyle={glassEffect}
-        style={[{ borderRadius, overflow: 'hidden' }, style]}
-        {...rest}
-      >
+      <View style={[{ borderRadius }, style]} {...rest}>
+        <GlassView
+          glassEffectStyle={glassEffect}
+          style={[StyleSheet.absoluteFillObject, { borderRadius, overflow: 'hidden' }]}
+          pointerEvents="none"
+        />
         {children}
-      </GlassView>
+      </View>
     );
   }
 

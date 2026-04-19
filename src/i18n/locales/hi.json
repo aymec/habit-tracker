@@ -56,13 +56,29 @@
       "week": "सप्ताह",
       "month": "महीना",
       "year": "वर्ष"
+    },
+    "a11y": {
+      "settings": "लक्ष्य सेटिंग्स और विकल्प",
+      "analytics": "लक्ष्य विश्लेषण",
+      "history": "लक्ष्य इतिहास",
+      "dismissTip": "सुझाव बंद करें",
+      "editName": "लक्ष्य का नाम संपादित करें",
+      "editTarget": "लक्ष्य संपादित करें",
+      "editOption": "विकल्प संपादित करें",
+      "deleteOption": "विकल्प हटाएं",
+      "targetValue": "लक्ष्य मान",
+      "targetUnit": "लक्ष्य इकाई",
+      "targetPeriod": "लक्ष्य अवधि"
     }
   },
   "history": {
     "title": "इतिहास",
     "totalCount": "कुल गणना",
     "deleteEntryConfirmation": "क्या आप वाकई इस प्रविष्टि को हटाना चाहते हैं?",
-    "noEntries": "अभी कोई प्रविष्टि नहीं है।"
+    "noEntries": "अभी कोई प्रविष्टि नहीं है।",
+    "a11y": {
+      "deleteEntry": "प्रविष्टि हटाएं"
+    }
   },
   "settings": {
     "title": "सेटिंग्स",
@@ -164,8 +180,20 @@
     "title": "विश्लेषण",
     "modeTime": "समय के साथ",
     "modeOptions": "विकल्प से",
+    "xAxis": "X-अक्ष",
+    "period": "अवधि",
     "groupBy": "समूह",
     "chart": "चार्ट",
+    "a11y": {
+      "modeTime": "समय के साथ डेटा दिखाएं",
+      "modeOptions": "विकल्प के अनुसार कुल दिखाएं",
+      "period": "{{period}} के लिए डेटा दिखाएं",
+      "groupBy": "{{bucket}} के अनुसार समूहित करें",
+      "chartLine": "रेखा चार्ट",
+      "chartBar": "बार चार्ट",
+      "pointsOn": "डेटा बिंदु दिखाए गए",
+      "pointsOff": "डेटा बिंदु छिपाए गए"
+    },
     "periods": {
       "thisWeek": "इस सप्ताह",
       "past7d": "पिछले 7 दिन",

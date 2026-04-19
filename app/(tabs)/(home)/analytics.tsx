@@ -143,7 +143,10 @@ export default function AnalyticsScreen() {
   const periodLabel = t(`analytics.periods.${periodId}`);
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <View
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+      accessibilityViewIsModal
+    >
       {Platform.OS === 'web' && (
         <Head>
           <title>{`${t('analytics.title')} | ${activeHabit.name}`}</title>
@@ -159,18 +162,34 @@ export default function AnalyticsScreen() {
 
       <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.controlsBlock}>
+          <Text style={[styles.eyebrow, { color: eyebrowColor }]}>{t('analytics.xAxis')}</Text>
           <Segmented
             options={[
-              { value: 'time', label: t('analytics.modeTime') },
-              { value: 'options', label: t('analytics.modeOptions') },
+              {
+                value: 'time',
+                label: t('analytics.modeTime'),
+                accessibilityLabel: t('analytics.a11y.modeTime'),
+              },
+              {
+                value: 'options',
+                label: t('analytics.modeOptions'),
+                accessibilityLabel: t('analytics.a11y.modeOptions'),
+              },
             ]}
             value={mode}
             onChange={(v) => setMode(v as Mode)}
             style={{ marginBottom: 14 }}
           />
 
+          <Text style={[styles.eyebrow, { color: eyebrowColor }]}>{t('analytics.period')}</Text>
           <PeriodChips
-            items={PERIODS.map((p) => ({ id: p.id, label: t(`analytics.periods.${p.id}`) }))}
+            items={PERIODS.map((p) => ({
+              id: p.id,
+              label: t(`analytics.periods.${p.id}`),
+              accessibilityLabel: t('analytics.a11y.period', {
+                period: t(`analytics.periods.${p.id}`),
+              }),
+            }))}
             activeId={periodId}
             onSelect={setPeriodId}
           />
@@ -181,9 +200,27 @@ export default function AnalyticsScreen() {
                 <Text style={[styles.eyebrow, { color: eyebrowColor }]}>{t('analytics.groupBy')}</Text>
                 <Segmented
                   options={[
-                    { value: 'day', label: t('analytics.agg.day') },
-                    { value: 'week', label: t('analytics.agg.week') },
-                    { value: 'month', label: t('analytics.agg.month') },
+                    {
+                      value: 'day',
+                      label: t('analytics.agg.day'),
+                      accessibilityLabel: t('analytics.a11y.groupBy', {
+                        bucket: t('analytics.agg.day').toLowerCase(),
+                      }),
+                    },
+                    {
+                      value: 'week',
+                      label: t('analytics.agg.week'),
+                      accessibilityLabel: t('analytics.a11y.groupBy', {
+                        bucket: t('analytics.agg.week').toLowerCase(),
+                      }),
+                    },
+                    {
+                      value: 'month',
+                      label: t('analytics.agg.month'),
+                      accessibilityLabel: t('analytics.a11y.groupBy', {
+                        bucket: t('analytics.agg.month').toLowerCase(),
+                      }),
+                    },
                   ]}
                   value={agg}
                   onChange={(v) => setAgg(v as Agg)}
@@ -193,8 +230,16 @@ export default function AnalyticsScreen() {
                 <Text style={[styles.eyebrow, { color: eyebrowColor }]}>{t('analytics.chart')}</Text>
                 <Segmented
                   options={[
-                    { value: 'line', label: <LineIcon color={iconColor} /> },
-                    { value: 'bar', label: <BarIcon color={iconColor} /> },
+                    {
+                      value: 'line',
+                      label: <LineIcon color={iconColor} />,
+                      accessibilityLabel: t('analytics.a11y.chartLine'),
+                    },
+                    {
+                      value: 'bar',
+                      label: <BarIcon color={iconColor} />,
+                      accessibilityLabel: t('analytics.a11y.chartBar'),
+                    },
                   ]}
                   value={chartKind}
                   onChange={(v) => setChartKind(v as ChartKind)}
@@ -223,6 +268,9 @@ export default function AnalyticsScreen() {
             {mode === 'time' && chartKind === 'line' ? (
               <LiftedPressable
                 onPress={() => setShowPoints(!showPoints)}
+                accessibilityLabel={
+                  showPoints ? t('analytics.a11y.pointsOn') : t('analytics.a11y.pointsOff')
+                }
                 style={[
                   styles.pointsPill,
                   { backgroundColor: showPoints ? pointsActiveBg : pointsInactiveBg },

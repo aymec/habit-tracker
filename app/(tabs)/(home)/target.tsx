@@ -232,10 +232,19 @@ export default function TargetScreen() {
               keyboardType="numeric"
               placeholder="0"
               placeholderTextColor={theme.colors.textSecondary}
+              accessibilityLabel={t('habits.a11y.targetValue')}
             />
             <TouchableOpacity
               style={[styles.dropdownTrigger, { backgroundColor: theme.colors.card, borderColor: showUnitPicker ? theme.colors.primary : theme.colors.border }]}
               onPress={() => { setShowUnitPicker(!showUnitPicker); setShowPeriodPicker(false); }}
+              accessibilityRole="button"
+              accessibilityLabel={`${t('habits.a11y.targetUnit')}, ${
+                selectedUnitKey
+                  ? t(`units.${selectedUnitKey}.name`)
+                  : isCustomUnit && customUnitShort
+                    ? customUnitShort
+                    : t('habits.noTarget')
+              }`}
             >
               <Text style={[styles.dropdownText, { color: selectedUnitKey || isCustomUnit ? theme.colors.text : theme.colors.textSecondary }]}>
                 {selectedUnitKey ? t(`units.${selectedUnitKey}.short`) : isCustomUnit ? (customUnitShort || '—') : '—'}
@@ -248,6 +257,10 @@ export default function TargetScreen() {
             <TouchableOpacity
               style={[styles.dropdownTrigger, { backgroundColor: theme.colors.card, borderColor: showPeriodPicker ? theme.colors.primary : theme.colors.border }]}
               onPress={() => { setShowPeriodPicker(!showPeriodPicker); setShowUnitPicker(false); }}
+              accessibilityRole="button"
+              accessibilityLabel={`${t('habits.a11y.targetPeriod')}, ${
+                selectedPeriod ? t(`habits.period.${selectedPeriod}`) : t('habits.noTarget')
+              }`}
             >
               <Text style={[styles.dropdownText, { color: selectedPeriod ? theme.colors.text : theme.colors.textSecondary }]}>
                 {selectedPeriod ? t(`habits.period.${selectedPeriod}`) : '—'}

@@ -56,13 +56,29 @@
       "week": "Woche",
       "month": "Monat",
       "year": "Jahr"
+    },
+    "a11y": {
+      "settings": "Zieleinstellungen und Optionen",
+      "analytics": "Zielanalyse",
+      "history": "Zielverlauf",
+      "dismissTip": "Tipp ausblenden",
+      "editName": "Zielname bearbeiten",
+      "editTarget": "Ziel bearbeiten",
+      "editOption": "Option bearbeiten",
+      "deleteOption": "Option löschen",
+      "targetValue": "Zielwert",
+      "targetUnit": "Zieleinheit",
+      "targetPeriod": "Zielzeitraum"
     }
   },
   "history": {
     "title": "Verlauf",
     "totalCount": "Gesamtanzahl",
     "deleteEntryConfirmation": "Bist du sicher, dass du diesen Eintrag löschen möchtest?",
-    "noEntries": "Noch keine Einträge."
+    "noEntries": "Noch keine Einträge.",
+    "a11y": {
+      "deleteEntry": "Eintrag löschen"
+    }
   },
   "settings": {
     "title": "Einstellungen",
@@ -164,8 +180,20 @@
     "title": "Analyse",
     "modeTime": "Zeitverlauf",
     "modeOptions": "Nach Option",
+    "xAxis": "X-Achse",
+    "period": "Zeitraum",
     "groupBy": "Gruppieren nach",
     "chart": "Diagramm",
+    "a11y": {
+      "modeTime": "Daten im Zeitverlauf anzeigen",
+      "modeOptions": "Summen nach Option anzeigen",
+      "period": "Daten für {{period}} anzeigen",
+      "groupBy": "Nach {{bucket}} gruppieren",
+      "chartLine": "Liniendiagramm",
+      "chartBar": "Balkendiagramm",
+      "pointsOn": "Datenpunkte sichtbar",
+      "pointsOff": "Datenpunkte ausgeblendet"
+    },
     "periods": {
       "thisWeek": "Diese Woche",
       "past7d": "Letzte 7 T.",

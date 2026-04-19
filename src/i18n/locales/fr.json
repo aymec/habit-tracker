@@ -56,13 +56,29 @@
       "week": "semaine",
       "month": "mois",
       "year": "an"
+    },
+    "a11y": {
+      "settings": "Paramètres et options de l'objectif",
+      "analytics": "Analyse de l'objectif",
+      "history": "Historique de l'objectif",
+      "dismissTip": "Ignorer l'astuce",
+      "editName": "Modifier le nom de l'objectif",
+      "editTarget": "Modifier l'objectif",
+      "editOption": "Modifier l'option",
+      "deleteOption": "Supprimer l'option",
+      "targetValue": "Valeur de l'objectif",
+      "targetUnit": "Unité de l'objectif",
+      "targetPeriod": "Période de l'objectif"
     }
   },
   "history": {
     "title": "Historique",
     "totalCount": "Nombre total",
     "deleteEntryConfirmation": "Êtes-vous sûr de vouloir supprimer cette entrée ?",
-    "noEntries": "Aucune entrée pour le moment."
+    "noEntries": "Aucune entrée pour le moment.",
+    "a11y": {
+      "deleteEntry": "Supprimer l'entrée"
+    }
   },
   "settings": {
     "title": "Paramètres",
@@ -164,8 +180,20 @@
     "title": "Analytique",
     "modeTime": "Dans le temps",
     "modeOptions": "Par option",
+    "xAxis": "Axe X",
+    "period": "Période",
     "groupBy": "Grouper par",
     "chart": "Graphique",
+    "a11y": {
+      "modeTime": "Afficher les données au fil du temps",
+      "modeOptions": "Afficher les totaux par option",
+      "period": "Afficher les données pour {{period}}",
+      "groupBy": "Grouper par {{bucket}}",
+      "chartLine": "Graphique en courbes",
+      "chartBar": "Graphique à barres",
+      "pointsOn": "Points de données affichés",
+      "pointsOff": "Points de données masqués"
+    },
     "periods": {
       "thisWeek": "Cette semaine",
       "past7d": "7 derniers j.",

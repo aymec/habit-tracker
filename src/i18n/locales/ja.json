@@ -56,13 +56,29 @@
       "week": "週",
       "month": "月",
       "year": "年"
+    },
+    "a11y": {
+      "settings": "目標の設定とオプション",
+      "analytics": "目標の分析",
+      "history": "目標の履歴",
+      "dismissTip": "ヒントを閉じる",
+      "editName": "目標名を編集",
+      "editTarget": "目標を編集",
+      "editOption": "オプションを編集",
+      "deleteOption": "オプションを削除",
+      "targetValue": "目標の値",
+      "targetUnit": "目標の単位",
+      "targetPeriod": "目標の期間"
     }
   },
   "history": {
     "title": "履歴",
     "totalCount": "合計回数",
     "deleteEntryConfirmation": "このエントリを削除してもよろしいですか？",
-    "noEntries": "エントリはまだありません。"
+    "noEntries": "エントリはまだありません。",
+    "a11y": {
+      "deleteEntry": "エントリを削除"
+    }
   },
   "settings": {
     "title": "設定",
@@ -164,8 +180,20 @@
     "title": "分析",
     "modeTime": "時系列",
     "modeOptions": "オプション別",
+    "xAxis": "X軸",
+    "period": "期間",
     "groupBy": "グループ化",
     "chart": "グラフ",
+    "a11y": {
+      "modeTime": "時系列でデータを表示",
+      "modeOptions": "オプション別の合計を表示",
+      "period": "{{period}}のデータを表示",
+      "groupBy": "{{bucket}}でグループ化",
+      "chartLine": "折れ線グラフ",
+      "chartBar": "棒グラフ",
+      "pointsOn": "データポイント表示中",
+      "pointsOff": "データポイント非表示"
+    },
     "periods": {
       "thisWeek": "今週",
       "past7d": "過去7日",
