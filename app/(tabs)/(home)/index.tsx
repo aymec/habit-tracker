@@ -14,7 +14,7 @@ import { GlassCard } from '../../../components/ui/glass-card';
 import { LiftedPressable } from '../../../components/ui/lifted-pressable';
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { calculatePeriodCount } from '../../../src/utils/period';
-import { formatNumber } from '../../../src/utils/format';
+import { formatNumberCompact } from '../../../src/utils/format';
 import { Entry } from '../../../src/models/types';
 import * as Storage from '../../../src/services/storage';
 import { usePressEffect } from '../../../src/theme/press-effect';
@@ -166,10 +166,14 @@ export default function HomeScreen() {
                               color={theme.colors.primary}
                               trackColor={theme.colors.border}
                             >
-                              <Text style={[styles.ringText, { color: theme.colors.text }]}>
+                              {/* numberOfLines={1} is load-bearing near the 10k threshold (e.g. "9 999 / 10k"). */}
+                              <Text
+                                style={[styles.ringText, { color: theme.colors.text }]}
+                                numberOfLines={1}
+                              >
                                 {hasTarget
-                                  ? `${formatNumber(periodCount)} / ${formatNumber(habit.target!.value)}`
-                                  : formatNumber(periodCount)}
+                                  ? `${formatNumberCompact(periodCount)} / ${formatNumberCompact(habit.target!.value)}`
+                                  : formatNumberCompact(periodCount)}
                               </Text>
                             </CircularProgress>
                           </View>

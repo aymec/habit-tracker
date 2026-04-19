@@ -18,7 +18,7 @@ interface ChartProps {
   emptyLabel?: string;
 }
 
-const VIEWBOX_WIDTH = 342;
+const DEFAULT_SVG_WIDTH = 342;
 const PAD_LEFT = 28;
 const PAD_RIGHT = 16;
 const PAD_TOP = 20;
@@ -47,10 +47,10 @@ export function Chart({
   yUnit = '',
   emptyLabel = 'No data in this range',
 }: ChartProps) {
-  const { isDark } = useTheme();
+  const { theme, isDark } = useTheme();
   const gridColor = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)';
-  const axisLabelColor = isDark ? 'rgba(235,235,245,0.4)' : 'rgba(60,60,67,0.5)';
-  const xLabelColor = isDark ? 'rgba(235,235,245,0.55)' : 'rgba(60,60,67,0.6)';
+  const axisLabelColor = theme.colors.text;
+  const xLabelColor = theme.colors.text;
   const hoverLineColor = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
   const pointStroke = isDark ? '#000' : '#FFF';
   const emptyTextColor = isDark ? '#8E8E93' : '#6C6C70';
@@ -60,11 +60,13 @@ export function Chart({
   const tooltipValueColor = isDark ? '#FFFFFF' : '#000000';
 
   const [hover, setHover] = useState<number | null>(null);
+  const [svgWidth, setSvgWidth] = useState(DEFAULT_SVG_WIDTH);
   const hoverRef = useRef<number | null>(null);
-  const layoutRef = useRef<{ x: number; width: number }>({ x: 0, width: 0 });
+  const chartRef = useRef<View>(null);
+  const layoutRef = useRef<{ pageX: number; width: number }>({ pageX: 0, width: 0 });
 
   const n = data.length;
-  const w = VIEWBOX_WIDTH - PAD_LEFT - PAD_RIGHT;
+  const w = svgWidth - PAD_LEFT - PAD_RIGHT;
   const h = height - PAD_TOP - PAD_BOTTOM;
 
   const max = Math.max(1, ...data.map((d) => d.value), targetLine || 0);
@@ -81,7 +83,7 @@ export function Chart({
     return data
       .map((d, i) => `${i === 0 ? 'M' : 'L'}${xFor(i).toFixed(1)} ${yFor(d.value).toFixed(1)}`)
       .join(' ');
-  }, [data, niceMax, n]);
+  }, [data, niceMax, n, w, h]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const areaPath = useMemo(() => {
     if (!n) return '';
@@ -89,7 +91,7 @@ export function Chart({
     const last = xFor(n - 1).toFixed(1);
     const mid = data.map((d, i) => `L${xFor(i).toFixed(1)} ${yFor(d.value).toFixed(1)}`).join(' ');
     return `M${first} ${PAD_TOP + h} ${mid} L${last} ${PAD_TOP + h} Z`;
-  }, [data, niceMax, n]);
+  }, [data, niceMax, n, w, h]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const ticks = useMemo(() => {
     const out: number[] = [];
@@ -101,14 +103,24 @@ export function Chart({
   const barGap = 2;
   const barW = kind === 'bar' ? Math.max(4, w / n - barGap) : 0;
 
+  const measureChart = (after?: () => void) => {
+    chartRef.current?.measure((_x, _y, width, _h, pageX) => {
+      const prevWidth = layoutRef.current.width;
+      layoutRef.current = { pageX, width };
+      if (width > 0 && width !== prevWidth) setSvgWidth(width);
+      after?.();
+    });
+  };
+
   const handleMoveToX = (screenX: number) => {
-    const { x: layoutX, width: layoutWidth } = layoutRef.current;
-    if (layoutWidth <= 0 || n === 0) return;
-    const relative = (screenX - layoutX) / layoutWidth;
-    const x = relative * VIEWBOX_WIDTH;
+    const { pageX: chartPageX, width: chartWidth } = layoutRef.current;
+    if (chartWidth <= 0 || n === 0) return;
+    const plotWidth = chartWidth - PAD_LEFT - PAD_RIGHT;
+    if (plotWidth <= 0) return;
+    const relative = (screenX - chartPageX - PAD_LEFT) / plotWidth;
     let idx: number;
     if (n === 1) idx = 0;
-    else idx = Math.round(((x - PAD_LEFT) / w) * (n - 1));
+    else idx = Math.round(relative * (n - 1));
     idx = Math.max(0, Math.min(n - 1, idx));
     if (hoverRef.current !== idx) {
       hoverRef.current = idx;
@@ -117,12 +129,22 @@ export function Chart({
     }
   };
 
+  // PanResponder is created once via useRef, so its handlers close over the
+  // first-render handleMoveToX (which in turn closes over the first-render n).
+  // Route every call through this ref so the handler always sees the latest n
+  // after the user changes period or group-by.
+  const handleMoveToXRef = useRef(handleMoveToX);
+  handleMoveToXRef.current = handleMoveToX;
+
   const responder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
-      onPanResponderGrant: (e) => handleMoveToX(e.nativeEvent.pageX),
-      onPanResponderMove: (e) => handleMoveToX(e.nativeEvent.pageX),
+      onPanResponderGrant: (e) => {
+        const { pageX } = e.nativeEvent;
+        measureChart(() => handleMoveToXRef.current(pageX));
+      },
+      onPanResponderMove: (e) => handleMoveToXRef.current(e.nativeEvent.pageX),
       onPanResponderRelease: () => {
         hoverRef.current = null;
         setHover(null);
@@ -144,18 +166,16 @@ export function Chart({
 
   const hoverD = hover != null ? data[hover] : null;
   const hoverX = hover != null ? xFor(hover) : 0;
-  const tooltipPct = Math.min(Math.max(0, (hoverX / VIEWBOX_WIDTH) * 100 - 12), 78);
+  const tooltipPct = Math.min(Math.max(0, (hoverX / svgWidth) * 100 - 12), 78);
 
   return (
     <View
+      ref={chartRef}
       style={{ position: 'relative' }}
-      onLayout={(e) => {
-        const { x, width } = e.nativeEvent.layout;
-        layoutRef.current = { x, width };
-      }}
+      onLayout={() => measureChart()}
       {...responder.panHandlers}
     >
-      <Svg width="100%" height={height} viewBox={`0 0 ${VIEWBOX_WIDTH} ${height}`}>
+      <Svg width="100%" height={height} viewBox={`0 0 ${svgWidth} ${height}`}>
         <Defs>
           <LinearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
             <Stop offset="0%" stopColor={color} stopOpacity="0.28" />
@@ -167,7 +187,7 @@ export function Chart({
           <G key={`tick-${i}`}>
             <Line
               x1={PAD_LEFT}
-              x2={VIEWBOX_WIDTH - PAD_RIGHT}
+              x2={svgWidth - PAD_RIGHT}
               y1={yFor(t)}
               y2={yFor(t)}
               stroke={gridColor}
@@ -190,7 +210,7 @@ export function Chart({
           <G>
             <Line
               x1={PAD_LEFT}
-              x2={VIEWBOX_WIDTH - PAD_RIGHT}
+              x2={svgWidth - PAD_RIGHT}
               y1={yFor(targetLine)}
               y2={yFor(targetLine)}
               stroke="#32D74B"
@@ -199,7 +219,7 @@ export function Chart({
               opacity={0.8}
             />
             <SvgText
-              x={VIEWBOX_WIDTH - PAD_RIGHT - 2}
+              x={svgWidth - PAD_RIGHT - 2}
               y={yFor(targetLine) - 4}
               fill="#32D74B"
               fontSize="10"

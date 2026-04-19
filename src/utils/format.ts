@@ -49,3 +49,49 @@ export const formatNumberWithSign = (value: number): string => {
   const formatted = formatNumber(value);
   return value > 0 ? `+${formatted}` : formatted;
 };
+
+/**
+ * Compact notation formatter for tight UI surfaces (e.g. the 90 px habit ring).
+ * Passes through to {@link formatNumber} below 10 000; above, uses k/M/B/T
+ * suffixes with up to 3 significant figures, trailing zeros stripped.
+ * Coefficient rollover (e.g. 999 500 → 1M) is handled explicitly.
+ */
+export const formatNumberCompact = (value: number): string => {
+  if (Math.abs(value) < 10_000) return formatNumber(value);
+
+  const sign = value < 0 ? '-' : '';
+  const abs = Math.abs(value);
+
+  const suffixes: { threshold: number; suffix: string }[] = [
+    { threshold: 1e12, suffix: 'T' },
+    { threshold: 1e9, suffix: 'B' },
+    { threshold: 1e6, suffix: 'M' },
+    { threshold: 1e3, suffix: 'k' },
+  ];
+
+  const roundToThreeSigFigs = (coeff: number): number => {
+    if (coeff >= 100) return Math.round(coeff);
+    if (coeff >= 10) return Math.round(coeff * 10) / 10;
+    return Math.round(coeff * 100) / 100;
+  };
+
+  for (let i = 0; i < suffixes.length; i++) {
+    const { threshold, suffix } = suffixes[i];
+    if (abs < threshold) continue;
+
+    const rounded = roundToThreeSigFigs(abs / threshold);
+
+    // Rollover: if rounding pushes us to 1000, step one suffix up.
+    // (i === 0 means we are already at T — no suffix above, so stay.)
+    if (rounded >= 1000 && i > 0) {
+      const next = suffixes[i - 1];
+      const nextRounded = roundToThreeSigFigs(abs / next.threshold);
+      return `${sign}${nextRounded}${next.suffix}`;
+    }
+
+    return `${sign}${rounded}${suffix}`;
+  }
+
+  // Unreachable when |value| >= 10_000, but keep a safe fallback.
+  return formatNumber(value);
+};
