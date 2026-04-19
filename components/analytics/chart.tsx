@@ -161,7 +161,7 @@ export function Chart({
     <View
       ref={chartRef}
       style={{ position: 'relative' }}
-      onLayout={measureChart}
+      onLayout={() => measureChart()}
       {...responder.panHandlers}
     >
       <Svg width="100%" height={height} viewBox={`0 0 ${VIEWBOX_WIDTH} ${height}`}>
