@@ -140,6 +140,7 @@ export default function GoalScreen() {
       />
 
       <ScrollView contentContainerStyle={styles.content}>
+        <View style={styles.flexibleTop} />
         {/* Counter Display */}
         <View style={styles.counterContainer}>
           {activeHabit.target ? (
@@ -180,6 +181,7 @@ export default function GoalScreen() {
           </Text>
         </View>
 
+        <View style={styles.flexibleMiddle} />
         {/* Option Buttons */}
         <View style={styles.optionsContainer}>
           {activeHabitOptions.map((option) => (
@@ -212,6 +214,7 @@ export default function GoalScreen() {
             </Pressable>
           ))}
         </View>
+        <View style={styles.flexibleBottom} />
 
       </ScrollView>
 
@@ -355,12 +358,26 @@ const styles = StyleSheet.create({
   content: {
     flexGrow: 1,
     alignItems: 'center',
-    paddingTop: 60,
     paddingBottom: 80,
+  },
+  flexibleTop: {
+    flex: 1,
+    minHeight: 24,
+    maxHeight: 80,
+    width: '100%',
+  },
+  flexibleMiddle: {
+    flex: 1,
+    minHeight: 24,
+    maxHeight: 100,
+    width: '100%',
+  },
+  flexibleBottom: {
+    flex: 2,
+    width: '100%',
   },
   counterContainer: {
     alignItems: 'center',
-    marginBottom: 80,
     width: '100%',
     paddingHorizontal: 20,
   },
