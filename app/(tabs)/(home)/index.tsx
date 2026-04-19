@@ -166,6 +166,7 @@ export default function HomeScreen() {
                               color={theme.colors.primary}
                               trackColor={theme.colors.border}
                             >
+                              {/* numberOfLines={1} is load-bearing near the 10k threshold (e.g. "9 999 / 10k"). */}
                               <Text
                                 style={[styles.ringText, { color: theme.colors.text }]}
                                 numberOfLines={1}
