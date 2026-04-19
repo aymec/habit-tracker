@@ -48,3 +48,4 @@ app-example
 .idea/
 docs/superpowers
 .worktrees/
+.superpowers/
