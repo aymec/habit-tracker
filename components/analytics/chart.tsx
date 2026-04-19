@@ -18,7 +18,7 @@ interface ChartProps {
   emptyLabel?: string;
 }
 
-const VIEWBOX_WIDTH = 342;
+const DEFAULT_SVG_WIDTH = 342;
 const PAD_LEFT = 28;
 const PAD_RIGHT = 16;
 const PAD_TOP = 20;
@@ -60,12 +60,13 @@ export function Chart({
   const tooltipValueColor = isDark ? '#FFFFFF' : '#000000';
 
   const [hover, setHover] = useState<number | null>(null);
+  const [svgWidth, setSvgWidth] = useState(DEFAULT_SVG_WIDTH);
   const hoverRef = useRef<number | null>(null);
   const chartRef = useRef<View>(null);
   const layoutRef = useRef<{ pageX: number; width: number }>({ pageX: 0, width: 0 });
 
   const n = data.length;
-  const w = VIEWBOX_WIDTH - PAD_LEFT - PAD_RIGHT;
+  const w = svgWidth - PAD_LEFT - PAD_RIGHT;
   const h = height - PAD_TOP - PAD_BOTTOM;
 
   const max = Math.max(1, ...data.map((d) => d.value), targetLine || 0);
@@ -104,7 +105,9 @@ export function Chart({
 
   const measureChart = (after?: () => void) => {
     chartRef.current?.measure((_x, _y, width, _h, pageX) => {
+      const prevWidth = layoutRef.current.width;
       layoutRef.current = { pageX, width };
+      if (width > 0 && width !== prevWidth) setSvgWidth(width);
       after?.();
     });
   };
@@ -112,11 +115,12 @@ export function Chart({
   const handleMoveToX = (screenX: number) => {
     const { pageX: chartPageX, width: chartWidth } = layoutRef.current;
     if (chartWidth <= 0 || n === 0) return;
-    const relative = (screenX - chartPageX) / chartWidth;
-    const x = relative * VIEWBOX_WIDTH;
+    const plotWidth = chartWidth - PAD_LEFT - PAD_RIGHT;
+    if (plotWidth <= 0) return;
+    const relative = (screenX - chartPageX - PAD_LEFT) / plotWidth;
     let idx: number;
     if (n === 1) idx = 0;
-    else idx = Math.round(((x - PAD_LEFT) / w) * (n - 1));
+    else idx = Math.round(relative * (n - 1));
     idx = Math.max(0, Math.min(n - 1, idx));
     if (hoverRef.current !== idx) {
       hoverRef.current = idx;
@@ -162,7 +166,7 @@ export function Chart({
 
   const hoverD = hover != null ? data[hover] : null;
   const hoverX = hover != null ? xFor(hover) : 0;
-  const tooltipPct = Math.min(Math.max(0, (hoverX / VIEWBOX_WIDTH) * 100 - 12), 78);
+  const tooltipPct = Math.min(Math.max(0, (hoverX / svgWidth) * 100 - 12), 78);
 
   return (
     <View
@@ -171,7 +175,7 @@ export function Chart({
       onLayout={() => measureChart()}
       {...responder.panHandlers}
     >
-      <Svg width="100%" height={height} viewBox={`0 0 ${VIEWBOX_WIDTH} ${height}`}>
+      <Svg width="100%" height={height} viewBox={`0 0 ${svgWidth} ${height}`}>
         <Defs>
           <LinearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
             <Stop offset="0%" stopColor={color} stopOpacity="0.28" />
@@ -183,7 +187,7 @@ export function Chart({
           <G key={`tick-${i}`}>
             <Line
               x1={PAD_LEFT}
-              x2={VIEWBOX_WIDTH - PAD_RIGHT}
+              x2={svgWidth - PAD_RIGHT}
               y1={yFor(t)}
               y2={yFor(t)}
               stroke={gridColor}
@@ -206,7 +210,7 @@ export function Chart({
           <G>
             <Line
               x1={PAD_LEFT}
-              x2={VIEWBOX_WIDTH - PAD_RIGHT}
+              x2={svgWidth - PAD_RIGHT}
               y1={yFor(targetLine)}
               y2={yFor(targetLine)}
               stroke="#32D74B"
@@ -215,7 +219,7 @@ export function Chart({
               opacity={0.8}
             />
             <SvgText
-              x={VIEWBOX_WIDTH - PAD_RIGHT - 2}
+              x={svgWidth - PAD_RIGHT - 2}
               y={yFor(targetLine) - 4}
               fill="#32D74B"
               fontSize="10"
