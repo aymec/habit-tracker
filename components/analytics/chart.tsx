@@ -61,7 +61,8 @@ export function Chart({
 
   const [hover, setHover] = useState<number | null>(null);
   const hoverRef = useRef<number | null>(null);
-  const layoutRef = useRef<{ x: number; width: number }>({ x: 0, width: 0 });
+  const chartRef = useRef<View>(null);
+  const layoutRef = useRef<{ pageX: number; width: number }>({ pageX: 0, width: 0 });
 
   const n = data.length;
   const w = VIEWBOX_WIDTH - PAD_LEFT - PAD_RIGHT;
@@ -101,10 +102,16 @@ export function Chart({
   const barGap = 2;
   const barW = kind === 'bar' ? Math.max(4, w / n - barGap) : 0;
 
+  const measureChart = () => {
+    chartRef.current?.measure((_x, _y, width, _h, pageX) => {
+      layoutRef.current = { pageX, width };
+    });
+  };
+
   const handleMoveToX = (screenX: number) => {
-    const { x: layoutX, width: layoutWidth } = layoutRef.current;
-    if (layoutWidth <= 0 || n === 0) return;
-    const relative = (screenX - layoutX) / layoutWidth;
+    const { pageX: chartPageX, width: chartWidth } = layoutRef.current;
+    if (chartWidth <= 0 || n === 0) return;
+    const relative = (screenX - chartPageX) / chartWidth;
     const x = relative * VIEWBOX_WIDTH;
     let idx: number;
     if (n === 1) idx = 0;
@@ -121,7 +128,10 @@ export function Chart({
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
-      onPanResponderGrant: (e) => handleMoveToX(e.nativeEvent.pageX),
+      onPanResponderGrant: (e) => {
+        measureChart();
+        handleMoveToX(e.nativeEvent.pageX);
+      },
       onPanResponderMove: (e) => handleMoveToX(e.nativeEvent.pageX),
       onPanResponderRelease: () => {
         hoverRef.current = null;
@@ -148,11 +158,9 @@ export function Chart({
 
   return (
     <View
+      ref={chartRef}
       style={{ position: 'relative' }}
-      onLayout={(e) => {
-        const { x, width } = e.nativeEvent.layout;
-        layoutRef.current = { x, width };
-      }}
+      onLayout={measureChart}
       {...responder.panHandlers}
     >
       <Svg width="100%" height={height} viewBox={`0 0 ${VIEWBOX_WIDTH} ${height}`}>
