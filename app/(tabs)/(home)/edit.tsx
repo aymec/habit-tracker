@@ -1,5 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { Platform, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +13,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { LiftedPressable } from '../../../components/ui/lifted-pressable';
 import { Option, TargetPeriod, HabitTarget } from '../../../src/models/types';
 import { formatNumber, formatNumberWithSign } from '../../../src/utils/format';
+
+const liquidGlass = isLiquidGlassAvailable();
 
 interface UnitDef {
   key: string;
@@ -51,6 +55,7 @@ export default function ModalScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const isFocused = useIsFocused();
+  const insets = useSafeAreaInsets();
 
   // Redirect to home if no habits exist (data was cleared) - only when screen is focused
   useEffect(() => {
@@ -436,7 +441,10 @@ export default function ModalScreen() {
         }}
       />
 
-      <ScrollView style={styles.content}>
+      <ScrollView
+        style={styles.content}
+        contentContainerStyle={{ paddingBottom: liquidGlass ? Math.max(25, insets.bottom + 60) : 25 }}
+      >
         {/* Goal Section */}
         <View style={[styles.section, { marginBottom: 10 }]}>
           <Text style={[styles.sectionHeader, { color: theme.colors.text }]}>

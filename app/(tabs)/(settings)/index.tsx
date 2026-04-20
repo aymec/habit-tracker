@@ -5,17 +5,21 @@ import { useTheme } from '../../../src/context/ThemeContext';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { Stack, useRouter } from 'expo-router';
 import Head from 'expo-router/head';
 import Constants from 'expo-constants';
 import { clearAllData } from '../../../src/services/storage';
+
+const liquidGlass = isLiquidGlassAvailable();
 
 export default function SettingsScreen() {
   const { theme, mode, setMode } = useTheme();
   const { t, i18n } = useTranslation();
   const { loadHabits } = useHabit();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   const [androidModalVisible, setAndroidModalVisible] = useState(false);
 
@@ -132,7 +136,12 @@ export default function SettingsScreen() {
       )}
       <Stack.Screen options={{ title: t('settings.title'), headerTitleAlign: 'center' }} />
 
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.content,
+          { paddingBottom: liquidGlass ? Math.max(20, insets.bottom + 60) : 20 },
+        ]}
+      >
 
         {/* Appearance Section */}
         <View style={styles.section}>

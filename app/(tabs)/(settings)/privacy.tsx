@@ -2,6 +2,8 @@ import { useCallback } from 'react';
 import { Linking, Platform, StyleSheet, View, Text, ScrollView } from 'react-native';
 import { HeaderBackButton } from '@react-navigation/elements';
 import { useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { Stack, useRouter } from 'expo-router';
 import Head from 'expo-router/head';
 import { useTheme } from '../../../src/context/ThemeContext';
@@ -9,11 +11,14 @@ import { useTranslation } from 'react-i18next';
 
 const ISSUES_URL = 'https://github.com/aymec/habit-tracker/issues';
 
+const liquidGlass = isLiquidGlassAvailable();
+
 export default function PrivacyPolicyScreen() {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const router = useRouter();
   const canGoBack = router.canGoBack();
+  const insets = useSafeAreaInsets();
 
   // Update document title on focus for web (Head component doesn't update on tab switch)
   useFocusEffect(
@@ -55,7 +60,12 @@ export default function PrivacyPolicyScreen() {
         }}
       />
 
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.content,
+          { paddingBottom: liquidGlass ? Math.max(40, insets.bottom + 60) : 40 },
+        ]}
+      >
         <Text style={[styles.lastUpdated, { color: theme.colors.textSecondary }]}>
           {t('privacy.lastUpdated')}
         </Text>

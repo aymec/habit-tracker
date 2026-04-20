@@ -1,6 +1,8 @@
 import { StyleSheet, View, Text, FlatList, TouchableOpacity, Alert, Platform } from 'react-native';
 import { useEffect, useCallback } from 'react';
 import { useIsFocused, useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { useHabit } from '../../../src/context/HabitContext';
 import { useTheme } from '../../../src/context/ThemeContext';
 import { useTranslation } from 'react-i18next';
@@ -10,12 +12,15 @@ import Head from 'expo-router/head';
 import { Entry } from '../../../src/models/types';
 import { formatNumberWithSign } from '../../../src/utils/format';
 
+const liquidGlass = isLiquidGlassAvailable();
+
 export default function EntryHistoryScreen() {
   const { activeHabitEntries, removeEntry, activeHabit, habits } = useHabit();
   const { theme } = useTheme();
   const { t } = useTranslation();
   const router = useRouter();
   const isFocused = useIsFocused();
+  const insets = useSafeAreaInsets();
 
   // Redirect to home if no habits exist (data was cleared) - only when screen is focused
   useEffect(() => {
@@ -77,7 +82,10 @@ export default function EntryHistoryScreen() {
       <FlatList
         data={activeHabitEntries}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.listContent}
+        contentContainerStyle={[
+          styles.listContent,
+          { paddingBottom: liquidGlass ? Math.max(25, insets.bottom + 60) : 16 },
+        ]}
         renderItem={({ item }) => (
           <View style={[styles.entryItem, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
             <View style={styles.entryInfo}>
