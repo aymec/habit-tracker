@@ -76,8 +76,24 @@
     "totalCount": "Total Count",
     "deleteEntryConfirmation": "Are you sure you want to delete this entry?",
     "noEntries": "No entries yet.",
+    "calendar": {
+      "week": "Week",
+      "month": "Month",
+      "year": "Year"
+    },
     "a11y": {
-      "deleteEntry": "Delete entry"
+      "deleteEntry": "Delete entry",
+      "calendarToggle": "Toggle calendar view"
+    }
+  },
+  "streaks": {
+    "current": "Current",
+    "best": "Best",
+    "period": {
+      "day": "day streak",
+      "week": "week streak",
+      "month": "month streak",
+      "year": "year streak"
     }
   },
   "settings": {
