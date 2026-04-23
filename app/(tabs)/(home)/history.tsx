@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, FlatList, TouchableOpacity, Alert, Platform } from 'react-native';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
@@ -11,6 +11,7 @@ import { Stack, useRouter } from 'expo-router';
 import Head from 'expo-router/head';
 import { Entry } from '../../../src/models/types';
 import { formatNumberWithSign } from '../../../src/utils/format';
+import { HabitCalendar, CalendarMode } from '../../../components/ui/habit-calendar';
 
 const liquidGlass = isLiquidGlassAvailable();
 
@@ -21,6 +22,11 @@ export default function EntryHistoryScreen() {
   const router = useRouter();
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
+  const [calendarMode, setCalendarMode] = useState<CalendarMode>('month');
+
+  const cycleCalendarMode = () => {
+    setCalendarMode(prev => prev === 'week' ? 'month' : prev === 'month' ? 'year' : 'week');
+  };
 
   // Redirect to home if no habits exist (data was cleared) - only when screen is focused
   useEffect(() => {
@@ -78,6 +84,22 @@ export default function EntryHistoryScreen() {
         </Head>
       )}
       <Stack.Screen options={{ title: pageTitle, headerTitleAlign: 'center' }} />
+
+      {/* Sticky calendar — entry list scrolls underneath */}
+      {activeHabit && (
+        <TouchableOpacity
+          onPress={cycleCalendarMode}
+          accessibilityRole="button"
+          accessibilityLabel={t('history.a11y.calendarToggle')}
+          activeOpacity={0.85}
+        >
+          <HabitCalendar
+            entries={activeHabitEntries}
+            habit={activeHabit}
+            mode={calendarMode}
+          />
+        </TouchableOpacity>
+      )}
 
       <FlatList
         data={activeHabitEntries}
