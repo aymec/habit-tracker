@@ -13,6 +13,7 @@ import { usePressEffect } from '../../../src/theme/press-effect';
 import { Entry } from '../../../src/models/types';
 import { formatNumber, formatNumberWithSign } from '../../../src/utils/format';
 import { calculatePeriodCount } from '../../../src/utils/period';
+import { computeStreaks } from '../../../src/utils/streaks';
 import { GlassCard } from '../../../components/ui/glass-card';
 import { CircularProgress } from '../../../components/ui/circular-progress';
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
@@ -68,6 +69,11 @@ export default function GoalScreen() {
     if (!activeHabit?.target) return undefined;
     return displayCount / activeHabit.target.value;
   }, [activeHabit, displayCount]);
+
+  const streaks = useMemo(() => {
+    if (!activeHabit) return { current: 0, best: 0 };
+    return computeStreaks(activeHabitEntries, activeHabit);
+  }, [activeHabit, activeHabitEntries]);
 
   // Calculate dynamic font size for web (adjustsFontSizeToFit doesn't work on web)
   const counterFontSize = useMemo(() => {
@@ -159,6 +165,13 @@ export default function GoalScreen() {
                 >
                   {formatCount(displayCount)}
                 </Text>
+                <Text style={[styles.ringLabel, { color: theme.colors.textSecondary }]} numberOfLines={1} adjustsFontSizeToFit>
+                  {t('habits.vsTarget', {
+                    value: formatNumber(activeHabit.target.value),
+                    unit: activeHabit.target.unitShort ? activeHabit.target.unitShort : '',
+                    period: t(`habits.period.${activeHabit.target.period}`)
+                  })}
+                </Text>
               </View>
             </CircularProgress>
           ) : (
@@ -170,16 +183,37 @@ export default function GoalScreen() {
               {formatCount(displayCount)}
             </Text>
           )}
-          <Text style={[styles.counterLabel, { color: theme.colors.text }]}>
-            {activeHabit.target
-              ? t('habits.vsTarget', {
-                  value: formatNumber(activeHabit.target.value),
-                  unit: activeHabit.target.unitShort ? activeHabit.target.unitShort : '',
-                  period: t(`habits.period.${activeHabit.target.period}`)
-                })
-              : t('history.totalCount')}
-          </Text>
+          {!activeHabit.target && (
+            <Text style={[styles.counterLabel, { color: theme.colors.text }]}>
+              {t('history.totalCount')}
+            </Text>
+          )}
         </View>
+
+        {/* Streak row — only shown when current or best is above 0 */}
+        {(streaks.current > 0 || streaks.best > 0) && (
+          <View style={styles.streakRow}>
+            <View style={styles.streakItem}>
+              <Text style={[styles.streakValue, { color: theme.colors.primary }]}>{streaks.current}</Text>
+              <Text style={[styles.streakLabel, { color: theme.colors.textSecondary }]}>
+                {t('streaks.current')}
+              </Text>
+              <Text style={[styles.streakUnit, { color: theme.colors.textSecondary }]}>
+                {t(`streaks.period.${activeHabit.target?.period ?? 'day'}`)}
+              </Text>
+            </View>
+            <View style={[styles.streakDivider, { backgroundColor: theme.colors.border }]} />
+            <View style={styles.streakItem}>
+              <Text style={[styles.streakValue, { color: theme.colors.primary }]}>{streaks.best}</Text>
+              <Text style={[styles.streakLabel, { color: theme.colors.textSecondary }]}>
+                {t('streaks.best')}
+              </Text>
+              <Text style={[styles.streakUnit, { color: theme.colors.textSecondary }]}>
+                {t(`streaks.period.${activeHabit.target?.period ?? 'day'}`)}
+              </Text>
+            </View>
+          </View>
+        )}
 
         <View style={styles.flexibleMiddle} />
         {/* Option Buttons */}
@@ -396,6 +430,45 @@ const styles = StyleSheet.create({
     width: RING_INNER_WIDTH,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  ringLabel: {
+    fontSize: 12,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    marginTop: 4,
+    textAlign: 'center',
+    width: RING_INNER_WIDTH - 24,
+  },
+  streakRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    gap: 0,
+  },
+  streakItem: {
+    alignItems: 'center',
+    paddingHorizontal: 32,
+  },
+  streakValue: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    fontVariant: ['tabular-nums'],
+  },
+  streakLabel: {
+    fontSize: 12,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    marginTop: 2,
+  },
+  streakUnit: {
+    fontSize: 11,
+    marginTop: 1,
+  },
+  streakDivider: {
+    width: 1,
+    height: 48,
+    borderRadius: 1,
   },
   optionsContainer: {
     flexDirection: 'row',
